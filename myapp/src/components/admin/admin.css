@@ -1,0 +1,236 @@
+/* ======================================= Admin control ================================================ */
+
+.admincontrol {
+    border: 1px solid black;
+    border-radius: 10px;
+    height: auto;
+    width: fit-content;
+    padding: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.product-add {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-add label {
+    margin: 10px 0px;
+}
+
+.product-add input {
+
+    padding: 10px;
+    border: 1px solid black;
+
+}
+
+#submit input {
+    width: 100px;
+    padding: 6px;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    transition: all ease-in-out 0.3s;
+}
+
+#submit input:hover {
+    background-color: white;
+    color: black;
+}
+
+/* ================================================= Admin Product ================================================ */
+
+.adminshowproduct {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    gap: 46px 132px;
+    position: absolute;
+    top: 75px;
+    margin-left: 8%;
+}
+
+.position {
+    position: relative;
+}
+
+.is {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    width: 310px;
+    padding: 10px 0px;
+    height: fit-content;
+}
+
+.itemss {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.img-wrappers img {
+    height: 100px;
+    width: 100px;
+}
+
+.text-wrappers {
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.productbuttons {
+    display: flex;
+    position: relative;
+    bottom: 0px;
+    left: 22%;
+    height: 21px;
+    width: 160px;
+    justify-content: space-evenly;
+}
+
+.productbuttons button {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0px 10px;
+    font-size: 15px;
+}
+
+.adminshow {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.nohave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+/* ================================================= Admin Product ================================================ */
+
+table {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+table tr th {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+table tr td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+
+/* ================================================= Admin Product ================================================ */
+
+
+
+
+#update_first input {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+#update_first input::placeholder {
+    text-align: center;
+}
+
+.updatewarm {
+    visibility: hidden;
+    margin-top: -15px;
+    font-size: 13px;
+}
+
+
+
+#updateclose {
+    height: 40px;
+}
+
+#updateclose img {
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: all ease-in-out 0.3s;
+    rotate: 45deg;
+}
+
+#updateclose img:hover {
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    rotate: 180deg;
+}
+
+
+.helloworld {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+}
+
+#update_first {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 25%;
+    height: 26%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    visibility: visible;
+    opacity: 1;
+    transition: all ease-in-out 0.5s;
+    box-shadow: 6px 6px 24px black;
+}
+#updates_first {
+    visibility: hidden;
+    transition: all ease-in-out 0.5s;
+    opacity: 0;
+}
+
+#update_second {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 20%;
+    height: 26%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease-in-out 0.5s;
+    box-shadow: 6px 6px 24px black;
+}
+
+#updates_second {
+    visibility: visible;
+    transition: all ease-in-out 0.5s;
+    opacity: 1;
+}

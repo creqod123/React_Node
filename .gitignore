@@ -1,5 +1,2 @@
 .env
-/bin
 node_modules/
-/.vs
-/.idea

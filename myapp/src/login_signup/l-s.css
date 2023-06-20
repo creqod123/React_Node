@@ -1,0 +1,176 @@
+div#root {
+    height: 100vh;
+    width: 100%;
+}
+
+.main {
+    width: 100%;
+    height: 92vh;
+}
+
+.Login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: darkgray;
+    height: 400px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    box-shadow: 20px 21px 50px lightcoral;
+    background-image: linear-gradient(79deg, #fcfced, #fcedfc 48%, #ebf6ff);
+    border-radius: 0px 30px;
+}
+
+.Login h1 {
+    position: absolute;
+    top: 10px;
+}
+
+.Signup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: darkgray;
+    height: 600px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    box-shadow: 20px 21px 50px lightcoral;
+    background-image: linear-gradient(79deg, #fcfced, #fcedfc 48%, #ebf6ff);
+    border-radius: 0px 30px;
+}
+
+.Signup h1 {
+    position: absolute;
+    top: 10px;
+}
+
+.for {
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+    width: 240px;
+    position: absolute;
+    bottom: 50%;
+}
+
+.for-1 {
+    height: 100px;
+}
+
+
+
+.in {
+    padding: 6px;
+}
+
+.in-1 {
+    margin-top: 5px;
+}
+
+.ina {
+    position: absolute;
+    bottom: 30px;
+    color: black;
+    cursor: pointer;
+}
+
+.ins {
+    position: absolute !important;
+    margin-top: 10px;
+    margin-left: 50%;
+    transform: translate(-50%);
+    bottom: -230px;
+    height: 40px;
+    width: 120px;
+}
+
+.ins-1 {
+    bottom: -120px;
+}
+
+.font {
+    font-size: 20px !important;
+    width: 20px;
+    margin: 0px 2px 0px 2px;
+}
+
+label.in {
+    margin-left: -9px;
+}
+
+#email {
+    font-size: 12px;
+    color: red;
+    height: 2%;
+}
+
+#password {
+    font-size: 12px;
+    color: red;
+}
+
+#tel {
+    font-size: 12px;
+    color: red;
+}
+
+#css {
+    margin: 20px 20px;
+
+}
+
+
+
+
+/* CSS */
+.button-17 {
+    align-items: center;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #3c4043;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    justify-content: center;
+    letter-spacing: .25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    touch-action: manipulation;
+    will-change: transform, opacity;
+    z-index: 0;
+}
+
+.button-17:hover {
+    background: #F6F9FE;
+    color: #174ea6;
+}
+
+.button-17:active {
+    box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+    outline: no ne;
+}
+
+.button-17:focus {
+    outline: none;
+    border: 2px solid #4285f4;
+}

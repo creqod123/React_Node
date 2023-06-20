@@ -1,0 +1,61 @@
+.userdetail button {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+#userdetailshow1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    border: 1px solid black;
+    height: auto;
+    width: 800px;
+    transition: all ease-in-out 0.5s;
+
+}
+
+#userdetailclose img {
+    rotate: 40deg;
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: -12px;
+    right: -45px;
+    transition: all ease-in-out 0.5s;
+}
+
+#userdetailclose img:hover {
+    rotate: 180deg;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+
+#userdetailshow2 {
+    height: 100%;
+    width: 100%;
+}
+
+#userdetailshow2 table {
+    border: none;
+    height: auto;
+    width: 100%;
+}
+
+button {
+    padding: 5px 10px;
+}
+
+.show {
+    visibility: visible;
+    opacity: 1;
+    transition: all ease-in-out 0.5s;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease-in-out 0.5s;
+}

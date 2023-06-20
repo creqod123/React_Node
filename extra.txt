@@ -1,0 +1,45 @@
+=================== set localstorage ===================
+
+windows.localStorage.setItem("token",token)
+windows.localStorage.removeItem("token",token)
+localStorage.setItem("data", JSON.stringify(data))
+
+=================== get localstorage ===================
+
+localStorage.getItem("token",token)
+var storedNames = JSON.parse(localStorage.getItem("names"));
+
+========================================================
+
+
+windows.location.href = "/"
+window.location.reload();
+
+
+const myTimeout = setTimeout({myGreeting}, 1000);
+const timer = setTimeout(() => {
+    console.log('This will run after 1 second!')
+  }, 1000);
+
+function myGreeting() {
+	console.log("first")
+}
+
+
+
+==================================================================================================================================================
+
+{
+  "_id": {
+    "$oid": "648c31e21b5f514f9325639a"
+  },
+  "ids": 1,
+  "image": "image-1686909409807-439574699.png",
+  "email": "helloworld@gmail.com",
+  "productName": "mobile",
+  "price": 60000,
+  "adminId": {
+    "$oid": "6482e35a24b977adab7aa03c"
+  },
+  "__v": 0
+}
