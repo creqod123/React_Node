@@ -93,16 +93,17 @@ exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
 exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
 
     var id = req.body.id
+    console.log("id :- ",id)
     try {
 
         var data = await register.find({ _id: id })
         if (data.length != 0) {
-            await adminProduct.deleteOne({ adminId: id })
-            await checkout.deleteOne({ sellerId: id })
+            // await adminProduct.deleteOne({ adminId: id })
+            // await checkout.deleteOne({ sellerId: id })
         }
         else {
-            await adminProduct.deleteOne({ _id: id })
-            await checkout.deleteOne({ productId: id })
+            // await adminProduct.deleteOne({ _id: id })
+            // await checkout.deleteOne({ productId: id })
         }
 
         res.status(200).json({
