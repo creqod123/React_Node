@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+let fs = require('fs');
+let p = require('path')
 
 const adminController = require('../controller/adminController')
 const ceoController = require('../controller/ceoControllers')
@@ -43,5 +45,19 @@ router.post('/ceo/user/delete', verifyToken, ceoController.userDelete)
 
 router.post('/ceo/admin/detail', verifyToken, ceoController.adminDetail)
 router.post('/ceo/admin/productremove', verifyToken, ceoController.productRemove)
+
+
+
+
+router.get('/image', upload.single('image'), (req, res, next) => {
+  let { path } = req.query;
+
+  console.log(p.join(process.cwd(), path));
+  if (fs.existsSync(p.join(process.cwd(), path))) {
+    return res.status(200).sendFile(p.join(process.cwd(), path));
+  }
+  return res.status(404).json({ message: 'File not found' });
+})
+
 
 module.exports = router;

@@ -15,7 +15,7 @@ function Cart(props) {
         const id = localStorage.getItem("id")
         const url = process.env.REACT_APP_USER_URL + "/checkout"
         let formdata = new FormData()
-
+        
         let swap
         let counter = []
         for (let i = 0; i < prop.length; i++) {

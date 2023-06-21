@@ -22,13 +22,13 @@ function Home(props) {
     const BorderExample = () => {
         return <Spinner animation="border" />;
     }
-        
+
     const showProduct = (props, product) => {
         const { image, productName, price } = product
         return (
             <div className="i">
                 <div className="img-wrapper item">
-                    <img src="./image/first.png" alt="" />
+                    <img src={image} alt="" />
                 </div>
                 <div className="text-wrapper item">
                     <span>{productName}</span>
