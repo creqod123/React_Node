@@ -3,6 +3,7 @@ import axios from 'axios'
 const email = localStorage.getItem("email")
 var token = localStorage.getItem("token")
 let data = []
+
 export default function getItem(state = [], action) {
 
     const abc = () => {
@@ -30,7 +31,7 @@ export default function getItem(state = [], action) {
         case "GET_ALL_ITEMS":
             {
                 abc()
-                return state = data 
+                return state = data
                 break;
             }
         default:

@@ -5,15 +5,13 @@ import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
 import { getAllitem } from "../../Services/Actions/actions"
 
-let Data = []
 function Home(props) {
 
     const [showTag, setShowTag] = useState(false);
-    const val = useSelector((a) => a.getItem)
+    const Data = useSelector((a) => a.getItem)
     const dispatch = useDispatch()
 
     dispatch(getAllitem())
-    Data = val
 
     useEffect(() => {
         const timeout = setTimeout(() => {
