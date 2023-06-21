@@ -13,6 +13,7 @@ const ImageComponent = () => {
                     const blob = await response.blob();
                     const imageUrl = URL.createObjectURL(blob);
                     console.log("img :- ",imageUrl)
+                    console.log("img :- ",blob)
                 } else {
                     setFileNotFound(true);
                 }
