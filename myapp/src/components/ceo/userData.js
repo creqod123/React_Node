@@ -73,8 +73,7 @@ export default function UserData() {
         catch (e) {
             console.log(e)
         }
-        window.location.href = "/"
-
+        window.location.href = "/ceo/user"
     }
 
     const userProductRemove = async (e) => {
