@@ -1,5 +1,6 @@
 import './user.css'
 import axios from 'axios'
+import { useSelector, useDispatch } from "react-redux"
 
 var totalcost = 0
 var total = 0
@@ -8,8 +9,7 @@ var token = localStorage.getItem("token")
 
 function Cart(props) {
 
-    console.log(props)
-
+    let prop = useSelector((a) => a.cardItems)
     const hello1 = async () => {
 
         const id = localStorage.getItem("id")
@@ -18,7 +18,6 @@ function Cart(props) {
 
         let swap
         let counter = []
-        let prop = props.data
         for (let i = 0; i < prop.length; i++) {
             prop[i].cardData.quantity = 1
             for (var j = i + 1; j < prop.length; j++) {
@@ -39,14 +38,13 @@ function Cart(props) {
                 }
             }
         }
-
-        formdata = [props.data, email]
+        formdata = [prop, email]
         try {
             await axios.post(url, formdata,
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        token:token,
+                        token: token,
                     },
                 })
         }
@@ -61,7 +59,6 @@ function Cart(props) {
 
     let swap
     let counter = []
-    let prop = props.data
     for (let i = 0; i < prop.length; i++) {
         prop[i].cardData.quantity = 1
         for (let j = i + 1; j < prop.length; j++) {
