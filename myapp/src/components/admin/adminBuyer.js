@@ -2,8 +2,6 @@ import './admin.css'
 import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
-
-
 var Data = []
 var email = localStorage.getItem("email")
 var token = localStorage.getItem("token")

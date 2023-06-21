@@ -22,7 +22,7 @@ function Home(props) {
     const BorderExample = () => {
         return <Spinner animation="border" />;
     }
-
+        
     const showProduct = (props, product) => {
         const { image, productName, price } = product
         return (
