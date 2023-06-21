@@ -13,5 +13,3 @@ const mapDispatchProps = dispatch => ({
 })
 
 export default connect(mapSateProps, mapDispatchProps)(Cart)
-
-// export default Home 
