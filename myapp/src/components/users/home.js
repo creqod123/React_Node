@@ -2,44 +2,24 @@ import React from "react"
 import './user.css'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
+import { getAllitem } from "../../Services/Actions/actions"
 
 let Data = []
-let id
-const email = localStorage.getItem("email")
-var token = localStorage.getItem("token")
-
 function Home(props) {
+
     const [showTag, setShowTag] = useState(false);
-    const SubFunction = () => {
-        return new Promise(async (resolve) => {
-            const url = process.env.REACT_APP_USER_URL
-            try {
-                const a = await axios.post(url, { email: email },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    }
-                )
-                Data = a.data.data
-                id = a.data.id
-            }
-            catch (e) {
-                console.log(e)
-            }
+    const val = useSelector((a) => a.getItem)
+    const dispatch = useDispatch()
 
-            resolve();
-        });
-    }
-
-    SubFunction();
+    dispatch(getAllitem())
+    Data = val
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             setShowTag(true);
-        }, 500);
+        }, 1000);
     }, []);
 
     const BorderExample = () => {
@@ -49,7 +29,6 @@ function Home(props) {
     const showProduct = (props, product) => {
         const { image, productName, price } = product
         return (
-
             <div className="i">
                 <div className="img-wrapper item">
                     <img src="./image/first.png" alt="" />
@@ -68,7 +47,6 @@ function Home(props) {
             </div>
         )
     }
-
 
     return (
         <div className="items position">

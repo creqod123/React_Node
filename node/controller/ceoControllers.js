@@ -93,7 +93,7 @@ exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
 exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
 
     var id = req.body.id
-    console.log("id :- ",id)
+    console.log("id :- ", id)
     try {
 
         var data = await register.find({ _id: id })
