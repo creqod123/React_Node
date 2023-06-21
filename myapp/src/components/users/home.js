@@ -1,6 +1,5 @@
 import React from "react"
 import './user.css'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';

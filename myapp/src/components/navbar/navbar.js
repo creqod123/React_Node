@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
+import { useSelector, useDispatch } from "react-redux"
 
 export default function Navbar(props) {
 
     const history = useNavigate('')
     var type = localStorage.getItem("type")
 
-
+    const cartLength = useSelector((a) => a.cardItems)
     const submit1 = (e) => {
         e.preventDefault()
         history('/user/shop')
@@ -25,7 +26,7 @@ export default function Navbar(props) {
                     </li>
                     <li className='cartimg'>
                         <a role='button' onClick={submit2}>
-                            <p id='cartlength'>0</p>
+                            <p id='cartlength'>{cartLength.length}</p>
                             <img src='https://cdn-icons-png.flaticon.com/512/3523/3523865.png' id='cartimg' />
                         </a>
                     </li>
