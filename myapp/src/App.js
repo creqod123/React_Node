@@ -11,6 +11,7 @@ import CartContainer from './container/CartContainer';
 import HeaderContainer from './container/HeaderContainer'
 import UserData from './components/ceo/userData';
 import AdminData from './components/ceo/adminData';
+import ImageComponent from './components/users/img';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
               <Route path='/admin/product' element={<Adminproduct />} />
               <Route path='/admin/detail' element={<Adminbuyer />} />
               <Route path='/admin/control' element={<Admincontrol />} />
+              <Route path='/admin/img' element={<ImageComponent />} />
             </Routes>
           </Router>
         </div>

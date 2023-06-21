@@ -11,8 +11,11 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + uniqueSuffix + '.png')
   }
 })
+
+
 const upload = multer({ storage: storage })
 module.exports = upload
+
 
 // module.exports.send = (req, res) => {
 //   upload.single('img');

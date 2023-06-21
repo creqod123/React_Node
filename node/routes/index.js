@@ -50,6 +50,7 @@ router.post('/ceo/admin/productremove', verifyToken, ceoController.productRemove
 
 
 router.get('/image', upload.single('image'), (req, res, next) => {
+  console.log("Hello world",req.query)
   let { path } = req.query;
 
   console.log(p.join(process.cwd(), path));
@@ -57,6 +58,7 @@ router.get('/image', upload.single('image'), (req, res, next) => {
     return res.status(200).sendFile(p.join(process.cwd(), path));
   }
   return res.status(404).json({ message: 'File not found' });
+
 })
 
 
