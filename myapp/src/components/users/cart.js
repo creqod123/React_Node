@@ -86,7 +86,7 @@ function Cart(props) {
         return (
             <div className="i i_2">
                 <div className="img-wrapper item">
-                    <img src={image} alt="" />
+                    <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
                 </div>
                 <div className="text-wrapper item">
                     <span>{productName}</span>

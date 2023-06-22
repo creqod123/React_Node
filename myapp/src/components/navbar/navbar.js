@@ -12,7 +12,7 @@ export default function Navbar(props) {
         e.preventDefault()
         history('/user/shop')
     }
-
+    
     const submit2 = (e) => {
         history('/user/cart')
     }
