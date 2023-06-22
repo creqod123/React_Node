@@ -50,15 +50,24 @@ router.post('/ceo/admin/productremove', verifyToken, ceoController.productRemove
 
 
 router.get('/image', upload.single('image'), (req, res, next) => {
-  console.log("Hello world",req.query)
-  let { path } = req.query;
+  console.log("Hello world", req.query)
 
-  console.log(p.join(process.cwd(), path));
-  if (fs.existsSync(p.join(process.cwd(), path))) {
-    return res.status(200).sendFile(p.join(process.cwd(), path));
+  try {
+    let { path } = req.query;
+    console.log("Path :- ", path)
+    if (fs.existsSync(p.join(process.cwd(), path))) {
+      console.log("check :- ", p.join(process.cwd(), path))
+      res.status(200).sendFile(
+        p.join(process.cwd(), path)
+      );
+    }
   }
-  return res.status(404).json({ message: 'File not found' });
-
+  catch (error) {
+    res.status(404).json({
+      message: 'File not found'
+    });
+  }
+  console.log("second")
 })
 
 

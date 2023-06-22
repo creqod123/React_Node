@@ -29,10 +29,10 @@ exports.getAll = ('/admin', async (req, res, next) => {
 exports.add = ('/admin/add', async (req, res, next) => {
 
     try {
-        console.log('1',req.body)
-        
+        console.log('1',req.file)
+
         let check = await register.find({ email: req.body.email })
-        req.body.image = req.file.filename
+        req.body.image = req.file.path
         
         var id = await adminProduct.find()
         req.body.ids = id.length + 1
