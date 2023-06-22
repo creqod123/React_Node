@@ -8,6 +8,7 @@ const ceoController = require('../controller/ceoControllers')
 const loginController = require('../controller/loginController')
 const registerController = require('../controller/registerController')
 const userController = require('../controller/userController')
+const imageController = require('../controller/imageController')
 
 const upload = require('../middleware/multer')
 const verifyToken = require('../middleware/token')
@@ -46,29 +47,8 @@ router.post('/ceo/user/delete', verifyToken, ceoController.userDelete)
 router.post('/ceo/admin/detail', verifyToken, ceoController.adminDetail)
 router.post('/ceo/admin/productremove', verifyToken, ceoController.productRemove)
 
+//            ============ Get image ============== 
 
-
-
-router.get('/image', upload.single('image'), (req, res, next) => {
-  console.log("Hello world", req.query)
-
-  try {
-    let { path } = req.query;
-    console.log("Path :- ", path)
-    if (fs.existsSync(p.join(process.cwd(), path))) {
-      console.log("check :- ", p.join(process.cwd(), path))
-      res.status(200).sendFile(
-        p.join(process.cwd(), path)
-      );
-    }
-  }
-  catch (error) {
-    res.status(404).json({
-      message: 'File not found'
-    });
-  }
-  console.log("second")
-})
-
+router.get('/image', upload.single('image'),imageController.getIma)
 
 module.exports = router;

@@ -28,7 +28,7 @@ function Home(props) {
         return (
             <div className="i">
                 <div className="img-wrapper item">
-                    <img src={image} alt="" />
+                    <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
                 </div>
                 <div className="text-wrapper item">
                     <span>{productName}</span>

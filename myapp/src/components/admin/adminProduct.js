@@ -15,7 +15,7 @@ export default function Adminproduct() {
     const [productName, setproductName] = useState('')
     const [price, setPrice] = useState('')
     const [isClicked, setIsClicked] = useState(false);
-    // const [image, setImage] = useState('')
+    const [image, setImage] = useState('')
 
     const SubFunction = () => {
         return new Promise(async (resolve) => {
@@ -42,7 +42,7 @@ export default function Adminproduct() {
         }, 1000);
     }, []);
 
-    const handleInputremove = async (e) => {
+    const handleInputRemove = async (e) => {
         const id = e.target.value;
         const url = process.env.REACT_APP_ADMIN_URL + "/remove"
         try {
@@ -56,7 +56,7 @@ export default function Adminproduct() {
         catch (e) {
             console.log(e)
         }
-        SubFunction()
+        window.location.reload()
     }
 
     const BorderExample = () => {
@@ -84,7 +84,7 @@ export default function Adminproduct() {
         window.location.reload()
     }
 
-    const handleInputupdate = (e, check) => {
+    const handleInputUpdate = (e, check) => {
 
         if (check === 0) {
             setIsClicked(false);
@@ -98,7 +98,7 @@ export default function Adminproduct() {
         <div>
             <div id={isClicked ? 'update_first' : 'update_second'}>
                 <label id='updateclose'>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputupdate(e, 0)} />
+                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
                 </label>
                 <label>
                     Product name :- <input type="text" placeholder="Product Name" onChange={(e) => setproductName(e.target.value)} name="productName" />
@@ -119,7 +119,7 @@ export default function Adminproduct() {
                     return (
                         <div className="is">
                             <div className="img-wrappers itemss">
-                                <img src={image} alt="" />
+                                <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
                             </div>
                             <div className="text-wrappers itemss">
                                 <tr>
@@ -131,8 +131,8 @@ export default function Adminproduct() {
                                 </tr>
                             </div>
                             <div className='productbuttons'>
-                                <button value={_id} role='button' onClick={e => handleInputremove(e)}>remove</button>
-                                <button value={_id} role='button' onClick={e => handleInputupdate(e)}>update</button>
+                                <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
+                                <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
                             </div>
                         </div>
                     )
