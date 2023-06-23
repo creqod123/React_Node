@@ -49,27 +49,34 @@ export default function Adminbuyer() {
                 <tr>
                     <th>No.</th>
                     <th>Email</th>
-                    <th>Product Id</th>
                     <th>productName</th>
                     <th>ProductPrice</th>
                     <th>Quantity</th>
-                    <th>Total Price</th>
+                    <th>Fulllname</th>
+                    <th>House No. and Name</th>
+                    <th>Area</th>
+                    <th>City</th>
+                    <th>Pincode</th>
                 </tr>
 
                 {showTag ? Data.map((product, counter = 0) => {
                     counter += 1
-                    const { _id, quantity, productId, userId, price } = product
+                    const { _id, quantity, productId, userId, price, fullName, house, area, city, pincode } = product
                     const { ids, productName } = productId
                     const { email } = userId
+                    console.log("adta :- ", fullName)
                     return (
                         <tr>
                             <td>{counter}</td>
                             <td>{email.slice(0, -10)}</td>
-                            <td>{ids}</td>
                             <td>{productName}</td>
                             <td>{price}</td>
                             <td>{quantity}</td>
-                            <td>{quantity * price}</td>
+                            <td>{fullName}</td>
+                            <td>{house}</td>
+                            <td>{area}</td>
+                            <td>{city}</td>
+                            <td>{pincode}</td>
                         </tr>
                     )
                 }) : <BorderExample />}

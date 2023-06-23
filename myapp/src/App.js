@@ -11,6 +11,7 @@ import CartContainer from './container/CartContainer';
 import HeaderContainer from './container/HeaderContainer'
 import UserData from './components/ceo/userData';
 import AdminData from './components/ceo/adminData';
+import OrderConformation from './components/users/order';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path='/user/shop' element={<HomeContainer />} />
               <Route path='/user/cart' element={<CartContainer />} />
+              <Route path='/user/conformorder' element={<OrderConformation />} />
             </Routes>
           </Router>
         </div>
@@ -39,6 +41,7 @@ function App() {
               <Route path='/admin/product' element={<Adminproduct />} />
               <Route path='/admin/detail' element={<Adminbuyer />} />
               <Route path='/admin/control' element={<Admincontrol />} />
+              
             </Routes> 
           </Router>
         </div>

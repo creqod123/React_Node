@@ -238,3 +238,21 @@
 }
 
 /*  */
+
+
+#orderconfrom {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  padding: 30px;
+  width: 20%;
+  height: fit-content;
+  transition: all ease-in-out 0.3s;
+}
+
+
+#orderconfrom input {
+  padding: 5px;
+}

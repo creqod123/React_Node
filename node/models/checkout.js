@@ -7,6 +7,11 @@ const checkout = new Schema({
     quantity: Number,
     price: Number,
     productName: String,
+    fullName: String,
+    house: String,
+    area: String,
+    city: String,
+    pincode: Number,
     productId: {
 
         type: mongoose.Schema.Types.ObjectId,

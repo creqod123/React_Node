@@ -60,13 +60,18 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
         var data = req.body[0]
         data.map(async (product) => {
 
-            const { quantity, _id, adminId, price } = product.cardData
+            const { quantity, _id, adminId, price, fullName, house, area, city, pincode } = product.cardData
             await checkout.create({
                 quantity: quantity,
                 price: price,
                 productId: _id,
                 userId: userId,
-                sellerId: adminId
+                sellerId: adminId,
+                fullName: fullName,
+                house: house,
+                area: area,
+                city: city,
+                pincode: pincode
             })
         })
 
