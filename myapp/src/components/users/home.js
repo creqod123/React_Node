@@ -1,33 +1,33 @@
 import React from "react"
 import './user.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
 import { pageNation } from "../../Services/Actions/actions"
 
-let paginat = 9
+let paginat = 0
 
 function Home(props) {
 
     const [showTag, setShowTag] = useState(false);
-    const [disable, setDisable] = useState(true);
     const Data = useSelector((a) => a.getItem)
     const dispatch = useDispatch()
-
+    const totalLength = Data[Data.length - 1]
+    Data.pop()
     dispatch(pageNation(paginat))
 
     const timeout = setTimeout(() => {
         setShowTag(true);
-    }, 2500);
+    }, 3500);
 
     const previous = () => {
         setShowTag(false);
-        dispatch(pageNation(paginat -= 9))
+        dispatch(pageNation(--paginat))
         const callReload = timeout
     }
     const forward = () => {
         setShowTag(false);
-        dispatch(pageNation(paginat += 9))
+        dispatch(pageNation(++paginat))
         const callReload = timeout
     }
 
@@ -63,17 +63,17 @@ function Home(props) {
         <div className="items position">
             {showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
             <div id="pagination">
-                    <table>
-                        <tr>
-                            {
-                                paginat > 9 ? <th name="previous" role="button" onClick={previous}>{"<"}</th> : <th disabled>{"<"}</th>
-                            }
-                            {
-                                <th className="check2" name="forward" role="button" onClick={forward}>{">"}</th>
-                            }
-                        </tr>
-                    </table>
-                </div>
+                <table>
+                    <tr>
+                        {
+                            paginat > 0 ? <th name="previous" onClick={previous}>{"<"}</th> : <th disabled>{"<"}</th>
+                        }
+                        {
+                            paginat < Math.floor(totalLength / 9) ? <th onClick={forward}>{">"}</th> : <th disabled>{">"}</th>
+                        }
+                    </tr>
+                </table>
+            </div>
         </div>
     );
 }

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Home from '../../components/users/home'
 
 const email = localStorage.getItem("email")
 var token = localStorage.getItem("token")
@@ -11,7 +10,7 @@ export default function getItem(state = [], action) {
         return new Promise(async (resolve) => {
             const url = process.env.REACT_APP_USER_URL
             try {
-                const a = await axios.post(url, { email: email, pageLength: pageLength },
+                const a = await axios.post(url, { email: email, pageLength: pageLength, pageNumber: pageLength },
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -19,7 +18,9 @@ export default function getItem(state = [], action) {
                         },
                     }
                 )
-                data = a.data.data
+                data = a.data.data.data
+
+                console.log(data.push(a.data.data.totalPosts))
             }
             catch (e) {
                 console.log(e)
