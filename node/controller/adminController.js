@@ -8,9 +8,9 @@ const checkout = require('../models/checkout');
 exports.getAll = ('/admin', async (req, res, next) => {
     const email = req.body.email
     try {
-        var objectid = await register.find({ email: req.body.email })
-        var id = objectid[0]._id
-        let data = await adminProduct.find({ email: email })
+        const objectid = await register.find({ email: req.body.email })
+        const id = objectid[0]._id
+        const data = await adminProduct.find({ email: email })
         res.status(200).json({
             message: "complete",
             data: data,
@@ -29,20 +29,20 @@ exports.getAll = ('/admin', async (req, res, next) => {
 exports.add = ('/admin/add', async (req, res, next) => {
 
     try {
-        console.log('1',req.file)
+        console.log('1', req.file)
 
-        let check = await register.find({ email: req.body.email })
+        const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
-        
-        var id = await adminProduct.find()
+
+        const id = await adminProduct.find()
         req.body.ids = id.length + 1
 
-        
         req.body['adminId'] = check[0]._id
+
         if (check.length != 0) {
             const a = await adminProduct.create(req.body)
-            let data = await adminProduct.find({ email, email })
-            
+            const data = await adminProduct.find({ email, email })
+
             res.status(200).json({
                 message: "complete",
                 data: data
@@ -66,11 +66,11 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
 exports.remove = ('/admin/remove', async (req, res, next) => {
     try {
-        var id = req.body.id
-        var email = req.body.email
+        const id = req.body.id
+        const email = req.body.email
         await adminProduct.deleteOne({ _id: id })
         await checkout.deleteOne({ productId: id })
-        var send = await adminProduct.find({ email: email })
+        const send = await adminProduct.find({ email: email })
 
         res.status(200).json({
             message: "complete",
@@ -89,7 +89,7 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
 
 
 exports.detail = ('/admin/detail', async (req, res, next) => {
-    let check = await register.find({ email: req.body.email })
+    const check = await register.find({ email: req.body.email })
     id = check[0]._id
     try {
         var data = await checkout.find({ sellerId: id }).populate('productId').populate('userId')
@@ -110,7 +110,7 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 
 exports.update = ('/admin/update', async (req, res, next) => {
 
-    var data = await register.find({ email: req.body.email })
+    const data = await register.find({ email: req.body.email })
     await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
 
     try {

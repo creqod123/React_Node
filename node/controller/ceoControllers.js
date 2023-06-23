@@ -5,8 +5,8 @@ const checkout = require('../models/checkout');
 
 exports.getData = ('/ceo', async (req, res, next) => {
     try {
-        var user = await register.find({ type: "user" }, { _id: 1, email: 1, tel: 1, type: 1 })
-        var seller = await register.find({ type: "seller" })
+        const user = await register.find({ type: "user" }, { _id: 1, email: 1, tel: 1, type: 1 })
+        const seller = await register.find({ type: "seller" })
 
         res.status(200).json({
             message: "complete",
@@ -27,8 +27,8 @@ exports.getData = ('/ceo', async (req, res, next) => {
 
 exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
 
-    var id = req.body.id
-    var data = await checkout.find({ userId: id }, { quantity: 1, price: 1, productId: 1 }).populate('productId')
+    const id = req.body.id
+    const data = await checkout.find({ userId: id }, { quantity: 1, price: 1, productId: 1 }).populate('productId')
 
     try {
 
@@ -46,11 +46,11 @@ exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
 
 exports.userDelete = ('/ceo/user/delete', async (req, res, next) => {
 
-    var registerid = req.body.id
-    var a = await register.find({ _id: registerid })
+    const registerid = req.body.id
+    const a = await register.find({ _id: registerid })
 
     if (a.length == 0) {
-        var a = await checkout.deleteOne({ productId: registerid })
+        const a = await checkout.deleteOne({ productId: registerid })
     }
     else {
         await checkout.deleteMany({ userId: registerid })
@@ -74,8 +74,8 @@ exports.userDelete = ('/ceo/user/delete', async (req, res, next) => {
 
 exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
 
-    var id = req.body.id
-    var data = await adminProduct.find({ adminId: id }, { _id: 1, productName: 1, price: 1 })
+    const id = req.body.id
+    const data = await adminProduct.find({ adminId: id }, { _id: 1, productName: 1, price: 1 })
     try {
 
         res.status(200).json({
@@ -92,18 +92,13 @@ exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
 
 exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
 
-    var id = req.body.id
-    console.log("id :- ", id)
+    const id = req.body.id
     try {
-
-        var data = await register.find({ _id: id })
-        console.log("data :- ", data)
-        console.log("id :- ", id)
+        const data = await register.find({ _id: id })
         if (data.length != 0) {
-            console.log("first")
             await adminProduct.deleteOne({ adminId: id })
             await checkout.deleteOne({ sellerId: id })
-            // await register.deleteOne({ _id: id })
+            await register.deleteOne({ _id: id })
         }
         else {
             await adminProduct.deleteOne({ _id: id })

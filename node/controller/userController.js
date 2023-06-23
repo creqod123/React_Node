@@ -7,14 +7,16 @@ const register = require('../models/register')
 
 exports.getAll = ('/user', async (req, res, next) => {
 
+    const length = req.body.pageLength
     var email = req.body.email
     var data = await adminProduct.find()
     var id = await register.find({ email: email })
+    var Hello = data.slice(length - 9, length)
 
     try {
         res.status(200).json({
             message: "complete",
-            data: data,
+            data: Hello,
             id: id[0]._id
         })
     }
@@ -25,11 +27,9 @@ exports.getAll = ('/user', async (req, res, next) => {
     }
 });
 
-
 exports.userCart = ('/user/cart', async (req, res, next) => {
 
     try {
-
         res.status(200).json({
             message: "complete",
             data: req.data

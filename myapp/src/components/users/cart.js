@@ -98,7 +98,7 @@ function Cart(props) {
                 </div>
                 <div className="cart_quan">
                     <p className="cart_quantity">{quantity}</p>
-                    <p className="cart_price">Total Price :- {total = quantity * price}</p>
+                    <p className="cart_price">Total Price  {total = quantity * price}</p>
                 </div>
                 <div className="button-wrapper item">
                     <button onClick={() => props.RemovetoCartHandler(product)}> - </button>

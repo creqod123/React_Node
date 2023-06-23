@@ -14,8 +14,9 @@ export const RemovetoCart = (data) => {
     }
 }
 
-export const getAllitem = () => {
+export const pageNation = (data) => {
     return {
-        type: "GET_ALL_ITEMS",
+        type: "PAGINATION",
+        data: data
     }
 }

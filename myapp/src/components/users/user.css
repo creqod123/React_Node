@@ -54,7 +54,7 @@
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
-  gap: 46px 132px;
+  gap: 46px 55px;
   position: absolute;
   top: 75px;
 }
@@ -65,7 +65,8 @@
   border: 1px solid #ccc;
   width: fit-content;
 }
-.i_2{
+
+.i_2 {
   height: 14vh;
 }
 
@@ -133,9 +134,9 @@
 
 .cart_price {
   position: relative;
-  width: 136px;
-  bottom: -26px;
-  right: 58px;
+  width: 120px;
+  bottom: -6px;
+  right: 50px;
 }
 
 .totalcost {
@@ -223,5 +224,17 @@
   border: none !important;
 }
 
+/* =================== Pagination ====================  */
+
+#pagination {
+  position: fixed;
+  top: 6%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#pagination table tr th:hover {
+  cursor: pointer;
+}
+
 /*  */
-  

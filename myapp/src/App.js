@@ -11,7 +11,6 @@ import CartContainer from './container/CartContainer';
 import HeaderContainer from './container/HeaderContainer'
 import UserData from './components/ceo/userData';
 import AdminData from './components/ceo/adminData';
-import PaginatedItems from './components/users/home2';
 
 function App() {
 
@@ -40,8 +39,7 @@ function App() {
               <Route path='/admin/product' element={<Adminproduct />} />
               <Route path='/admin/detail' element={<Adminbuyer />} />
               <Route path='/admin/control' element={<Admincontrol />} />
-              <Route path='/admin/pagination' element={<PaginatedItems/>} />
-            </Routes>
+            </Routes> 
           </Router>
         </div>
       );
