@@ -19,8 +19,7 @@ export default function getItem(state = [], action) {
                     }
                 )
                 data = a.data.data.data
-
-                console.log(data.push(a.data.data.totalPosts))
+                data.push(a.data.data.totalPosts)
             }
             catch (e) {
                 console.log(e)

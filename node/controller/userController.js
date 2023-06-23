@@ -9,31 +9,16 @@ exports.getAll = ('/user', async (req, res, next) => {
     const email = req.body.email
 
     const id = await register.find({ email: email })
-    const pageNumber = parseInt(req.body.pageNumber) || 0;
+    const pageNumber = req.body.pageNumber;
     const result = {};
     const totalPosts = await adminProduct.countDocuments().exec();
     let startIndex = pageNumber * 9;
-    const endIndex = (pageNumber + 1) * 9;
     result.totalPosts = totalPosts;
-
-    if (startIndex > 0) {
-        result.previous = {
-            pageNumber: pageNumber - 1,
-            limit: 9,
-        };
-    }
-    if (endIndex < (await adminProduct.countDocuments().exec())) {
-        result.next = {
-            pageNumber: pageNumber + 1,
-            limit: 9,
-        };
-    }
     result.data = await adminProduct.find()
         .sort("-_id")
         .skip(startIndex)
         .limit(9)
         .exec();
-    result.rowsPerPage = 9;
     try {
         res.status(200).json({
             message: "complete",
