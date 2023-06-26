@@ -1,6 +1,6 @@
 import axios from 'axios'
 import './user.css'
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useSelector } from "react-redux"
 var totalcost = 0
 var total = 0

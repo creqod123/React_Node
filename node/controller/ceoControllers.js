@@ -21,8 +21,6 @@ exports.getData = ('/ceo', async (req, res, next) => {
     }
 });
 
-
-
 // =========================================  User Detail =========================================
 
 exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
