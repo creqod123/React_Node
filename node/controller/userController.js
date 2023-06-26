@@ -19,7 +19,6 @@ exports.getAll = ('/user', async (req, res, next) => {
         .skip(startIndex)
         .limit(9)
         .exec();
-    console.log("data length :- ",result.data.length)
     try {
         res.status(200).json({
             message: "complete",
@@ -76,17 +75,59 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
                 productId: _id,
                 userId: userId,
                 sellerId: adminId,
-                addressId: id._id
+                addressId: id._id,
+                status: "Pending"
             })
         })
 
         res.status(200).json({
             message: "complete",
-        })
+        })  
     }
     catch (error) {
         res.status(404).json({
             message: "complete fail",
+        })
+    }
+});
+
+// ============================= Admin detail show =========================== 
+
+
+exports.detail = ('/user/detail', async (req, res, next) => {
+
+    const id = await register.find({ email: req.body.email })
+    const find = id[0]._id
+    const data = await checkout.find({ userId: find }).populate('productId').populate('addressId').populate('userId')
+
+    try {
+
+        res.status(200).json({
+            message: "complete",
+            data: data
+        })
+    }
+    catch (error) { 
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});
+
+// ============================= Admin detail show =========================== 
+
+exports.order = ('/user/order', async (req, res, next) => {
+    try {
+        const data = await address.find({ _id: req.body.email })
+        console.log("Data :- ", data)
+        res.status(200).json({
+            message: "complete",
+            data: data
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
         })
     }
 });

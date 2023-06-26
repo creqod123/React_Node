@@ -11,6 +11,7 @@ import CartContainer from './container/CartContainer';
 import HeaderContainer from './container/HeaderContainer'
 import UserData from './components/ceo/userData';
 import AdminData from './components/ceo/adminData';
+import Order from './components/users/Order';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path='/user/shop' element={<HomeContainer />} />
               <Route path='/user/cart' element={<CartContainer />} />
+              <Route path='/user/order' element={<Order />} />
             </Routes>
           </Router>
         </div>

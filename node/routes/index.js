@@ -32,12 +32,14 @@ router.post('/admin/remove', verifyToken, adminController.remove);
 router.post('/admin/detail', verifyToken, adminController.detail);
 router.post('/admin/update', verifyToken, adminController.update);
 router.post('/admin/order', verifyToken, adminController.order);
+router.post('/admin/status', verifyToken, adminController.status);
 
 //            ============ User ============== 
 router.post('/user', verifyToken, userController.getAll)
 router.post('/user/cart', verifyToken, userController.userCart)
 router.post('/user/checkout', verifyToken, userController.checkout)
-
+router.post('/user/order', verifyToken, userController.order);
+router.post('/user/detail', verifyToken, userController.detail);
 //            ============ Controller by admin ============== 
 
 router.get('/ceo', verifyToken, ceoController.getData)

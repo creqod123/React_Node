@@ -16,6 +16,10 @@ export default function Navbar(props) {
     const submit2 = (e) => {
         history('/user/cart')
     }
+    const submit3 = (e) => {
+        e.preventDefault()
+        history('/user/order')
+    }
 
     if (type === "user") {
         return (
@@ -29,6 +33,9 @@ export default function Navbar(props) {
                             <p id='cartlength'>{cartLength.length}</p>
                             <img src='https://cdn-icons-png.flaticon.com/512/3523/3523865.png' id='cartimg' />
                         </a>
+                    </li>
+                    <li className='cartimg'>
+                        <a role='button' onClick={submit3}>Order</a>
                     </li>
                     <li>
                         <a href='/register' role='button' onClick={signout}>Signout</a>

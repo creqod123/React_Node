@@ -1,5 +1,4 @@
-import './admin.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
 var Data = []
@@ -7,15 +6,14 @@ var order = []
 var email = localStorage.getItem("email")
 var token = localStorage.getItem("token")
 
-export default function Adminbuyer() {
-
+export default function Order() {
     const [showTag, setShowTag] = useState(false);
     const [address, setAddress] = useState(false);
     const [clicked, setClicked] = useState(false);
 
     const SubFunction = () => {
         return new Promise(async (resolve) => {
-            const url = process.env.REACT_APP_ADMIN_URL + "/detail"
+            const url = process.env.REACT_APP_USER_URL + "/detail"
             try {
                 var response = await fetch(url, {
                     method: 'POST',
@@ -27,6 +25,7 @@ export default function Adminbuyer() {
                 })
                 const data = await response.json();
                 Data = data.data
+                console.log("Data :- ", Data)
             }
             catch (e) {
                 console.log(e)
@@ -51,7 +50,7 @@ export default function Adminbuyer() {
 
         const SubFunction = () => {
             return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_ADMIN_URL + "/order"
+                const url = process.env.REACT_APP_USER_URL + "/order"
                 try {
                     var response = await fetch(url, {
                         method: 'POST',
@@ -73,68 +72,14 @@ export default function Adminbuyer() {
         }
         SubFunction();
         const timeout = setTimeout(() => {
-            console.log("order :- ", order)
             setAddress(true)
         }, 1000);
     }
 
+
     const handleInputUpdate = (check) => {
         setClicked(false);
     }
-
-    const conform = (e) => {
-
-        const id = e.target.value
-
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_ADMIN_URL + "/status"
-                try {
-                    var response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ id: id, status: 'conform' }),
-                    })
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-            }, []);
-        }
-        SubFunction();
-    }
-    const del = (e) => {
-
-        const id = e.target.value
-
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_ADMIN_URL + "/status"
-                try {
-                    var response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ id: id, status: 'delete' }),
-                    })
-                    const data = await response.json();
-                    order = data.data
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-            }, []);
-        }
-        SubFunction();
-    }
-
 
     return (
         <div className='adminshow' >
@@ -145,9 +90,7 @@ export default function Adminbuyer() {
                     <th>productName</th>
                     <th>ProductPrice</th>
                     <th>Quantity</th>
-                    <th>status</th>
-                    <th>Conform</th>
-                    <th>Delete</th>
+                    <th>Status</th>
                     <th>Address</th>
                 </tr>
                 {showTag ? Data.map((product, counter = 0) => {
@@ -163,8 +106,6 @@ export default function Adminbuyer() {
                             <td>{price}</td>
                             <td>{quantity}</td>
                             <td>{status}</td>
-                            <td><button value={product._id} onClick={conform} >Conform</button></td>
-                            <td><button value={product._id} onClick={del}>Delete</button></td>
                             <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
                         </tr>
                     )

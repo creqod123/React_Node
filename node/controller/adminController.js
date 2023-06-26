@@ -126,16 +126,43 @@ exports.update = ('/admin/update', async (req, res, next) => {
     }
 });
 
-// ============================= Admin detail show =========================== 
+// ============================= Admin Order show =========================== 
 
 
 exports.order = ('/admin/order', async (req, res, next) => {
-    console.log("Data 123:- ",req.body)
+    console.log("Data 123:- ", req.body)
     try {
         const data = await address.find({ _id: req.body.email })
         res.status(200).json({
             message: "complete",
             data: data,
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});
+
+// ============================= Admin status update show =========================== 
+
+
+exports.status = ('/admin/status', async (req, res, next) => {
+    console.log("Data 123:- ", req.body)
+    const id = req.body.id
+    const status = req.body.status
+
+    if (status === 'conform') {
+        await checkout.updateOne({ _id: id }, {status:'Conform'})
+    }
+    else {
+        console.log("Delete")
+    }
+
+    try {
+        res.status(200).json({
+            message: "complete",
         })
     }
     catch (error) {

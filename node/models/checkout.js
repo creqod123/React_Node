@@ -7,6 +7,7 @@ const checkout = new Schema({
     quantity: Number,
     price: Number,
     productName: String,
+    status: String,
     productId: {
 
         type: mongoose.Schema.Types.ObjectId,
