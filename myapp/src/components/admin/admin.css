@@ -234,3 +234,30 @@ table tr td {
     transition: all ease-in-out 0.5s;
     opacity: 1;
 }
+
+#close{
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    right: -10%;
+    top: -10px;
+    cursor: pointer;
+}
+
+#hide{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-40%);
+    opacity: 0;
+    transition: all ease-in-out 0.5s;
+}
+
+#show{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-40%);
+    transition: all ease-in-out 0.5s;
+    opacity: 1;
+}

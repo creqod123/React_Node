@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
 var Data = []
+var order = []
 var email = localStorage.getItem("email")
 var token = localStorage.getItem("token")
 let Address
@@ -10,6 +11,7 @@ let Address
 export default function Adminbuyer() {
     const [showTag, setShowTag] = useState(false);
     const [address, setAddress] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
     const SubFunction = () => {
         return new Promise(async (resolve) => {
@@ -34,11 +36,9 @@ export default function Adminbuyer() {
     }
 
     SubFunction();
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setShowTag(true);
-        }, 1000);
-    }, []);
+    const timeout = setTimeout(() => {
+        setShowTag(true)
+    }, 1000);
 
     const BorderExample = () => {
 
@@ -46,14 +46,46 @@ export default function Adminbuyer() {
     }
 
     const checkAddress = (e) => {
-        Address = e.target.value
-        console.log("adasd :- ",{Address})
-        setAddress(true)
+
+        const email = e.target.value
+
+        const SubFunction = () => {
+            return new Promise(async (resolve) => {
+                const url = process.env.REACT_APP_ADMIN_URL + "/order"
+                try {
+                    var response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            token: token,
+                        },
+                        body: JSON.stringify({ email: email }),
+                    })
+                    const data = await response.json();
+                    order = data.data
+                }
+                catch (e) {
+                    console.log(e)
+                }
+                resolve();
+                setClicked(true)
+            }, []);
+        }
+        SubFunction();
+        const timeout = setTimeout(() => {
+            console.log("order :- ", order)
+            setAddress(true)
+        }, 1000);
+    }
+
+
+    const handleInputUpdate = (check) => {
+        setClicked(false);
     }
 
     return (
         <div className='adminshow' >
-            <table>
+            <table id={clicked ? 'hide' : 'show'}>
                 <tr>
                     <th>No.</th>
                     <th>Email</th>
@@ -62,7 +94,6 @@ export default function Adminbuyer() {
                     <th>Quantity</th>
                     <th>Address</th>
                 </tr>
-
                 {showTag ? Data.map((product, counter = 0) => {
                     counter += 1
                     const { _id, quantity, productId, userId, price } = product
@@ -83,27 +114,31 @@ export default function Adminbuyer() {
 
 
             {address ?
-                <table>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>House NO and Name</th>
-                        <th>Area</th>
-                        <th>City</th>
-                        <th>Pincode</th>
-                    </tr>
-
-                    <tr>
-                        <td>{Address.fullName}</td>
-                        <td>{Address.house}</td>
-                        <td>{Address.area}</td>
-                        <td>{Address.city}</td>
-                        <td>{Address.pincode}</td>
-                    </tr>
-                </table>
+                <div id={clicked ? 'show' : 'hide'}>
+                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
+                    <table>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>House NO and Name</th>
+                            <th>Area</th>
+                            <th>City</th>
+                            <th>Pincode</th>
+                        </tr>
+                        {address ? order.map((product) => {
+                            const { fullName, house, area, city, pincode } = product
+                            return (
+                                <tr>
+                                    <td>{fullName}</td>
+                                    <td>{house}</td>
+                                    <td>{area}</td>
+                                    <td>{city}</td>
+                                    <td>{pincode}</td>
+                                </tr>
+                            )
+                        }) : <></>}
+                    </table>
+                </div>
                 : <></>}
-
-
-
         </div>
     )
 }

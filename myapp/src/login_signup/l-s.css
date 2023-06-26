@@ -61,11 +61,13 @@ div#root {
     bottom: 50%;
 }
 
+.for input {
+    border: 1px solid black;
+}
+
 .for-1 {
     height: 100px;
 }
-
-
 
 .in {
     padding: 6px;

@@ -19,6 +19,7 @@ exports.getAll = ('/user', async (req, res, next) => {
         .skip(startIndex)
         .limit(9)
         .exec();
+    console.log("data length :- ",result.data.length)
     try {
         res.status(200).json({
             message: "complete",

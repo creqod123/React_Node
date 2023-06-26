@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const adminProduct = require('../models/adminProduct')
 const register = require('../models/register')
 const checkout = require('../models/checkout');
+const address = require('../models/address');
 
 // ============================= Admin get product =========================== 
 
@@ -125,3 +126,21 @@ exports.update = ('/admin/update', async (req, res, next) => {
     }
 });
 
+// ============================= Admin detail show =========================== 
+
+
+exports.order = ('/admin/order', async (req, res, next) => {
+    console.log("Data 123:- ",req.body)
+    try {
+        const data = await address.find({ _id: req.body.email })
+        res.status(200).json({
+            message: "complete",
+            data: data,
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});

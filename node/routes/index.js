@@ -31,6 +31,7 @@ router.post('/admin/add', upload.single('image'), adminController.add);
 router.post('/admin/remove', verifyToken, adminController.remove);
 router.post('/admin/detail', verifyToken, adminController.detail);
 router.post('/admin/update', verifyToken, adminController.update);
+router.post('/admin/order', verifyToken, adminController.order);
 
 //            ============ User ============== 
 router.post('/user', verifyToken, userController.getAll)
@@ -49,6 +50,6 @@ router.post('/ceo/admin/productremove', verifyToken, ceoController.productRemove
 
 //            ============ Get image ============== 
 
-router.get('/image', upload.single('image'),imageController.getIma)
+router.get('/image', upload.single('image'), imageController.getIma)
 
 module.exports = router;
