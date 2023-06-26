@@ -142,7 +142,7 @@ function Cart(props) {
                         Full Name <input type="text" placeholder="Full name" name="productName" onChange={(e) => setfullName(e.target.value)} />
                     </label>
                     <label>
-                        House <input type="number" placeholder="Building No and Name" name="productName" onChange={(e) => setHouse(e.target.value)} />
+                        House <input type="text" placeholder="Building No and Name" name="productName" onChange={(e) => setHouse(e.target.value)} />
                     </label>
                     <label>
                         Area <input type="text" placeholder="Area" name="price" onChange={(e) => setArea(e.target.value)} />

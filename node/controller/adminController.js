@@ -92,7 +92,7 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
     const check = await register.find({ email: req.body.email })
     id = check[0]._id
     try {
-        var data = await checkout.find({ sellerId: id }).populate('productId').populate('userId')
+        var data = await checkout.find({ sellerId: id }).populate('productId').populate('userId').populate('addressId')
         res.status(200).json({
             message: "complete",
             data: data,

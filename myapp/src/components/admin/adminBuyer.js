@@ -5,9 +5,11 @@ import Spinner from 'react-bootstrap/Spinner';
 var Data = []
 var email = localStorage.getItem("email")
 var token = localStorage.getItem("token")
+let Address
 
 export default function Adminbuyer() {
     const [showTag, setShowTag] = useState(false);
+    const [address, setAddress] = useState(false);
 
     const SubFunction = () => {
         return new Promise(async (resolve) => {
@@ -43,6 +45,12 @@ export default function Adminbuyer() {
         return <Spinner animation="border" className='helloworld' variant="primary" />;
     }
 
+    const checkAddress = (e) => {
+        Address = e.target.value
+        console.log("adasd :- ",{Address})
+        setAddress(true)
+    }
+
     return (
         <div className='adminshow' >
             <table>
@@ -52,19 +60,14 @@ export default function Adminbuyer() {
                     <th>productName</th>
                     <th>ProductPrice</th>
                     <th>Quantity</th>
-                    <th>Fulllname</th>
-                    <th>House No. and Name</th>
-                    <th>Area</th>
-                    <th>City</th>
-                    <th>Pincode</th>
+                    <th>Address</th>
                 </tr>
 
                 {showTag ? Data.map((product, counter = 0) => {
                     counter += 1
-                    const { _id, quantity, productId, userId, price, fullName, house, area, city, pincode } = product
+                    const { _id, quantity, productId, userId, price } = product
                     const { ids, productName } = productId
                     const { email } = userId
-                    console.log("adta :- ", fullName)
                     return (
                         <tr>
                             <td>{counter}</td>
@@ -72,15 +75,35 @@ export default function Adminbuyer() {
                             <td>{productName}</td>
                             <td>{price}</td>
                             <td>{quantity}</td>
-                            <td>{fullName}</td>
-                            <td>{house}</td>
-                            <td>{area}</td>
-                            <td>{city}</td>
-                            <td>{pincode}</td>
+                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
                         </tr>
                     )
                 }) : <BorderExample />}
             </table>
+
+
+            {address ?
+                <table>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>House NO and Name</th>
+                        <th>Area</th>
+                        <th>City</th>
+                        <th>Pincode</th>
+                    </tr>
+
+                    <tr>
+                        <td>{Address.fullName}</td>
+                        <td>{Address.house}</td>
+                        <td>{Address.area}</td>
+                        <td>{Address.city}</td>
+                        <td>{Address.pincode}</td>
+                    </tr>
+                </table>
+                : <></>}
+
+
+
         </div>
     )
 }
