@@ -106,7 +106,7 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
     }
 });
 
-// ============================= Admin detail show =========================== 
+// ============================= Admin update show =========================== 
 
 
 exports.update = ('/admin/update', async (req, res, next) => {
@@ -149,15 +149,19 @@ exports.order = ('/admin/order', async (req, res, next) => {
 
 
 exports.status = ('/admin/status', async (req, res, next) => {
-    console.log("Data 123:- ", req.body)
     const id = req.body.id
     const status = req.body.status
 
     if (status === 'conform') {
-        await checkout.updateOne({ _id: id }, {status:'Conform'})
+        await checkout.updateOne({ _id: id }, { status: 'Conform' })
     }
     else {
-        console.log("Delete")
+
+        const a = await checkout.find({ _id: id }).populate('addressId')
+        await checkout.deleteOne({ _id: id })
+
+        const check = a[0].addressId._id
+        await address.deleteOne({ _id: check })
     }
 
     try {

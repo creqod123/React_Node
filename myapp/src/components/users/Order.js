@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
+import './user.css'
 
-var Data = []
-var order = []
-var email = localStorage.getItem("email")
-var token = localStorage.getItem("token")
+let Data = []
+let order = []
+const email = localStorage.getItem("email")
+const token = localStorage.getItem("token")
+let id
 
 export default function Order() {
     const [showTag, setShowTag] = useState(false);
     const [address, setAddress] = useState(false);
+    const [updateAddress, setUpdateAddress] = useState(false);
     const [clicked, setClicked] = useState(false);
+    const [fullName, setfullName] = useState('');
+    const [house, setHouse] = useState('');
+    const [area, setArea] = useState('');
+    const [city, setCity] = useState('');
+    const [pincode, setPincode] = useState('');
 
     const SubFunction = () => {
         return new Promise(async (resolve) => {
@@ -25,7 +33,6 @@ export default function Order() {
                 })
                 const data = await response.json();
                 Data = data.data
-                console.log("Data :- ", Data)
             }
             catch (e) {
                 console.log(e)
@@ -76,9 +83,40 @@ export default function Order() {
         }, 1000);
     }
 
-
     const handleInputUpdate = (check) => {
         setClicked(false);
+        setUpdateAddress(false)
+    }
+
+    const addressUpdate = (e) => {
+        id = e.target.value
+        console.log("Id :- ", id)
+        setUpdateAddress(true)
+    }
+
+    const orderUpdate = () => {
+
+        const SubFunction = () => {
+
+            return new Promise(async (resolve) => {
+                const url = process.env.REACT_APP_USER_URL + "/orderupdate"
+                try {
+                    var response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            token: token,
+                        },
+                        body: JSON.stringify({ id: id, fullName: fullName, house: house, area: area, city: city, pincode: pincode }),
+                    })
+                }
+                catch (e) {
+                    console.log(e)
+                }
+                resolve();
+            }, []);
+        }
+        SubFunction();
     }
 
     return (
@@ -111,8 +149,6 @@ export default function Order() {
                     )
                 }) : <BorderExample />}
             </table>
-
-
             {address ?
                 <div id={clicked ? 'show' : 'hide'}>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
@@ -123,9 +159,10 @@ export default function Order() {
                             <th>Area</th>
                             <th>City</th>
                             <th>Pincode</th>
+                            <th>update</th>
                         </tr>
                         {address ? order.map((product) => {
-                            const { fullName, house, area, city, pincode } = product
+                            const { fullName, house, area, city, pincode, _id } = product
                             return (
                                 <tr>
                                     <td>{fullName}</td>
@@ -133,10 +170,37 @@ export default function Order() {
                                     <td>{area}</td>
                                     <td>{city}</td>
                                     <td>{pincode}</td>
+                                    <td>{<button value={_id} onClick={addressUpdate}>Update</button>}</td>
                                 </tr>
                             )
                         }) : <></>}
                     </table>
+
+                    {updateAddress ?
+                        <div id='updateOrder'>
+                            <label id='updateclose'>
+                                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={handleInputUpdate} />
+                            </label>
+                            <label>
+                                Full Name <input type="text" placeholder="Full name" name="productName" onChange={(e) => setfullName(e.target.value)} />
+                            </label>
+                            <label>
+                                House <input type="text" placeholder="Building No and Name" name="productName" onChange={(e) => setHouse(e.target.value)} />
+                            </label>
+                            <label>
+                                Area <input type="text" placeholder="Area" name="price" onChange={(e) => setArea(e.target.value)} />
+                            </label>
+                            <label>
+                                City <input type="text" placeholder="City" name="price" onChange={(e) => setCity(e.target.value)} />
+                            </label>
+                            <label>
+                                Pincode <input type="tel" max={6} min={6} placeholder="Pincode" name="price" onChange={(e) => setPincode(e.target.value)} />
+                            </label>
+                            <label id='submit'>
+                                <input type='submit' onClick={orderUpdate} />
+                            </label>
+                        </div>
+                        : <></>}
                 </div>
                 : <></>}
         </div>

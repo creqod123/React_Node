@@ -4,6 +4,8 @@ const checkout = require('../models/checkout')
 const register = require('../models/register')
 const address = require('../models/address')
 
+// ============================= getall data show =========================== 
+
 exports.getAll = ('/user', async (req, res, next) => {
 
     const email = req.body.email
@@ -35,6 +37,8 @@ exports.getAll = ('/user', async (req, res, next) => {
 
 });
 
+// ============================= Cart data show =========================== 
+
 exports.userCart = ('/user/cart', async (req, res, next) => {
 
     try {
@@ -50,6 +54,7 @@ exports.userCart = ('/user/cart', async (req, res, next) => {
     }
 });
 
+// ============================= data checkout =========================== 
 
 exports.checkout = ('/user/checkout', async (req, res, next) => {
     var userEmail = req.body[1]
@@ -82,7 +87,7 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
 
         res.status(200).json({
             message: "complete",
-        })  
+        })
     }
     catch (error) {
         res.status(404).json({
@@ -91,7 +96,7 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
     }
 });
 
-// ============================= Admin detail show =========================== 
+// ============================= user detail show =========================== 
 
 
 exports.detail = ('/user/detail', async (req, res, next) => {
@@ -107,14 +112,14 @@ exports.detail = ('/user/detail', async (req, res, next) => {
             data: data
         })
     }
-    catch (error) { 
+    catch (error) {
         res.status(404).json({
             message: "fail",
         })
     }
 });
 
-// ============================= Admin detail show =========================== 
+// ============================= user order show =========================== 
 
 exports.order = ('/user/order', async (req, res, next) => {
     try {
@@ -123,6 +128,23 @@ exports.order = ('/user/order', async (req, res, next) => {
         res.status(200).json({
             message: "complete",
             data: data
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});
+
+
+// ============================= user order update =========================== 
+
+exports.orderUpdate = ('/user/orderupdate', async (req, res, next) => {
+    try {
+        await address.updateOne({ _id: req.body.id }, { fullName: req.body.fullName, house: req.body.house, area: req.body.area, city: req.body.city, pincode: req.body.pincode })
+        res.status(200).json({
+            message: "complete",
         })
     }
     catch (error) {

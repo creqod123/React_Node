@@ -40,6 +40,7 @@ router.post('/user/cart', verifyToken, userController.userCart)
 router.post('/user/checkout', verifyToken, userController.checkout)
 router.post('/user/order', verifyToken, userController.order);
 router.post('/user/detail', verifyToken, userController.detail);
+router.post('/user/orderupdate', verifyToken, userController.orderUpdate);
 //            ============ Controller by admin ============== 
 
 router.get('/ceo', verifyToken, ceoController.getData)

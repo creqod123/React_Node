@@ -17,7 +17,7 @@ export default function Adminbuyer() {
         return new Promise(async (resolve) => {
             const url = process.env.REACT_APP_ADMIN_URL + "/detail"
             try {
-                var response = await fetch(url, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -48,12 +48,11 @@ export default function Adminbuyer() {
     const checkAddress = (e) => {
 
         const email = e.target.value
-
         const SubFunction = () => {
             return new Promise(async (resolve) => {
                 const url = process.env.REACT_APP_ADMIN_URL + "/order"
                 try {
-                    var response = await fetch(url, {
+                    const response = await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -73,12 +72,11 @@ export default function Adminbuyer() {
         }
         SubFunction();
         const timeout = setTimeout(() => {
-            console.log("order :- ", order)
             setAddress(true)
         }, 1000);
     }
 
-    const handleInputUpdate = (check) => {
+    const handleInputUpdate = () => {
         setClicked(false);
     }
 
@@ -90,7 +88,7 @@ export default function Adminbuyer() {
             return new Promise(async (resolve) => {
                 const url = process.env.REACT_APP_ADMIN_URL + "/status"
                 try {
-                    var response = await fetch(url, {
+                    await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -115,7 +113,7 @@ export default function Adminbuyer() {
             return new Promise(async (resolve) => {
                 const url = process.env.REACT_APP_ADMIN_URL + "/status"
                 try {
-                    var response = await fetch(url, {
+                    await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -123,8 +121,6 @@ export default function Adminbuyer() {
                         },
                         body: JSON.stringify({ id: id, status: 'delete' }),
                     })
-                    const data = await response.json();
-                    order = data.data
                 }
                 catch (e) {
                     console.log(e)
@@ -161,9 +157,9 @@ export default function Adminbuyer() {
                             <td>{email.slice(0, -10)}</td>
                             <td>{productName}</td>
                             <td>{price}</td>
-                            <td>{quantity}</td>
+                            <td>{quantity}</td>     
                             <td>{status}</td>
-                            <td><button value={product._id} onClick={conform} >Conform</button></td>
+                            <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
                             <td><button value={product._id} onClick={del}>Delete</button></td>
                             <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
                         </tr>
