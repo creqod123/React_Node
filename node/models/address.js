@@ -2,10 +2,22 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const address = new Schema({
-    fullName: String,
-    house: String,
-    area: String,
-    city: String,
+    fullName: {
+        type: String,
+        require: true
+    },
+    house: {
+        type: String,
+        require: true
+    },
+    area: {
+        type: String,
+        require: true
+    },
+    city: {
+        type: String,
+        require: true
+    },
     pincode: Number,
 })
 

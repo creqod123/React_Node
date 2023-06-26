@@ -22,7 +22,6 @@ router.get('/', async function (req, res, next) {
 
 router.post("/register", registerController.register);
 router.post("/login", loginController.login);
-// router.post("/login", verifyToken, loginController.login);
 
 //            ============ Admin ============== 
 
@@ -35,12 +34,14 @@ router.post('/admin/order', verifyToken, adminController.order);
 router.post('/admin/status', verifyToken, adminController.status);
 
 //            ============ User ============== 
+
 router.post('/user', verifyToken, userController.getAll)
 router.post('/user/cart', verifyToken, userController.userCart)
 router.post('/user/checkout', verifyToken, userController.checkout)
 router.post('/user/order', verifyToken, userController.order);
 router.post('/user/detail', verifyToken, userController.detail);
 router.post('/user/orderupdate', verifyToken, userController.orderUpdate);
+
 //            ============ Controller by admin ============== 
 
 router.get('/ceo', verifyToken, ceoController.getData)

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const { stringify } = require('querystring')
 const Schema = mongoose.Schema
 
 const checkout = new Schema({
@@ -9,11 +8,9 @@ const checkout = new Schema({
     productName: String,
     status: String,
     productId: {
-
         type: mongoose.Schema.Types.ObjectId,
         ref: "adminProduct",
         required: true
-
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
