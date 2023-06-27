@@ -58,30 +58,55 @@ exports.userCart = ('/user/cart', async (req, res, next) => {
 
 exports.checkout = ('/user/checkout', async (req, res, next) => {
     var userEmail = req.body[1]
-    let check = await register.find({ email: userEmail })
-    userId = check[0]._id
+    const check = await register.find({ email: userEmail })
+    const userId = check[0]._id
+    const adminIdStore = []
+    const productIds = []
+    const quantitys = []
+    const prices = []
 
     try {
         var data = req.body[0]
-        // data.map(async (product) => {
-        //     const { quantity, _id, adminId, price, fullName, house, area, city, pincode } = product.cardData
-        //     const id = await address.create({
-        //         fullName: fullName,
-        //         house: house,
-        //         area: area,
-        //         city: city,
-        //         pincode: pincode
-        //     })
-        //     await checkout.create({
-        //         quantity: quantity,
-        //         price: price,
-        //         productId: _id,
-        //         userId: userId,
-        //         sellerId: adminId,
-        //         addressId: id._id,
-        //         status: "Pending"
-        //     })
-        // })
+        const id = await address.create({
+            fullName: data[0].cardData.fullName,
+            house: data[0].cardData.house,
+            area: data[0].cardData.area,
+            city: data[0].cardData.city,
+            pincode: data[0].cardData.pincode
+        })
+
+        data.map(async (product) => {
+            adminIdStore.push(product.cardData.adminId)
+        })
+
+        for (var i = 0; i < adminIdStore.length; i++) {
+            for (var j = i + 1; j < adminIdStore.length; j++) {
+                if (adminIdStore[i] === adminIdStore[j]) {
+                    adminIdStore.splice(j, 1)
+                    j--
+                }
+            }
+        }
+
+        adminIdStore.map(async (adminIdGet) => {
+            data.map(async (product) => {
+                const { quantity, _id, adminId, price } = product.cardData
+                if (adminId === adminIdGet) {
+                    productIds.push(_id)
+                    quantitys.push(quantity)
+                    prices.push(price)
+                }
+            })
+            await checkout.create({
+                quantity: quantitys,
+                price: prices,
+                productId: productIds,
+                userId: userId,
+                sellerId: adminIdGet,
+                addressId: id._id,
+                status: "Pending"
+            })
+        })
 
         res.status(200).json({
             message: "complete",

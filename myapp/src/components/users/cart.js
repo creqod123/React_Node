@@ -76,7 +76,7 @@ function Cart(props) {
         counter.map((e) => prop.push(e))
         totalcost = 0
         total = 0
-        window.location.href = '/user/shop'
+        // window.location.href = '/user/shop'
     }
 
     let swap

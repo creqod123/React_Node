@@ -3,9 +3,8 @@ const Schema = mongoose.Schema
 
 const checkout = new Schema({
 
-    quantity: Number,
-    price: Number,
-    productName: String,
+    quantity: [Number],
+    price: [Number],
     status: String,
     productId: [{
         type: mongoose.Schema.Types.ObjectId,
