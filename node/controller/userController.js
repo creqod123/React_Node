@@ -108,6 +108,27 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
             })
         })
 
+
+        // data.map(async (product) => {
+        //     const { quantity, _id, adminId, price, fullName, house, area, city, pincode } = product.cardData
+        //     const id = await address.create({
+        //         fullName: fullName,
+        //         house: house,
+        //         area: area,
+        //         city: city,
+        //         pincode: pincode
+        //     })
+        //     await checkout.create({
+        //         quantity: quantity,
+        //         price: price,
+        //         productId: _id,
+        //         userId: userId,
+        //         sellerId: adminId,
+        //         addressId: id._id,
+        //         status: "Pending"
+        //     })
+        // })
+
         res.status(200).json({
             message: "complete",
         })
