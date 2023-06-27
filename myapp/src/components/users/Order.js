@@ -100,7 +100,7 @@ export default function Order() {
             return new Promise(async (resolve) => {
                 const url = process.env.REACT_APP_USER_URL + "/orderupdate"
                 try {
-                    var response = await fetch(url, {
+                    await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -116,8 +116,6 @@ export default function Order() {
                 setUpdateAddress(false)
             }, []);
         }
-
-
 
         if (fullName.length == 0 || house.length == 0 || area.length == 0 || city.length == 0 || pincode.length == 0) {
             console.log("first")
