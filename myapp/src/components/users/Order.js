@@ -133,7 +133,6 @@ export default function Order() {
         <div className='adminshow' >
             <table id={clicked ? 'hide' : 'show'}>
                 <tr>
-                    <th>No.</th>
                     <th>Email</th>
                     <th>productName</th>
                     <th>ProductPrice</th>
@@ -141,21 +140,28 @@ export default function Order() {
                     <th>Status</th>
                     <th>Address</th>
                 </tr>
-                {showTag ? Data.map((product, counter = 0) => {
-                    counter += 1
+                {showTag ? Data.map((product) => {
                     const { _id, quantity, productId, userId, price, status } = product
-                    const { ids, productName } = productId
                     const { email } = userId
+                    let counter = -1
                     return (
-                        <tr>
-                            <td>{counter}</td>
-                            <td>{email.slice(0, -10)}</td>
-                            <td>{productName}</td>
-                            <td>{price}</td>
-                            <td>{quantity}</td>
-                            <td>{status}</td>
-                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                        </tr>
+                        <>
+                            {
+                                quantity.map(() => {
+                                    ++counter
+                                    return (
+                                        <tr>
+                                            <td>{email.slice(0, -10)}</td>
+                                            <td>{productId[counter].productName}</td>
+                                            <td>{price[counter]}</td>
+                                            <td>{quantity[counter]}</td>
+                                            <td>{status}</td>
+                                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </>
                     )
                 }) : <BorderExample />}
             </table>

@@ -61,18 +61,17 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
     const check = await register.find({ email: userEmail })
     const userId = check[0]._id
     const adminIdStore = []
-    const productIds = []
-    const quantitys = []
-    const prices = []
+
 
     try {
         var data = req.body[0]
+        const { fullName, house, area, city, pincode } = data[0].cardData
         const id = await address.create({
-            fullName: data[0].cardData.fullName,
-            house: data[0].cardData.house,
-            area: data[0].cardData.area,
-            city: data[0].cardData.city,
-            pincode: data[0].cardData.pincode
+            fullName: fullName,
+            house: house,
+            area: area,
+            city: city,
+            pincode: pincode
         })
 
         data.map(async (product) => {
@@ -89,6 +88,9 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
         }
 
         adminIdStore.map(async (adminIdGet) => {
+            const productIds = []
+            const quantitys = []
+            const prices = []
             data.map(async (product) => {
                 const { quantity, _id, adminId, price } = product.cardData
                 if (adminId === adminIdGet) {

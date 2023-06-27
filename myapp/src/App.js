@@ -12,6 +12,7 @@ import HeaderContainer from './container/HeaderContainer'
 import UserData from './components/ceo/userData';
 import AdminData from './components/ceo/adminData';
 import Order from './components/users/Order';
+import Hello from './components/users/extra';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
               <Route path='/user/shop' element={<HomeContainer />} />
               <Route path='/user/cart' element={<CartContainer />} />
               <Route path='/user/order' element={<Order />} />
+              <Route path='/user/extra' element={<Hello />} />
             </Routes>
           </Router>
         </div>
