@@ -159,8 +159,14 @@ function Cart(props) {
                 </div> :
                 <div id='orderconfrom1'>{prop.map((product) => hello(props, product.cardData))}
                     <div className="totalcost">
-                        <p className='cartc'>Total Cost :- {totalcost}</p>
-                        <button className="cartc" onClick={check1}>CheckOut</button>
+                        {
+                            props.data.length != 0 ?
+                                <>
+                                    <p className='cartc'>Total Cost :- {totalcost}</p>
+                                    <button className="cartc" onClick={check1}>CheckOut</button>
+                                </>
+                                : <h1>Add product</h1>
+                        }
                     </div>
                     <div className="cartprop">{counter.map((e) => prop.push(e))} {totalcost = 0} {total = 0}</div></div>}
         </div>

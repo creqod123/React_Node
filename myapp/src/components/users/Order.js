@@ -97,7 +97,6 @@ export default function Order() {
     const orderUpdate = () => {
 
         const SubFunction = () => {
-
             return new Promise(async (resolve) => {
                 const url = process.env.REACT_APP_USER_URL + "/orderupdate"
                 try {
@@ -114,9 +113,20 @@ export default function Order() {
                     console.log(e)
                 }
                 resolve();
+                setUpdateAddress(false)
             }, []);
         }
-        SubFunction();
+
+
+
+        if (fullName.length == 0 || house.length == 0 || area.length == 0 || city.length == 0 || pincode.length == 0) {
+            console.log("first")
+        }
+        else {
+            console.log("second :- ", (fullName.length == 0 || house.length == 0))
+            SubFunction();
+        }
+
     }
 
     return (
