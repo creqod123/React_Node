@@ -94,6 +94,10 @@ export default function Order() {
         setUpdateAddress(true)
     }
 
+    const Detail = () => {
+        console.log("Hello world")
+    }
+
     const orderUpdate = () => {
 
         const SubFunction = () => {
@@ -124,7 +128,6 @@ export default function Order() {
             console.log("second :- ", (fullName.length == 0 || house.length == 0))
             SubFunction();
         }
-
     }
 
     return (
@@ -137,6 +140,7 @@ export default function Order() {
                     <th>Quantity</th>
                     <th>Status</th>
                     <th>Address</th>
+                    <th>Detail</th>
                 </tr>
                 {showTag ? Data.map((product) => {
                     const { _id, quantity, productId, userId, price, status } = product
@@ -155,6 +159,7 @@ export default function Order() {
                                             <td>{quantity[counter]}</td>
                                             <td>{status}</td>
                                             <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                                            <td><button onClick={Detail}>Detail</button></td>
                                         </tr>
                                     )
                                 })
