@@ -7,11 +7,11 @@ const checkout = new Schema({
     price: Number,
     productName: String,
     status: String,
-    productId: {
+    productId: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "adminProduct",
         required: true
-    },
+    }],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "register",

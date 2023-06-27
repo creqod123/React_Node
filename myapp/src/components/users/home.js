@@ -35,6 +35,7 @@ function Home(props) {
         return <Spinner animation="border" />;
     }
 
+
     const showProduct = (props, product) => {
         const { image, productName, price } = product
         return (
@@ -58,7 +59,6 @@ function Home(props) {
             </>
         )
     }
-
     return (
         <div className="items position">
             {showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
