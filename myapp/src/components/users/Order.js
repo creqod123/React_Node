@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import './user.css'
 
+let check
 let Data = []
 let order = []
 const email = localStorage.getItem("email")
@@ -20,26 +21,22 @@ export default function Order() {
     const [pincode, setPincode] = useState('');
     const [detail, setDetail] = useState(false)
 
-    const SubFunction = () => {
-        return new Promise(async (resolve) => {
-            const url = process.env.REACT_APP_USER_URL + "/detail"
-            try {
-                var response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        token: token,
-                    },
-                    body: JSON.stringify({ email: email }),
-                })
-                const data = await response.json();
-                Data = data.data
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-        }, []);
+    const SubFunction = async () => {
+        try {
+            var response = await fetch(`${process.env.REACT_APP_USER_URL}/detail`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    token: token,
+                },
+                body: JSON.stringify({ email: email }),
+            })
+            const data = await response.json();
+            Data = data.data
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     SubFunction();
@@ -56,27 +53,23 @@ export default function Order() {
 
         const email = e.target.value
 
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_USER_URL + "/order"
-                try {
-                    var response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ email: email }),
-                    })
-                    const data = await response.json();
-                    order = data.data
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-                setClicked(true)
-            }, []);
+        const SubFunction = async () => {
+            try {
+                var response = await fetch(`${process.env.REACT_APP_USER_URL}/order`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ email: email }),
+                })
+                const data = await response.json();
+                order = data.data
+            }
+            catch (e) {
+                console.log(e)
+            }
+            setClicked(true)
         }
         SubFunction();
         const timeout = setTimeout(() => {
@@ -85,42 +78,42 @@ export default function Order() {
     }
 
     const handleInputUpdate = (check) => {
-        setClicked(false);
+        setShowTag(false)
+        setAddress(false)
         setUpdateAddress(false)
+        setClicked(false)
+        setDetail(false)
     }
 
     const addressUpdate = (e) => {
         id = e.target.value
-        console.log("Id :- ", id)
         setUpdateAddress(true)
     }
 
-    const Detail = () => {
-        console.log("Hello world first",showTag)
+    const Detail = (e) => {
+        check = e.target.value
+        console.log("check :- ", check)
         setDetail(true)
+        setClicked(true)
     }
 
     const orderUpdate = () => {
 
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_USER_URL + "/orderupdate"
-                try {
-                    await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ id: id, fullName: fullName, house: house, area: area, city: city, pincode: pincode }),
-                    })
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-                setUpdateAddress(false)
-            }, []);
+        const SubFunction = async () => {
+            try {
+                await fetch(`${process.env.REACT_APP_USER_URL}/orderupdate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ id: id, fullName: fullName, house: house, area: area, city: city, pincode: pincode }),
+                })
+            }
+            catch (e) {
+                console.log(e)
+            }
+            setUpdateAddress(false)
         }
 
         if (fullName.length == 0 || house.length == 0 || area.length == 0 || city.length == 0 || pincode.length == 0) {
@@ -134,75 +127,63 @@ export default function Order() {
 
     return (
         <div className='adminshow' >
-            <table id={clicked ? 'hide' : 'show'}>
+            {clicked ? <></> : <table>
                 <tr>
                     <th>Email</th>
-                    <th>productName</th>
-                    <th>ProductPrice</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
                     <th>Address</th>
                     <th>Detail</th>
                 </tr>
-                {showTag ? Data.map((product) => {
+                {showTag ? Data.map((product, counter = 0) => {
                     const { _id, quantity, productId, userId, price, status } = product
                     const { email } = userId
-                    let counter = -1
+
                     return (
-                        <>
-                            {
-                                quantity.map(() => {
-                                    ++counter
-                                    return (
-                                        <tr>
-                                            <td>{email.slice(0, -10)}</td>
-                                            <td>{productId[counter].productName}</td>
-                                            <td>{price[counter]}</td>
-                                            <td>{quantity[counter]}</td>
-                                            <td>{status}</td>
-                                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                                            <td><button onClick={Detail}>Detail</button></td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </>
+                        <tr>
+                            <td>{email.slice(0, -10)}</td>
+                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                            <td><button value={counter++} onClick={Detail}>Detail</button></td>
+                        </tr>
                     )
                 }) : <BorderExample />}
-            </table>
+            </table>}
 
             {/* =========================================================================================================================== */}
 
-            <table id={clicked ? 'shows' : 'hides'}>
+            {detail ? <table>
+                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
                 <tr>
                     <th>productName</th>
                     <th>ProductPrice</th>
                     <th>Quantity</th>
                     <th>Status</th>
                 </tr>
-                {showTag ? Data.map((product) => {
-                    const { _id, quantity, productId, userId, price, status } = product
-                    const { email } = userId
-                    let counter = -1
-                    return (
-                        <>
-                            {
-                                quantity.map(() => {
-                                    ++counter
-                                    return (
-                                        <tr>
-                                            <td>{productId[counter].productName}</td>
-                                            <td>{price[counter]}</td>
-                                            <td>{quantity[counter]}</td>
-                                            <td>{status}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </>
-                    )
+                {showTag ? Data.map((product, count = 0) => {
+                    if (count == check) {
+                        const {  quantity, productId, userId, price, status } = product
+                        const { email } = userId
+                        let counter = -1
+                        return (
+                            <>
+                                {
+                                    quantity.map(() => {
+                                        ++counter
+                                        return (
+                                            <tr>
+                                                <td>{productId[counter].productName}</td>
+                                                <td>{price[counter]}</td>
+                                                <td>{quantity[counter]}</td>
+                                                <td>{status}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </>
+                        )
+                    }
+                    ++count
+
                 }) : <BorderExample />}
-            </table>
+            </table> : <></>}
 
             {/* ========================================================================================================== */}
 

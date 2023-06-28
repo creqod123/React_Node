@@ -2,40 +2,36 @@ import './admin.css'
 import { useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
-var Data = []
-var order = []
-var email = localStorage.getItem("email")
-var token = localStorage.getItem("token")
+let Data = []
+let check
+let order = []
+let email = localStorage.getItem("email")
+let token = localStorage.getItem("token")
 
 export default function Adminbuyer() {
 
     const [showTag, setShowTag] = useState(false);
     const [address, setAddress] = useState(false);
     const [clicked, setClicked] = useState(false);
+    const [detail, setDetail] = useState(false)
 
-    const SubFunction = () => {
-        return new Promise(async (resolve) => {
-            const url = process.env.REACT_APP_ADMIN_URL + "/detail"
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        token: token,
-                    },
-                    body: JSON.stringify({ email: email }),
-                })
-                const data = await response.json();
-                Data = data.data
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-        }, []);
+    const SubFunction = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_ADMIN_URL}/detail`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    token: token,
+                },
+                body: JSON.stringify({ email: email }),
+            })
+            const data = await response.json();
+            Data = data.data
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
-
-    console.log("Dev till end")
 
     SubFunction();
     const timeout = setTimeout(() => {
@@ -48,29 +44,24 @@ export default function Adminbuyer() {
     }
 
     const checkAddress = (e) => {
-
         const email = e.target.value
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_ADMIN_URL + "/order"
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ email: email }),
-                    })
-                    const data = await response.json();
-                    order = data.data
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-                setClicked(true)
-            }, []);
+        const SubFunction = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_ADMIN_URL}/order`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ email: email }),
+                })
+                const data = await response.json();
+                order = data.data
+            }
+            catch (e) {
+                console.log(e)
+            }
+            setClicked(true)
         }
         SubFunction();
         const timeout = setTimeout(() => {
@@ -78,57 +69,57 @@ export default function Adminbuyer() {
         }, 1000);
     }
 
+
     const handleInputUpdate = () => {
-        setClicked(false);
+        setShowTag(true)
+        setAddress(false)
+        setClicked(false)
+        setDetail(false)
     }
 
     const conform = (e) => {
-
         const id = e.target.value
-
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_ADMIN_URL + "/status"
-                try {
-                    await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ id: id, status: 'conform' }),
-                    })
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-            }, []);
+        const SubFunction = async () => {
+            try {
+                await fetch(`${process.env.REACT_APP_ADMIN_URL}/status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ id: id, status: 'conform' }),
+                })
+            }
+            catch (e) {
+                console.log(e)
+            }
         }
         SubFunction();
     }
+
+    const Detail = (e) => {
+        check = e.target.value
+        console.log("Check :- ",check)
+        setDetail(true)
+        setClicked(true)
+    }
+
     const del = (e) => {
-
         const id = e.target.value
-
-        const SubFunction = () => {
-            return new Promise(async (resolve) => {
-                const url = process.env.REACT_APP_ADMIN_URL + "/status"
-                try {
-                    await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                        body: JSON.stringify({ id: id, status: 'delete' }),
-                    })
-                }
-                catch (e) {
-                    console.log(e)
-                }
-                resolve();
-            }, []);
+        const SubFunction = async () => {
+            try {
+                await fetch(`${process.env.REACT_APP_ADMIN_URL}/status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ id: id, status: 'delete' }),
+                })
+            }
+            catch (e) {
+                console.log(e)
+            }
         }
         SubFunction();
     }
@@ -136,42 +127,77 @@ export default function Adminbuyer() {
 
     return (
         <div className='adminshow' >
-            <table id={clicked ? 'hide' : 'show'}>
+            {clicked ? <></> : <table>
                 <tr>
                     <th>No.</th>
                     <th>Email</th>
-                    <th>productName</th>
-                    <th>ProductPrice</th>
-                    <th>Quantity</th>
                     <th>status</th>
                     <th>Conform</th>
                     <th>Delete</th>
                     <th>Address</th>
+                    <th>Detail</th>
                 </tr>
                 {showTag ? Data.map((product, counter = 0) => {
-                    counter += 1
                     const { _id, quantity, productId, userId, price, status } = product
                     const { ids, productName } = productId
                     const { email } = userId
                     return (
                         <tr>
-                            <td>{counter}</td>
+                            <td>{counter+1}</td>
                             <td>{email.slice(0, -10)}</td>
-                            <td>{productName}</td>
-                            <td>{price}</td>
-                            <td>{quantity}</td>
                             <td>{status}</td>
                             <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
                             <td><button value={product._id} onClick={del}>Delete</button></td>
                             <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                            <td><button value={counter++} onClick={Detail}>Detail</button></td>
                         </tr>
                     )
                 }) : <BorderExample />}
-            </table>
+            </table>}
+
+            {/* =========================================================================================================================== */}
+
+            {detail ? <table>
+                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
+                <tr>
+                    <th>productName</th>
+                    <th>ProductPrice</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+                {showTag ? Data.map((product, count = 0) => {
+                    if (count == check) {
+                        const { _id, quantity, productId, userId, price, status } = product
+                        const { email } = userId
+                        let counter = -1
+                        return (
+                            <>
+                                {
+                                    quantity.map(() => {
+                                        ++counter
+                                        return (
+                                            <tr>
+                                                <td>{productId[counter].productName}</td>
+                                                <td>{price[counter]}</td>
+                                                <td>{quantity[counter]}</td>
+                                                <td>{status}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </>
+                        )
+                    }
+                    ++count
+
+                }) : <BorderExample />}
+            </table> : <></>}
+
+            {/* ========================================================================================================== */}
 
 
             {address ?
-                <div id={clicked ? 'show' : 'hide'}>
+                <div>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
                     <table>
                         <tr>

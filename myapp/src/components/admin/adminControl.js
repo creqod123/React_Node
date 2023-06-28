@@ -11,14 +11,13 @@ export default function Admincontrol() {
     var email = localStorage.getItem("email")
 
     const productAdd = async (e) => {
-        const url = process.env.REACT_APP_ADMIN_URL + "/add"
         const formData = new FormData();
         formData.append('productName', productName);
         formData.append('price', price);
         formData.append('image', image);
         formData.append('email', email)
         try {
-            await axios.post(url, formData)
+            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/add`, formData)
         }
         catch (e) {
             console.log(e)

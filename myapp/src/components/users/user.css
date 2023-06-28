@@ -287,4 +287,11 @@
   transform: translate(-40%);
   transition: all ease-in-out 0.5s;
   opacity: 1;
+  background-color: white;
+}
+
+
+#search{
+  /* border: 1px solid black; */
+  padding: 5px;
 }

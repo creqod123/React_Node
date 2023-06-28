@@ -35,6 +35,10 @@ function Home(props) {
         return <Spinner animation="border" />;
     }
 
+    const hello = (e) => {
+        console.log(e.target.value)
+    }
+
 
     const showProduct = (props, product) => {
         const { image, productName, price } = product
@@ -65,12 +69,17 @@ function Home(props) {
             <div id="pagination">
                 <table>
                     <tr>
-                        {
-                            paginat > 0 ? <th name="previous" onClick={previous}>{"<"}</th> : <th disabled>{"<"}</th>
-                        }
-                        {
-                            paginat < Math.floor(totalLength / 9) ? <th onClick={forward}>{">"}</th> : <th disabled>{">"}</th>
-                        }
+                        <td>
+                            {
+                                paginat > 0 ? <th name="previous" onClick={previous}>{"<"}</th> : <th disabled>{"<"}</th>
+                            }
+                            {
+                                paginat < Math.floor(totalLength / 9) ? <th onClick={forward}>{">"}</th> : <th disabled>{">"}</th>
+                            }
+                        </td>
+                        <td>
+                            Search  <input type="search" id="search" placeholder="Search product" onChange={hello} />
+                        </td>
                     </tr>
                 </table>
             </div>

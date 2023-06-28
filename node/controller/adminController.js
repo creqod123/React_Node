@@ -159,9 +159,12 @@ exports.status = ('/admin/status', async (req, res, next) => {
 
         const a = await checkout.find({ _id: id }).populate('addressId')
         await checkout.deleteOne({ _id: id })
-
         const check = a[0].addressId._id
-        await address.deleteOne({ _id: check })
+        const b = await checkout.find({ addressId: check })
+
+        if (b.length === 0) {
+            await address.deleteOne({ _id: check })
+        }
     }
 
     try {

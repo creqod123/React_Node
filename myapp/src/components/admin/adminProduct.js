@@ -17,24 +17,21 @@ export default function Adminproduct() {
     const [isClicked, setIsClicked] = useState(false);
     const [image, setImage] = useState('')
 
-    const SubFunction = () => {
-        return new Promise(async (resolve) => {
-            var url = process.env.REACT_APP_ADMIN_URL
-            try {
-                var a = await axios.post(url, { email: email }, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        token: token,
-                    },
-                })
-                Data = a.data.data
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-        });
+    const SubFunction = async () => {
+        try {
+            var a = await axios.post(`${process.env.REACT_APP_ADMIN_URL}`, { email: email }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    token: token,
+                },
+            })
+            Data = a.data.data
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
+
     SubFunction()
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -44,9 +41,8 @@ export default function Adminproduct() {
 
     const handleInputRemove = async (e) => {
         const id = e.target.value;
-        const url = process.env.REACT_APP_ADMIN_URL + "/remove"
         try {
-            await axios.post(url, { id: id, email: email }, {
+            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/remove`, { id: id, email: email }, {
                 headers: {
                     'Content-Type': 'application/json',
                     token: token,
@@ -67,9 +63,8 @@ export default function Adminproduct() {
         if (productName === '' || price === '') {
             return (" ")
         }
-        const url = process.env.REACT_APP_ADMIN_URL + "/update"
         try {
-            await axios.post(url, { email: email, productName: productName, price: price }, {
+            await axios.post(`${process.env.REACT_APP_ADMIN_URL} /update`, { email: email, productName: productName, price: price }, {
                 headers: {
                     'Content-Type': 'application/json',
                     token: token,
@@ -85,7 +80,6 @@ export default function Adminproduct() {
     }
 
     const handleInputUpdate = (e, check) => {
-
         if (check === 0) {
             setIsClicked(false);
         }
@@ -112,7 +106,6 @@ export default function Adminproduct() {
                     <input type='submit' onClick={update} />
                 </label>
             </div>
-
             <div className='adminshowproduct position' id={isClicked ? 'updates_first' : 'updates_second'}>
                 {showTag ? Data.map((product) => {
                     const { _id, image, productName, price, ids } = product
