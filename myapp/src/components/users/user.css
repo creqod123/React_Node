@@ -270,3 +270,21 @@
 #updateOrder label {
   padding: 10px 0px;
 }
+
+#hides{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-40%);
+  opacity: 0;
+  transition: all ease-in-out 0.5s;
+}
+
+#shows{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-40%);
+  transition: all ease-in-out 0.5s;
+  opacity: 1;
+}

@@ -18,6 +18,7 @@ export default function Order() {
     const [area, setArea] = useState('');
     const [city, setCity] = useState('');
     const [pincode, setPincode] = useState('');
+    const [detail, setDetail] = useState(false)
 
     const SubFunction = () => {
         return new Promise(async (resolve) => {
@@ -95,7 +96,8 @@ export default function Order() {
     }
 
     const Detail = () => {
-        console.log("Hello world")
+        console.log("Hello world first",showTag)
+        setDetail(true)
     }
 
     const orderUpdate = () => {
@@ -168,6 +170,43 @@ export default function Order() {
                     )
                 }) : <BorderExample />}
             </table>
+
+            {/* =========================================================================================================================== */}
+
+            <table id={clicked ? 'shows' : 'hides'}>
+                <tr>
+                    <th>productName</th>
+                    <th>ProductPrice</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+                {showTag ? Data.map((product) => {
+                    const { _id, quantity, productId, userId, price, status } = product
+                    const { email } = userId
+                    let counter = -1
+                    return (
+                        <>
+                            {
+                                quantity.map(() => {
+                                    ++counter
+                                    return (
+                                        <tr>
+                                            <td>{productId[counter].productName}</td>
+                                            <td>{price[counter]}</td>
+                                            <td>{quantity[counter]}</td>
+                                            <td>{status}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </>
+                    )
+                }) : <BorderExample />}
+            </table>
+
+            {/* ========================================================================================================== */}
+
+
             {address ?
                 <div id={clicked ? 'show' : 'hide'}>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />

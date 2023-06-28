@@ -35,6 +35,8 @@ export default function Adminbuyer() {
         }, []);
     }
 
+    console.log("Dev till end")
+
     SubFunction();
     const timeout = setTimeout(() => {
         setShowTag(true)
@@ -157,7 +159,7 @@ export default function Adminbuyer() {
                             <td>{email.slice(0, -10)}</td>
                             <td>{productName}</td>
                             <td>{price}</td>
-                            <td>{quantity}</td>     
+                            <td>{quantity}</td>
                             <td>{status}</td>
                             <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
                             <td><button value={product._id} onClick={del}>Delete</button></td>
