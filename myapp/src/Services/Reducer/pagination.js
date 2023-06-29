@@ -3,7 +3,6 @@ import axios from 'axios'
 const email = localStorage.getItem("email")
 var token = localStorage.getItem("token")
 let paginat = []
-let search = []
 
 export default function getItem(state = [], action) {
     const pagination = (pageLength) => {
@@ -28,36 +27,11 @@ export default function getItem(state = [], action) {
         });
     }
 
-    const searching = async (message) => {
-        return new Promise(async (resolve) => {
-            try {
-                const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: message },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    }
-                )
-                console.log("Node :- ", a)
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-        });
-    }
-
     switch (action.type) {
         case "PAGINATION":
             {
                 const pageLength = action.data
                 pagination(pageLength)
-                return state = paginat
-            }
-        case "SEARCH":
-            {
-                searching(action.data)
                 return state = paginat
             }
         default:

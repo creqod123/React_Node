@@ -1,11 +1,15 @@
 import React from "react"
+import axios from "axios"
 import './user.css'
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
-import { pageNation, searchProductData } from "../../Services/Actions/actions"
+import { pageNation } from "../../Services/Actions/actions"
 
 let paginat = 0
+const email = localStorage.getItem("email")
+const token = localStorage.getItem("token")
+let Data
 
 function Home(props) {
 
@@ -13,7 +17,7 @@ function Home(props) {
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
 
-    const Data = useSelector((a) => a.getItem)
+    Data = useSelector((a) => a.getItem)
 
     const dispatch = useDispatch()
     dispatch(pageNation(paginat))
@@ -40,8 +44,29 @@ function Home(props) {
         return <Spinner animation="border" />;
     }
 
-    const hello = () => {
-        dispatch(searchProductData(searchValue))
+    const hello = async () => {
+        setShowTag(false)
+
+        console.log("Check :- ", searchValue)
+        try {
+            const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: searchValue },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                }
+            )
+            const check = a.data.data.length
+            if (check !== 0) {
+                Data = a.data.data
+            }
+            console.log("first")
+        }
+        catch (e) {
+            console.log(e)
+        }
+        setShowTag(true)
     }
 
 
@@ -68,9 +93,11 @@ function Home(props) {
             </>
         )
     }
+    console.log("Data Data :- ", Data)
     return (
         <div className="items position">
             {showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
+
             <div id="pagination">
                 <table>
                     <tr>

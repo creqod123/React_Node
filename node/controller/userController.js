@@ -202,10 +202,17 @@ exports.orderUpdate = ('/user/orderupdate', async (req, res, next) => {
 // ============================= search order =========================== 
 
 exports.search = ('/user/search', async (req, res, next) => {
-    console.log("Check :- ",req.body.message)
+
+    console.log("Data :- ",req.body)
+
+    const message = req.body.message
+
+    const Data = await adminProduct.find({ productName: message })
+    console.log("Check :- ", Data)
     try {
         res.status(200).json({
             message: "complete",
+            data: Data
         })
     }
     catch (error) {
