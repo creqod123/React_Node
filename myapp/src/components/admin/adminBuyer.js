@@ -138,7 +138,7 @@ export default function Adminbuyer() {
                 </tr>
                 {showTag ? Data.map((product, counter = 0) => {
                     const { _id, quantity, productId, userId, price, status } = product
-                    const { ids, productName } = productId
+                    const { productName } = productId
                     const { email } = userId
                     return (
                         <tr>

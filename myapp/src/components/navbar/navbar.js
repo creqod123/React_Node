@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 import { useSelector, useDispatch } from "react-redux"
 
-export default function Navbar(props) {
+export default function Navbar() {
 
     const history = useNavigate('')
     var type = localStorage.getItem("type")

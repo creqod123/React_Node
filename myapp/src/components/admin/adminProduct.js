@@ -108,7 +108,7 @@ export default function Adminproduct() {
             </div>
             <div className='adminshowproduct position' id={isClicked ? 'updates_first' : 'updates_second'}>
                 {showTag ? Data.map((product) => {
-                    const { _id, image, productName, price, ids } = product
+                    const { _id, image, productName, price } = product
                     return (
                         <div className="is">
                             <div className="img-wrappers itemss">

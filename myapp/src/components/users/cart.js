@@ -1,23 +1,27 @@
 import axios from 'axios'
 import './user.css'
 import { useState } from "react"
-import { useSelector } from "react-redux"
-var totalcost = 0
-var total = 0
-var email = localStorage.getItem('email')
-var token = localStorage.getItem("token")
+import { useSelector, useDispatch } from "react-redux"
+import { addtoCart, RemovetoCart } from "../../Services/Actions/actions"
 
-function Cart(props) {
+let totalcost = 0
+let total = 0
+let email = localStorage.getItem('email')
+let token = localStorage.getItem("token")
+
+
+function Cart() {
     const [showTag, setShowTag] = useState(false);
-
     const [fullName, setfullName] = useState('');
     const [house, setHouse] = useState('');
     const [area, setArea] = useState('');
     const [city, setCity] = useState('');
     const [pincode, setPincode] = useState('');
 
-    let prop = useSelector((a) => a.cardItems)
+    const dispatch = useDispatch()
 
+    let prop = useSelector((a) => a.cardItems)
+    let helloworld = useSelector((a) => a.cardItems)
 
     const check1 = async () => {
         setShowTag(true)
@@ -26,6 +30,16 @@ function Cart(props) {
     const check2 = async () => {
         setShowTag(false)
     }
+
+    const add = (e) => {
+        dispatch(addtoCart(JSON.parse(e.target.value)))
+    }
+
+    const remove = (e) => {
+        dispatch(RemovetoCart(JSON.parse(e.target.value)))
+    }
+
+
 
     const conformOrder = async () => {
         const id = localStorage.getItem("id")
@@ -42,7 +56,7 @@ function Cart(props) {
             prop[i].cardData.city = city
             prop[i].cardData.pincode = pincode
             for (var j = i + 1; j < prop.length; j++) {
-                if (prop[i].cardData.ids === prop[j].cardData.ids) {
+                if (prop[i].cardData._id === prop[j].cardData._id) {
                     counter.push(prop[i])
                     prop[i].cardData.quantity = prop[i].cardData.quantity + 1
                     prop.splice(j, 1)
@@ -52,7 +66,7 @@ function Cart(props) {
         }
         for (let k = 0; k < prop.length; k++) {
             for (let l = k; l < prop.length; l++) {
-                if (prop[k].cardData.ids >= prop[l].cardData.ids) {
+                if (prop[k].cardData._id >= prop[l].cardData._id) {
                     swap = prop[l]
                     prop[l] = prop[k]
                     prop[k] = swap
@@ -79,12 +93,14 @@ function Cart(props) {
         // window.location.href = '/user/shop'
     }
 
+
     let swap
     let counter = []
+
     for (let i = 0; i < prop.length; i++) {
         prop[i].cardData.quantity = 1
         for (let j = i + 1; j < prop.length; j++) {
-            if (prop[i].cardData.ids === prop[j].cardData.ids) {
+            if (prop[i].cardData._id === prop[j].cardData._id) {
                 counter.push(prop[i])
                 prop[i].cardData.quantity = prop[i].cardData.quantity + 1
                 prop.splice(j, 1)
@@ -93,17 +109,7 @@ function Cart(props) {
         }
     }
 
-    for (let k = 0; k < prop.length; k++) {
-        for (let l = k; l < prop.length; l++) {
-            if (prop[k].cardData.ids >= prop[l].cardData.ids) {
-                swap = prop[l]
-                prop[l] = prop[k]
-                prop[k] = swap
-            }
-        }
-    }
-
-    const hello = (props, product) => {
+    const hello = (product) => {
         const { image, productName, price, quantity } = product
         return (
             <div className="i i_2">
@@ -116,14 +122,14 @@ function Cart(props) {
                     <span>Price ${price}</span>
                 </div>
                 <div className="button-wrapper item">
-                    <button onClick={() => props.addtoCartHandler(product)}> + </button>
+                    <button value={JSON.stringify(product)} onClick={add}> + </button>
                 </div>
                 <div className="cart_quan">
                     <p className="cart_quantity">{quantity}</p>
                     <p className="cart_price">Total Price  {total = quantity * price}</p>
                 </div>
                 <div className="button-wrapper item">
-                    <button onClick={() => props.RemovetoCartHandler(product)}> - </button>
+                    <button value={JSON.stringify(product)} onClick={remove}> - </button>
                 </div>
                 <div className="cartprop">{totalcost += quantity * price}</div>
             </div>
@@ -157,10 +163,10 @@ function Cart(props) {
                         <input type='submit' onClick={conformOrder} />
                     </label>
                 </div> :
-                <div id='orderconfrom1'>{prop.map((product) => hello(props, product.cardData))}
+                <div id='orderconfrom1'>{prop.map((product) => hello(product.cardData))}
                     <div className="totalcost">
                         {
-                            props.data.length != 0 ?
+                            prop.length != 0 ?
                                 <>
                                     <p className='cartc'>Total Cost :- {totalcost}</p>
                                     <button className="cartc" onClick={check1}>CheckOut</button>

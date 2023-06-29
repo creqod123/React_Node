@@ -12,7 +12,7 @@ const hello1 = async () => {
     for (let i = 0; i < prop.length; i++) {
         prop[i].cardData.quantity = 1
         for (var j = i + 1; j < prop.length; j++) {
-            if (prop[i].cardData.ids === prop[j].cardData.ids) {
+            if (prop[i].cardData._id === prop[j].cardData._id) {
                 counter.push(prop[i])
                 prop[i].cardData.quantity = prop[i].cardData.quantity + 1
                 prop.splice(j, 1)
@@ -22,7 +22,7 @@ const hello1 = async () => {
     }
     for (let k = 0; k < prop.length; k++) {
         for (let l = k; l < prop.length; l++) {
-            if (prop[k].cardData.ids >= prop[l].cardData.ids) {
+            if (prop[k].cardData._id >= prop[l].cardData._id) {
                 swap = prop[l]
                 prop[l] = prop[k]
                 prop[k] = swap

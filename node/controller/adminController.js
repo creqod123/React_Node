@@ -33,9 +33,6 @@ exports.add = ('/admin/add', async (req, res, next) => {
         const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
 
-        const id = await adminProduct.find()
-        req.body.ids = id.length + 1
-
         req.body['adminId'] = check[0]._id
 
         if (check.length != 0) {

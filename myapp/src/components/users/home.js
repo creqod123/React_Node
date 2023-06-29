@@ -4,7 +4,7 @@ import './user.css'
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
-import { pageNation } from "../../Services/Actions/actions"
+import { pageNation, addtoCart, RemovetoCart } from "../../Services/Actions/actions"
 
 let paginat = 0
 const email = localStorage.getItem("email")
@@ -12,7 +12,7 @@ const token = localStorage.getItem("token")
 let Data
 let Check123
 
-function Home(props) {
+function Home() {
 
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -47,8 +47,6 @@ function Home(props) {
 
     const hello = async () => {
         setShowTag(false)
-
-        console.log("Check :- ", searchValue)
         try {
             const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: searchValue },
                 {
@@ -62,7 +60,6 @@ function Home(props) {
             if (check !== 0) {
                 Check123 = a.data.data
             }
-            console.log("first :- ", Check123)
         }
         catch (e) {
             console.log(e)
@@ -70,8 +67,15 @@ function Home(props) {
         setSearchData(true)
     }
 
+    const add = (e) => {
+        dispatch(addtoCart(JSON.parse(e.target.value)))
+    }
+    const remove = (e) => {
+        dispatch(RemovetoCart(JSON.parse(e.target.value)))
+    }
 
-    const showProduct = (props, product) => {
+
+    const showProduct = (product) => {
         const { image, productName, price } = product
         return (
             <>
@@ -85,10 +89,10 @@ function Home(props) {
                         <span>Price ${price}</span>
                     </div>
                     <div className="button-wrapper item">
-                        <button value={product} onClick={() => props.addtoCartHandler(product)}>Add to cart</button>
+                        <button value={JSON.stringify(product)} onClick={add}>Add to cart</button>
                     </div>
                     <div className="button-wrapper item">
-                        <button value={product} onClick={() => props.RemovetoCartHandler(product)}>Remove</button>
+                        <button value={JSON.stringify(product)} onClick={remove}>Remove</button>
                     </div>
                 </div>
             </>
@@ -96,7 +100,7 @@ function Home(props) {
     }
     return (
         <div className="items position">
-            {searchData ? Check123.map((product) => showProduct(props, product)) : showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
+            {searchData ? Check123.map((product) => showProduct(product)) : showTag ? Data.map((product) => showProduct(product)) : <BorderExample />}
 
             <div id="pagination">
                 <table>
