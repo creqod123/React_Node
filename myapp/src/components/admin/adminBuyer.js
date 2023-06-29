@@ -99,7 +99,6 @@ export default function Adminbuyer() {
 
     const Detail = (e) => {
         check = e.target.value
-        console.log("Check :- ",check)
         setDetail(true)
         setClicked(true)
     }
@@ -189,7 +188,6 @@ export default function Adminbuyer() {
                         )
                     }
                     ++count
-
                 }) : <BorderExample />}
             </table> : <></>}
 

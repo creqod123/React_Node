@@ -13,49 +13,41 @@ export default function UserData() {
     const [showTag, setShowTag] = useState(false);
 
 
-    const SubFunction = () => {
-        return new Promise(async (resolve) => {
-            var url = process.env.REACT_APP_CEO_URL
-            try {
-                const a = await axios.get(url,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    })
-                userdatas = a.data.user
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-            setShowTag(true);
-        });
+    const SubFunction = async () => {
+        try {
+            const a = await axios.get(process.env.REACT_APP_CEO_URL,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                })
+            userdatas = a.data.user
+        }
+        catch (e) {
+            console.log(e)
+        }
+        setShowTag(true);
     }
     SubFunction();
 
     const checkUserData = async (e) => {
-        return new Promise(async (resolve) => {
-            const id = e.target.value;
-            var url = process.env.REACT_APP_CEO_URL + "/user/detail"
-            try {
-                const a = await axios.post(url, { id: id },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    })
-                data = a.data.data
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-            setShowTag(true);
-            setIsClicked(true);
-        });
+        const id = e.target.value;
+        try {
+            const a = await axios.post(`${process.env.REACT_APP_CEO_URL}/user/detail`, { id: id },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                })
+            data = a.data.data
+        }
+        catch (e) {
+            console.log(e)
+        }
+        setShowTag(true);
+        setIsClicked(true);
     }
 
     const removeUser = async (e) => {
@@ -78,9 +70,8 @@ export default function UserData() {
 
     const userProductRemove = async (e) => {
         var id = e.target.value
-        var url = process.env.REACT_APP_CEO_URL + "/user/delete"
         try {
-            await axios.post(url, { id: id },
+            await axios.post(`${process.env.REACT_APP_CEO_URL}/user/delete`, { id: id },
                 {
                     headers: {
                         'Content-Type': 'application/json',

@@ -92,7 +92,6 @@ export default function Order() {
 
     const Detail = (e) => {
         check = e.target.value
-        console.log("check :- ", check)
         setDetail(true)
         setClicked(true)
     }
@@ -120,7 +119,6 @@ export default function Order() {
             console.log("first")
         }
         else {
-            console.log("second :- ", (fullName.length == 0 || house.length == 0))
             SubFunction();
         }
     }
@@ -159,7 +157,7 @@ export default function Order() {
                 </tr>
                 {showTag ? Data.map((product, count = 0) => {
                     if (count == check) {
-                        const {  quantity, productId, userId, price, status } = product
+                        const { quantity, productId, userId, price, status } = product
                         const { email } = userId
                         let counter = -1
                         return (
@@ -186,7 +184,6 @@ export default function Order() {
             </table> : <></>}
 
             {/* ========================================================================================================== */}
-
 
             {address ?
                 <div id={clicked ? 'show' : 'hide'}>

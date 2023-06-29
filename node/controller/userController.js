@@ -170,7 +170,6 @@ exports.detail = ('/user/detail', async (req, res, next) => {
 exports.order = ('/user/order', async (req, res, next) => {
     try {
         const data = await address.find({ _id: req.body.email })
-        console.log("Data :- ", data)
         res.status(200).json({
             message: "complete",
             data: data

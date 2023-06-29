@@ -30,8 +30,6 @@ exports.getAll = ('/admin', async (req, res, next) => {
 exports.add = ('/admin/add', async (req, res, next) => {
 
     try {
-        console.log('1', req.file)
-
         const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
 
@@ -50,7 +48,6 @@ exports.add = ('/admin/add', async (req, res, next) => {
             })
         }
         else {
-            console.log('2')
             res.status(200).json({
                 message: "complete fail",
             })
@@ -130,7 +127,6 @@ exports.update = ('/admin/update', async (req, res, next) => {
 
 
 exports.order = ('/admin/order', async (req, res, next) => {
-    console.log("Data 123:- ", req.body)
     try {
         const data = await address.find({ _id: req.body.email })
         res.status(200).json({

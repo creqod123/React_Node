@@ -90,7 +90,6 @@ export default function Order() {
 
     const addressUpdate = (e) => {
         id = e.target.value
-        console.log("Id :- ", id)
         setUpdateAddress(true)
     }
 
@@ -121,7 +120,6 @@ export default function Order() {
             console.log("first")
         }
         else {
-            console.log("second :- ", (fullName.length == 0 || house.length == 0))
             SubFunction();
         }
 

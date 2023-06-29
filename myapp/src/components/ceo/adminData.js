@@ -12,34 +12,28 @@ export default function AdminData() {
     const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
 
-    const SubFunction = () => {
-        return new Promise(async (resolve) => {
-            var url = process.env.REACT_APP_CEO_URL
-            try {
-                const a = await axios.get(url,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    })
-                adminData = a.data.seller
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-            setShowTag(true);
-        });
+    const SubFunction = async () => {
+        try {
+            const a = await axios.get(process.env.REACT_APP_CEO_URL,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                })
+            adminData = a.data.seller
+        }
+        catch (e) {
+            console.log(e)
+        }
+        setShowTag(true);
     }
 
     SubFunction();
     const checkAdminData = async (e) => {
-
         const id = e.target.value;
-        var url = process.env.REACT_APP_CEO_URL + "/admin/detail"
         try {
-            const a = await axios.post(url, { id: id },
+            const a = await axios.post(`${process.env.REACT_APP_CEO_URL}/admin/detail`, { id: id },
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -56,9 +50,8 @@ export default function AdminData() {
 
     const adminProdctRemove = async (e) => {
         const id = e.target.value;
-        var url = process.env.REACT_APP_CEO_URL + "/admin/productremove"
         try {
-            axios.post(url, { id: id },
+            axios.post(`${process.env.REACT_APP_CEO_URL}/admin/productremove`, { id: id },
                 {
                     headers: {
                         'Content-Type': 'application/json',

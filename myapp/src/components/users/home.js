@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { pageNation } from "../../Services/Actions/actions"
 
 let paginat = 0
+let hello123
 
 function Home(props) {
 
@@ -78,7 +79,7 @@ function Home(props) {
                             }
                         </td>
                         <td>
-                            Search  <input type="search" id="search" placeholder="Search product" onChange={hello} />
+                            Search  <input type="search" id="search" placeholder="Search product" onChange={hello} value={hello123}/>
                         </td>
                     </tr>
                 </table>

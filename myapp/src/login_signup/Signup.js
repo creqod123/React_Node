@@ -30,30 +30,25 @@ function SignUp() {
             res = await axios.post(process.env.REACT_APP_REGISTER_URL, {
                 email, password, conPassword, tel, type
             })
-            console.log("responde :- ",res)
             if (res.data.message === "Enter vaild email" || res.data.message === "email already exist") {
-                console.log("Email")
                 setCheckEmail(true)
                 setCheckPassword(false)
                 setCheckTel(false)
                 setCheckType(false)
             }
             else if (res.data.message === "Password_not_same") {
-                console.log("password")
                 setCheckEmail(false)
                 setCheckPassword(true)
                 setCheckTel(false)
                 setCheckType(false)
             }
             else if (res.data.message === "check number") {
-                console.log("Check tel")
                 setCheckEmail(false)
                 setCheckPassword(false)
                 setCheckTel(true)
                 setCheckType(false)
             }
             else if (res.data.message === "type") {
-                console.log("Check type")
                 setCheckEmail(false)
                 setCheckPassword(false)
                 setCheckTel(false)
