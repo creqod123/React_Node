@@ -43,8 +43,7 @@ function Cart() {
 
     const conformOrder = async () => {
         const id = localStorage.getItem("id")
-        const url = process.env.REACT_APP_USER_URL + "/checkout"
-        let formdata = new FormData()
+            let formdata = new FormData()
 
         let swap
         let counter = []
@@ -75,8 +74,9 @@ function Cart() {
         }
 
         formdata = [prop, email]
+
         try {
-            await axios.post(url, formdata,
+            await axios.post(`${process.env.REACT_APP_USER_URL}/checkout`, formdata,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -93,7 +93,6 @@ function Cart() {
         window.location.href = '/user/shop'
     }
 
-
     let swap
     let counter = []
 
@@ -105,6 +104,15 @@ function Cart() {
                 prop[i].cardData.quantity = prop[i].cardData.quantity + 1
                 prop.splice(j, 1)
                 j--
+            }
+        }
+    }
+    for (let k = 0; k < prop.length; k++) {
+        for (let l = k; l < prop.length; l++) {
+            if (prop[k].cardData._id >= prop[l].cardData._id) {
+                swap = prop[l]
+                prop[l] = prop[k]
+                prop[k] = swap
             }
         }
     }

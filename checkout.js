@@ -4,7 +4,6 @@
 const hello1 = async () => {
 
     const id = localStorage.getItem("id")
-    const url = process.env.REACT_APP_USER_URL + "/checkout"
     let formdata = new FormData()
 
     let swap
@@ -31,7 +30,7 @@ const hello1 = async () => {
     }
     formdata = [prop, email]
     try {
-        await axios.post(url, formdata,
+        await axios.post(`${process.env.REACT_APP_USER_URL}/checkout`, formdata,
             {
                 headers: {
                     'Content-Type': 'application/json',

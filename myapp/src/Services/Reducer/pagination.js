@@ -7,9 +7,8 @@ let paginat = []
 export default function getItem(state = [], action) {
     const pagination = (pageLength) => {
         return new Promise(async (resolve) => {
-            const url = process.env.REACT_APP_USER_URL
             try {
-                const a = await axios.post(url, { email: email, pageLength: pageLength, pageNumber: pageLength },
+                const a = await axios.post(process.env.REACT_APP_USER_URL, { email: email, pageLength: pageLength, pageNumber: pageLength },
                     {
                         headers: {
                             'Content-Type': 'application/json',

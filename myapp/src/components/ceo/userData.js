@@ -52,9 +52,8 @@ export default function UserData() {
 
     const removeUser = async (e) => {
         const id = e.target.value;
-        var url = process.env.REACT_APP_CEO_URL + "/user/delete"
         try {
-            await axios.post(url, { id: id },
+            await axios.post(`${process.env.REACT_APP_CEO_URL}/user/delete`, { id: id },
                 {
                     headers: {
                         'Content-Type': 'application/json',

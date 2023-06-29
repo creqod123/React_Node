@@ -35,6 +35,7 @@ function Home() {
         dispatch(pageNation(--paginat))
         const callReload = timeout
     }
+
     const forward = () => {
         setShowTag(false);
         dispatch(pageNation(++paginat))
@@ -61,12 +62,12 @@ function Home() {
                 Check123 = a.data.data
                 const timeout = setTimeout(() => {
                     setSearchData(true)
-                }, 2000);
+                }, 500);
             }
             else {
                 const timeout = setTimeout(() => {
                     setSearchData(false)
-                }, 2000);
+                }, 500);
             }
         }
         catch (e) {
