@@ -9,7 +9,6 @@ import Admincontrol from './components/admin/adminControl'
 import UserData from './components/ceo/userData';
 import AdminData from './components/ceo/adminData';
 import Order from './components/users/Order';
-import Hello from './components/users/extra';
 
 import Home from './components/users/home';
 import Cart from './components/users/cart';
@@ -29,7 +28,6 @@ function App() {
               <Route path='/user/shop' element={<Home />} />
               <Route path='/user/cart' element={<Cart />} />
               <Route path='/user/order' element={<Order />} />
-              <Route path='/user/extra' element={<Hello />} />
             </Routes>
           </Router>
         </div>

@@ -19,7 +19,7 @@ export default function getItem(state = [], action) {
                 )
                 paginat = a.data.data.data
                 paginat.push(a.data.data.totalPosts)
-            }
+                }
             catch (e) {
                 console.log(e)
             }

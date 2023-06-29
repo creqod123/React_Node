@@ -57,14 +57,21 @@ function Home() {
                 }
             )
             const check = a.data.data.length
-            if (check !== 0) {
+            if (check != 0) {
                 Check123 = a.data.data
+                const timeout = setTimeout(() => {
+                    setSearchData(true)
+                }, 2000);
+            }
+            else {
+                const timeout = setTimeout(() => {
+                    setSearchData(false)
+                }, 2000);
             }
         }
         catch (e) {
             console.log(e)
         }
-        setSearchData(true)
     }
 
     const add = (e) => {

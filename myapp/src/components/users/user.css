@@ -54,11 +54,10 @@
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
-  gap: 46px 55px;
+  gap: 50px 194px;
   position: absolute;
-  top: 75px;
-}
-
+  top: 100px;
+} 
 .i {
   display: flex;
   flex-wrap: wrap;
@@ -247,7 +246,8 @@
   transform: translate(-50%, -50%);
   border: 1px solid black;
   padding: 30px;
-  width: 20%;
+  width: 16%;
+  height: -moz-fit-content;
   height: fit-content;
   transition: all ease-in-out 0.3s;
 }

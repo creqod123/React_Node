@@ -90,7 +90,7 @@ function Cart() {
         counter.map((e) => prop.push(e))
         totalcost = 0
         total = 0
-        // window.location.href = '/user/shop'
+        window.location.href = '/user/shop'
     }
 
 
