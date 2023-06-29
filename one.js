@@ -1,78 +1,123 @@
-import axios from 'axios'
+import React from "react"
+import axios from "axios"
+import './user.css'
+import { useState } from 'react'
+import { useSelector, useDispatch } from "react-redux"
+import Spinner from 'react-bootstrap/Spinner';
+import { pageNation } from "../../Services/Actions/actions"
 
+let paginat = 0
 const email = localStorage.getItem("email")
-var token = localStorage.getItem("token")
-let paginat = []
-let search = []
-let check
+const token = localStorage.getItem("token")
+let Data
+let Check123
 
-export default function getItem(state = [], action) {
-    const pagination = (pageLength) => {
-        return new Promise(async (resolve) => {
-            const url = process.env.REACT_APP_USER_URL
-            try {
-                const a = await axios.post(url, { email: email, pageLength: pageLength, pageNumber: pageLength },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    }
-                )
-                paginat = a.data.data.data
-                paginat.push(a.data.data.totalPosts)
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-            console.log("second")
-        });
+function Home(props) {
+
+    const [showTag, setShowTag] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
+    const [searchData, setSearchData] = useState(false);
+
+    Data = useSelector((a) => a.getItem)
+
+    const dispatch = useDispatch()
+    dispatch(pageNation(paginat))
+
+    const totalLength = Data[Data.length - 1]
+    Data.pop()
+
+    const timeout = setTimeout(() => {
+        setShowTag(true);
+    }, 3500);
+
+    const previous = () => {
+        setShowTag(false);
+        dispatch(pageNation(--paginat))
+        const callReload = timeout
+    }
+    const forward = () => {
+        setShowTag(false);
+        dispatch(pageNation(++paginat))
+        const callReload = timeout
     }
 
-    const searching = async (message) => {
-        return new Promise(async (resolve) => {
-            try {
-                const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: message },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: token,
-                        },
-                    }
-                )
-                check = a.data.data.length
-                search = a.data.data
-            }
-            catch (e) {
-                console.log(e)
-            }
-            resolve();
-            console.log("First")
-        });
+    const BorderExample = () => {
+        return <Spinner animation="border" />;
     }
 
-    switch (action.type) {
-        case "PAGINATION":
-            {
-                const pageLength = action.data
-                pagination(pageLength)
-                return state = paginat
-            }
-        case "SEARCH":
-            {
-                searching(action.data)
-                if (check == 0) {
-                    return state = paginat
+    const hello = async () => {
+        setShowTag(false)
+
+        console.log("Check :- ", searchValue)
+        try {
+            const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: searchValue },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
                 }
-                else {
-                    return state = search
-                }
+            )
+            const check = a.data.data.length
+            if (check !== 0) {
+                Check123 = a.data.data
             }
-        default:
-            {
-                return state
-                break;
-            }
+            console.log("first :- ", Check123)
+        }
+        catch (e) {
+            console.log(e)
+        }
+        setSearchData(true)
     }
+
+
+    const showProduct = (props, product) => {
+        const { image, productName, price } = product
+        return (
+            <>
+                <div className="i">
+                    <div className="img-wrapper item">
+                        <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
+                    </div>
+                    <div className="text-wrapper item">
+                        <span>{productName}</span>
+                        <br />
+                        <span>Price ${price}</span>
+                    </div>
+                    <div className="button-wrapper item">
+                        <button value={product} onClick={() => props.addtoCartHandler(product)}>Add to cart</button>
+                    </div>
+                    <div className="button-wrapper item">
+                        <button value={product} onClick={() => props.RemovetoCartHandler(product)}>Remove</button>
+                    </div>
+                </div>
+            </>
+        )
+    }
+    return (
+        <div className="items position">
+            {searchData ? Check123.map((product) => showProduct(props, product)) : showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
+
+            <div id="pagination">
+                <table>
+                    <tr>
+                        <td>
+                            {
+                                paginat > 0 ? <th name="previous" onClick={previous}>{"<"}</th> : <th disabled>{"<"}</th>
+                            }
+                            {
+                                paginat < Math.floor(totalLength / 9) ? <th onClick={forward}>{">"}</th> : <th disabled>{">"}</th>
+                            }
+                        </td>
+                        <td>
+                            Search  <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                            <input type="submit" onClick={hello} />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    );
 }
+
+export default Home

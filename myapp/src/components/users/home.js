@@ -10,6 +10,7 @@ let paginat = 0
 const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let Data
+let Check123
 
 function Home(props) {
 
@@ -59,14 +60,14 @@ function Home(props) {
             )
             const check = a.data.data.length
             if (check !== 0) {
-                Data = a.data.data
+                Check123 = a.data.data
             }
-            console.log("first")
+            console.log("first :- ", Check123)
         }
         catch (e) {
             console.log(e)
         }
-        setShowTag(true)
+        setSearchData(true)
     }
 
 
@@ -84,19 +85,18 @@ function Home(props) {
                         <span>Price ${price}</span>
                     </div>
                     <div className="button-wrapper item">
-                        <button onClick={() => props.addtoCartHandler(product)}>Add to cart</button>
+                        <button value={product} onClick={() => props.addtoCartHandler(product)}>Add to cart</button>
                     </div>
                     <div className="button-wrapper item">
-                        <button onClick={() => props.RemovetoCartHandler(product)}>Remove</button>
+                        <button value={product} onClick={() => props.RemovetoCartHandler(product)}>Remove</button>
                     </div>
                 </div>
             </>
         )
     }
-    console.log("Data Data :- ", Data)
     return (
         <div className="items position">
-            {showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
+            {searchData ? Check123.map((product) => showProduct(props, product)) : showTag ? Data.map((product) => showProduct(props, product)) : <BorderExample />}
 
             <div id="pagination">
                 <table>
