@@ -3,19 +3,23 @@ import './user.css'
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
-import { pageNation } from "../../Services/Actions/actions"
+import { pageNation, searchProductData } from "../../Services/Actions/actions"
 
 let paginat = 0
-let hello123
 
 function Home(props) {
 
     const [showTag, setShowTag] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
+    const [searchData, setSearchData] = useState(false);
+
     const Data = useSelector((a) => a.getItem)
+
     const dispatch = useDispatch()
+    dispatch(pageNation(paginat))
+
     const totalLength = Data[Data.length - 1]
     Data.pop()
-    dispatch(pageNation(paginat))
 
     const timeout = setTimeout(() => {
         setShowTag(true);
@@ -36,8 +40,8 @@ function Home(props) {
         return <Spinner animation="border" />;
     }
 
-    const hello = (e) => {
-        console.log(e.target.value)
+    const hello = () => {
+        dispatch(searchProductData(searchValue))
     }
 
 
@@ -79,7 +83,8 @@ function Home(props) {
                             }
                         </td>
                         <td>
-                            Search  <input type="search" id="search" placeholder="Search product" onChange={hello} value={hello123}/>
+                            Search  <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                            <input type="submit" onClick={hello} />
                         </td>
                     </tr>
                 </table>

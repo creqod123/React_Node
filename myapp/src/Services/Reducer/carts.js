@@ -7,12 +7,12 @@ export default function cardItems(state = length, action) {
                 { cardData: action.data }
             ]
             break;
-            case "REMOVE_TO_CART":
+        case "REMOVE_TO_CART":
             var ID = action.data.ids
             if (state.length >= 0) {
                 for (var i = 0; i < state.length; i++) {
                     if (state[i].cardData.ids == ID) {
-                        var b = i   
+                        var b = i
                         state.splice(b, 1)
                         break;
                     }

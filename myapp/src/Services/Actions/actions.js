@@ -14,6 +14,13 @@ export const RemovetoCart = (data) => {
     }
 }
 
+export const searchProductData = (data) => {
+    return {
+        type: "SEARCH",
+        data: data
+    }
+}
+
 export const pageNation = (data) => {
     return {
         type: "PAGINATION",

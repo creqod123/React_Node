@@ -41,6 +41,7 @@ router.post('/user/checkout', verifyToken, userController.checkout)
 router.post('/user/order', verifyToken, userController.order);
 router.post('/user/detail', verifyToken, userController.detail);
 router.post('/user/orderupdate', verifyToken, userController.orderUpdate);
+router.post('/user/search', userController.search);
 
 //            ============ Controller by admin ============== 
 

@@ -198,3 +198,19 @@ exports.orderUpdate = ('/user/orderupdate', async (req, res, next) => {
         })
     }
 });
+
+// ============================= search order =========================== 
+
+exports.search = ('/user/search', async (req, res, next) => {
+    console.log("Check :- ",req.body.message)
+    try {
+        res.status(200).json({
+            message: "complete",
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});
