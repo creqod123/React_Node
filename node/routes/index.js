@@ -32,6 +32,7 @@ router.post('/admin/detail', verifyToken, adminController.detail);
 router.post('/admin/update', verifyToken, adminController.update);
 router.post('/admin/order', verifyToken, adminController.order);
 router.post('/admin/status', verifyToken, adminController.status);
+router.post('/admin/search', verifyToken, adminController.search);
 
 //            ============ User ============== 
 

@@ -8,20 +8,21 @@ const address = require('../models/address')
 
 exports.getAll = ('/user', async (req, res, next) => {
 
-    const email = req.body.email
-
-    const id = await register.find({ email: email })
-    const pageNumber = req.body.pageNumber;
-    const result = {};
-    const totalPosts = await adminProduct.countDocuments().exec();
-    let startIndex = pageNumber * 9;
-    result.totalPosts = totalPosts;
-    result.data = await adminProduct.find()
-        .sort("-_id")
-        .skip(startIndex)
-        .limit(9)
-        .exec();
     try {
+
+        const email = req.body.email
+
+        const id = await register.find({ email: email })
+        const pageNumber = req.body.pageNumber;
+        const result = {};
+        const totalPosts = await adminProduct.countDocuments().exec();
+        let startIndex = pageNumber * 9;
+        result.totalPosts = totalPosts;
+        result.data = await adminProduct.find()
+            .sort("-_id")
+            .skip(startIndex)
+            .limit(9)
+            .exec();
         res.status(200).json({
             message: "complete",
             data: result,
@@ -57,14 +58,13 @@ exports.userCart = ('/user/cart', async (req, res, next) => {
 // ============================= data checkout =========================== 
 
 exports.checkout = ('/user/checkout', async (req, res, next) => {
-    var userEmail = req.body[1]
-    const check = await register.find({ email: userEmail })
-    const userId = check[0]._id
-    const adminIdStore = []
-
 
     try {
-        var data = req.body[0]
+        const userEmail = req.body[1]
+        const check = await register.find({ email: userEmail })
+        const userId = check[0]._id
+        const adminIdStore = []
+        let data = req.body[0]
         const { fullName, house, area, city, pincode } = data[0].cardData
         const id = await address.create({
             fullName: fullName,
@@ -78,8 +78,8 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
             adminIdStore.push(product.cardData.adminId)
         })
 
-        for (var i = 0; i < adminIdStore.length; i++) {
-            for (var j = i + 1; j < adminIdStore.length; j++) {
+        for (let i = 0; i < adminIdStore.length; i++) {
+            for (let j = i + 1; j < adminIdStore.length; j++) {
                 if (adminIdStore[i] === adminIdStore[j]) {
                     adminIdStore.splice(j, 1)
                     j--
@@ -110,27 +110,6 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
             })
         })
 
-
-        // data.map(async (product) => {
-        //     const { quantity, _id, adminId, price, fullName, house, area, city, pincode } = product.cardData
-        //     const id = await address.create({
-        //         fullName: fullName,
-        //         house: house,
-        //         area: area,
-        //         city: city,
-        //         pincode: pincode
-        //     })
-        //     await checkout.create({
-        //         quantity: quantity,
-        //         price: price,
-        //         productId: _id,
-        //         userId: userId,
-        //         sellerId: adminId,
-        //         addressId: id._id,
-        //         status: "Pending"
-        //     })
-        // })
-
         res.status(200).json({
             message: "complete",
         })
@@ -147,11 +126,11 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
 
 exports.detail = ('/user/detail', async (req, res, next) => {
 
-    const id = await register.find({ email: req.body.email })
-    const find = id[0]._id
-    const data = await checkout.find({ userId: find }).populate('productId').populate('addressId').populate('userId')
 
     try {
+        const id = await register.find({ email: req.body.email })
+        const find = id[0]._id
+        const data = await checkout.find({ userId: find }).populate('productId').populate('addressId').populate('userId')
 
         res.status(200).json({
             message: "complete",
@@ -202,10 +181,18 @@ exports.orderUpdate = ('/user/orderupdate', async (req, res, next) => {
 // ============================= search order =========================== 
 
 exports.search = ('/user/search', async (req, res, next) => {
-
-    const message = req.body.message
-    const Data = await adminProduct.find({ productName: message })
     try {
+        const Data = {}
+        const pageNumber = req.body.paginat
+        const message = req.body.message
+        const totalPosts = await adminProduct.find({ productName: message }).countDocuments().exec();
+        let startIndex = pageNumber * 9;
+        Data.totalPosts = totalPosts;
+        Data.data = await adminProduct.find({ productName: message })
+            .sort("-_id")
+            .skip(startIndex)
+            .limit(9)
+            .exec();
         res.status(200).json({
             message: "complete",
             data: Data

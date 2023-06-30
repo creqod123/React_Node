@@ -50,9 +50,7 @@ export default function Order() {
     }
 
     const checkAddress = (e) => {
-
         const email = e.target.value
-
         const SubFunction = async () => {
             try {
                 var response = await fetch(`${process.env.REACT_APP_USER_URL}/order`, {
@@ -74,7 +72,7 @@ export default function Order() {
         SubFunction();
         const timeout = setTimeout(() => {
             setAddress(true)
-        }, 1000);
+        }, 100);
     }
 
     const handleInputUpdate = (check) => {

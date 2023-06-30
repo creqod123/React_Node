@@ -25,10 +25,10 @@ exports.getData = ('/ceo', async (req, res, next) => {
 
 exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
 
-    const id = req.body.id
-    const data = await checkout.find({ userId: id }, { quantity: 1, price: 1, productId: 1 }).populate('productId')
 
     try {
+        const id = req.body.id
+        const data = await checkout.find({ userId: id }, { quantity: 1, price: 1, productId: 1 }).populate('productId')
 
         res.status(200).json({
             message: "complete",
@@ -44,17 +44,17 @@ exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
 
 exports.userDelete = ('/ceo/user/delete', async (req, res, next) => {
 
-    const registerid = req.body.id
-    const a = await register.find({ _id: registerid })
-
-    if (a.length == 0) {
-        const a = await checkout.deleteOne({ productId: registerid })
-    }
-    else {
-        await checkout.deleteMany({ userId: registerid })
-        await register.deleteOne({ _id: registerid })
-    }
     try {
+        const registerid = req.body.id
+        const a = await register.find({ _id: registerid })
+
+        if (a.length == 0) {
+            const a = await checkout.deleteOne({ productId: registerid })
+        }
+        else {
+            await checkout.deleteMany({ userId: registerid })
+            await register.deleteOne({ _id: registerid })
+        }
         res.status(200).json({
             message: "complete",
         })
@@ -72,10 +72,9 @@ exports.userDelete = ('/ceo/user/delete', async (req, res, next) => {
 
 exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
 
-    const id = req.body.id
-    const data = await adminProduct.find({ adminId: id }, { _id: 1, productName: 1, price: 1 })
     try {
-
+        const id = req.body.id
+        const data = await adminProduct.find({ adminId: id }, { _id: 1, productName: 1, price: 1 })
         res.status(200).json({
             message: "complete",
             data: data,
@@ -90,8 +89,8 @@ exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
 
 exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
 
-    const id = req.body.id
     try {
+        const id = req.body.id
         const data = await register.find({ _id: id })
         if (data.length != 0) {
             await adminProduct.deleteOne({ adminId: id })

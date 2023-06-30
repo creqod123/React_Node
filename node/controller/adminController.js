@@ -7,11 +7,21 @@ const address = require('../models/address');
 // ============================= Admin get product =========================== 
 
 exports.getAll = ('/admin', async (req, res, next) => {
-    const email = req.body.email
+
     try {
+        const pageNumber = req.body.paginat
+        const email = req.body.email
+        const data = {};
         const objectid = await register.find({ email: req.body.email })
         const id = objectid[0]._id
-        const data = await adminProduct.find({ email: email })
+        const totalPosts = await adminProduct.find({ email: email }).countDocuments().exec();
+        let startIndex = pageNumber * 9;
+        data.totalPosts = totalPosts;
+        data.data = await adminProduct.find({ email: email })
+            .sort("-_id")
+            .skip(startIndex)
+            .limit(9)
+            .exec();
         res.status(200).json({
             message: "complete",
             data: data,
@@ -84,9 +94,9 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
 
 
 exports.detail = ('/admin/detail', async (req, res, next) => {
-    const check = await register.find({ email: req.body.email })
-    id = check[0]._id
     try {
+        const check = await register.find({ email: req.body.email })
+        id = check[0]._id
         var data = await checkout.find({ sellerId: id }).populate('productId').populate('userId').populate('addressId')
         res.status(200).json({
             message: "complete",
@@ -105,10 +115,10 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 
 exports.update = ('/admin/update', async (req, res, next) => {
 
-    const data = await register.find({ email: req.body.email })
-    await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
 
     try {
+        const data = await register.find({ email: req.body.email })
+        await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
         res.status(200).json({
             message: "complete",
         })
@@ -142,27 +152,54 @@ exports.order = ('/admin/order', async (req, res, next) => {
 
 
 exports.status = ('/admin/status', async (req, res, next) => {
-    const id = req.body.id
-    const status = req.body.status
-
-    if (status === 'conform') {
-        await checkout.updateOne({ _id: id }, { status: 'Conform' })
-    }
-    else {
-
-        const a = await checkout.find({ _id: id }).populate('addressId')
-        await checkout.deleteOne({ _id: id })
-        const check = a[0].addressId._id
-        const b = await checkout.find({ addressId: check })
-
-        if (b.length === 0) {
-            await address.deleteOne({ _id: check })
-        }
-    }
-
     try {
+        const id = req.body.id
+        const status = req.body.status
+
+        if (status === 'conform') {
+            await checkout.updateOne({ _id: id }, { status: 'Conform' })
+        }
+        else {
+
+            const a = await checkout.find({ _id: id }).populate('addressId')
+            await checkout.deleteOne({ _id: id })
+            const check = a[0].addressId._id
+            const b = await checkout.find({ addressId: check })
+
+            if (b.length === 0) {
+                await address.deleteOne({ _id: check })
+            }
+        }
         res.status(200).json({
             message: "complete",
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});
+
+// ============================= search added product =========================== 
+
+exports.search = ('/admin/search', async (req, res, next) => {
+    try {
+        const Data = {}
+        const pageNumber = req.body.paginat
+        const message = req.body.message
+        const email = req.body.email
+        const totalPosts = await adminProduct.find({ productName: message, email: email }).countDocuments().exec();
+        let startIndex = pageNumber * 9;
+        Data.totalPosts = totalPosts;
+        Data.data = await adminProduct.find({ productName: message, email: email })
+            .sort("-_id")
+            .skip(startIndex)
+            .limit(9)
+            .exec();
+        res.status(200).json({
+            message: "complete",
+            data: Data
         })
     }
     catch (error) {

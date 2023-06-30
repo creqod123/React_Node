@@ -11,69 +11,25 @@ const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let Data
 let Check123
+let searchPaginatIndex = 0
 
 function Home() {
 
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
+    const dispatch = useDispatch()
+
+    // ========================================================== Get Data, add and remove to cart ==================================================================
 
     Data = useSelector((a) => a.getItem)
-
-    const dispatch = useDispatch()
     dispatch(pageNation(paginat))
-    console.log("Pagination :- ",paginat)
     const totalLength = Data[Data.length - 1]
     Data.pop()
 
     const timeout = setTimeout(() => {
         setShowTag(true);
     }, 3500);
-
-    const previous = () => {
-        setShowTag(false);
-        dispatch(pageNation(--paginat))
-        const callReload = timeout
-    }
-
-    const forward = () => {
-        setShowTag(false);
-        dispatch(pageNation(++paginat))
-        const callReload = timeout
-    }
-
-    const BorderExample = () => {
-        return <Spinner animation="border" />;
-    }
-
-    const hello = async () => {
-        setShowTag(false)
-        try {
-            const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: searchValue },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        token: token,
-                    },
-                }
-            )
-            const check = a.data.data.length
-            if (check != 0) {
-                Check123 = a.data.data
-                const timeout = setTimeout(() => {
-                    setSearchData(true)
-                }, 500);
-            }
-            else {
-                const timeout = setTimeout(() => {
-                    setSearchData(false)
-                }, 500);
-            }
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }
 
     const add = (e) => {
         dispatch(addtoCart(JSON.parse(e.target.value)))
@@ -82,6 +38,74 @@ function Home() {
         dispatch(RemovetoCart(JSON.parse(e.target.value)))
     }
 
+    // ========================================================== Previous forward and spinner ==================================================================
+
+    const changePage = (check) => {
+
+        if (showTag === true) {
+            setShowTag(false)
+            if (check === "previous") {
+                dispatch(pageNation(--paginat))
+            }
+            else {
+                dispatch(pageNation(++paginat))
+            }
+            const callReload = timeout
+        }
+        else {
+            if (check === "previous") {
+                searchFun(--searchPaginatIndex)
+            }
+            else {
+                searchFun(++searchPaginatIndex)
+            }
+            const timeout = setTimeout(() => {
+                setSearchData(true);
+            }, 1000);
+        }
+    }
+
+    const BorderExample = () => {
+        return <Spinner animation="border" />;
+    }
+
+
+    // ========================================================== Search Function ==================================================================
+
+    const searchFun = async () => {
+        setShowTag(false)
+        setSearchData(false)
+        try {
+            const a = await axios.post(`${process.env.REACT_APP_USER_URL}/search`, { message: searchValue, paginat: searchPaginatIndex },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                }
+            )
+            console.log("Check :- ",a)
+            const check = a.data.data.length
+            if (check != 0) {
+                Check123 = a.data.data
+                const timeout = setTimeout(() => {
+                    setShowTag(false)
+                    setSearchData(true)
+                }, 500);
+            }
+            else {
+                const timeout = setTimeout(() => {
+                    setSearchData(false)
+                    setShowTag(true)
+                }, 500);
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    // ========================================================== Display All product ==================================================================
 
     const showProduct = (product) => {
         const { image, productName, price } = product
@@ -106,27 +130,22 @@ function Home() {
             </>
         )
     }
+
     return (
         <div className="items position">
             {searchData ? Check123.map((product) => showProduct(product)) : showTag ? Data.map((product) => showProduct(product)) : <BorderExample />}
 
             <div id="pagination">
-                <table>
-                    <tr>
-                        <td>
-                            {
-                                paginat > 0 ? <th name="previous" onClick={previous}>{"<"}</th> : <th disabled>{"<"}</th>
-                            }
-                            {
-                                paginat < Math.floor(totalLength / 9) ? <th onClick={forward}>{">"}</th> : <th disabled>{">"}</th>
-                            }
-                        </td>
-                        <td>
-                            Search  <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                            <input type="submit" onClick={hello} />
-                        </td>
-                    </tr>
-                </table>
+                {
+                    searchData ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
+                        : paginat > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
+                }
+                {
+                    searchData ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                        : paginat < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                }
+                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <input type="submit" onClick={searchFun} />
             </div>
         </div>
     );
