@@ -115,6 +115,7 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 
 exports.update = ('/admin/update', async (req, res, next) => {
 
+    console.log("Hello world")
 
     try {
         const data = await register.find({ email: req.body.email })

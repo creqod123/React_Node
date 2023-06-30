@@ -72,10 +72,10 @@ export default function Adminproduct() {
     }
 
     const update = async (e) => {
-        if (productName === '' || price === '') {
-            return (" ")
-        }
         try {
+            if (productName === '' || price === '') {
+                return (" ")
+            }
             await axios.post(`${process.env.REACT_APP_ADMIN_URL} /update`, { email: email, productName: productName, price: price }, {
                 headers: {
                     'Content-Type': 'application/json',

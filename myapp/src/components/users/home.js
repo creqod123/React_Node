@@ -18,11 +18,11 @@ function Home() {
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
-    const dispatch = useDispatch()
-
+    
     // ========================================================== Get Data, add and remove to cart ==================================================================
-
+    
     Data = useSelector((a) => a.getItem)
+    const dispatch = useDispatch()
     dispatch(pageNation(paginat))
     const totalLength = Data[Data.length - 1]
     Data.pop()
@@ -69,7 +69,6 @@ function Home() {
         return <Spinner animation="border" />;
     }
 
-
     // ========================================================== Search Function ==================================================================
 
     const searchFun = async () => {
@@ -84,10 +83,10 @@ function Home() {
                     },
                 }
             )
-            console.log("Check :- ",a)
-            const check = a.data.data.length
+            console.log("Check :- ", a)
+            const check = a.data.data.data.length
             if (check != 0) {
-                Check123 = a.data.data
+                Check123 = a.data.data.data
                 const timeout = setTimeout(() => {
                     setShowTag(false)
                     setSearchData(true)
