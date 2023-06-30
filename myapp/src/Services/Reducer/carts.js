@@ -15,8 +15,7 @@ export default function cardItems(state = length, action) {
                     del = property
                     break
                 }
-                else
-                {
+                else {
                     del = null
                 }
             }

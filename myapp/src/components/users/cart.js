@@ -43,7 +43,7 @@ function Cart() {
 
     const conformOrder = async () => {
         const id = localStorage.getItem("id")
-            let formdata = new FormData()
+        let formdata = new FormData()
 
         let swap
         let counter = []
@@ -63,6 +63,8 @@ function Cart() {
                 }
             }
         }
+
+
         for (let k = 0; k < prop.length; k++) {
             for (let l = k; l < prop.length; l++) {
                 if (prop[k].cardData._id >= prop[l].cardData._id) {
@@ -72,6 +74,7 @@ function Cart() {
                 }
             }
         }
+
 
         formdata = [prop, email]
 

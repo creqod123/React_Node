@@ -11,6 +11,7 @@ export default function UserData() {
 
     let [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
+    const [detail, setDetail] = useState(false)
 
 
     const SubFunction = async () => {
@@ -101,26 +102,36 @@ export default function UserData() {
                 <div id='userdetailshow2'>
                     <table id='getss'>
                         <tr>
-                            <td>No.1</td>
+                            <td>S.R no</td>
                             <td>product Name</td>
                             <td>price</td>
                             <td>qantity</td>
-                            <td>total</td>
                         </tr>
                         {
                             0 !== data.length ?
-                                data.map((user, counter = 0) => {
-                                    counter += 1
-                                    const { productName, _id } = user.productId
+                                data.map((user) => {
                                     const { quantity, price } = user
+                                    const loop = user.productId
+                                    let count = -1
+                                    let counter = 0
                                     return (
-                                        <tr>
-                                            <td>{counter}</td>
-                                            <td>{productName}</td>
-                                            <td>{price}</td>
-                                            <td>{quantity}</td>
-                                            <td><button value={_id} onClick={e => userProductRemove(e)}>Remove</button></td>
-                                        </tr>
+                                        <>
+                                            {
+                                                loop.map((product) => {
+                                                    ++count
+                                                    const { productName, _id } = product
+                                                    return (
+                                                        <tr>
+                                                            <td>{++counter}</td>
+                                                            <td>{productName}</td>
+                                                            <td>{price[count]}</td>
+                                                            <td>{quantity[count]}</td>
+                                                            <td><button value={_id} onClick={e => userProductRemove(e)}>Remove</button></td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </>
                                     )
                                 }) : <h1>Product not order </h1>
                         }
