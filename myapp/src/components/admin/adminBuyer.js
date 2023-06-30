@@ -142,7 +142,7 @@ export default function Adminbuyer() {
                     const { email } = userId
                     return (
                         <tr>
-                            <td>{counter+1}</td>
+                            <td>{counter + 1}</td>
                             <td>{email.slice(0, -10)}</td>
                             <td>{status}</td>
                             <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>

@@ -22,7 +22,7 @@ function Home() {
 
     const dispatch = useDispatch()
     dispatch(pageNation(paginat))
-
+    console.log("Pagination :- ",paginat)
     const totalLength = Data[Data.length - 1]
     Data.pop()
 
