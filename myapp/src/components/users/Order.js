@@ -20,6 +20,7 @@ export default function Order() {
     const [city, setCity] = useState('');
     const [pincode, setPincode] = useState('');
     const [detail, setDetail] = useState(false)
+    const [searchValue, setSearchValue] = useState('');
 
     const SubFunction = async () => {
         try {
@@ -121,8 +122,20 @@ export default function Order() {
         }
     }
 
+
+    // ============================================================================================
+
+    const searchFun = () => {
+
+    }
+
+
     return (
         <div className='adminshow' >
+
+            {/* <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} /> */}
+            {/* <input type="submit" onClick={searchFun} /> */}
+
             {clicked ? <></> : <table>
                 <tr>
                     <th>Email</th>
