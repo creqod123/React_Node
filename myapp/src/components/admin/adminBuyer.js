@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
 let Data = []
+let searchData = []
 let check
 let order = []
 let email = localStorage.getItem("email")
@@ -14,8 +15,10 @@ export default function Adminbuyer() {
     const [address, setAddress] = useState(false);
     const [clicked, setClicked] = useState(false);
     const [detail, setDetail] = useState(false)
+    const [searchValue, setSearchValue] = useState('')
+    const [showSearchValue, setshowSearchValue] = useState('')
 
-    const SubFunction = async () => {
+    const SubFunction = async (check) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_ADMIN_URL}/detail`, {
                 method: 'POST',
@@ -23,20 +26,29 @@ export default function Adminbuyer() {
                     'Content-Type': 'application/json',
                     token: token,
                 },
-                body: JSON.stringify({ email: email }),
+                body: JSON.stringify({ email: check }),
             })
             const data = await response.json();
-            Data = data.data
+
+            if (data.message !== "fail") {
+                Data = data.data
+                searchData = Data
+            }
+            else {
+                setShowTag(true)
+                setshowSearchValue(false)
+            }
+
         }
         catch (e) {
             console.log(e)
         }
     }
-
-    SubFunction();
+    SubFunction(email);
     const timeout = setTimeout(() => {
         setShowTag(true)
     }, 1000);
+
 
     const BorderExample = () => {
 
@@ -64,9 +76,11 @@ export default function Adminbuyer() {
             setClicked(true)
         }
         SubFunction();
+
         const timeout = setTimeout(() => {
             setAddress(true)
-        }, 1000);
+        }, 500);
+
     }
 
 
@@ -123,35 +137,66 @@ export default function Adminbuyer() {
         SubFunction();
     }
 
+    const searchFun = () => {
+        setShowTag(false)
+        setshowSearchValue(true)
+        SubFunction(`${searchValue}@gmail.com`);
+    }
+
 
     return (
         <div className='adminshow' >
+            <div className='SearchBuyer'>
+                <button disabled>{"<"}</button>
+                <button disabled>{">"}</button>
+                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <input type="submit" onClick={searchFun} />
+            </div>
             {clicked ? <></> : <table>
                 <tr>
                     <th>No.</th>
-                    <th>Email</th>
+                    <th>Username</th>
                     <th>status</th>
                     <th>Conform</th>
                     <th>Delete</th>
                     <th>Address</th>
                     <th>Detail</th>
                 </tr>
-                {showTag ? Data.map((product, counter = 0) => {
-                    const { _id, quantity, productId, userId, price, status } = product
-                    const { productName } = productId
-                    const { email } = userId
-                    return (
-                        <tr>
-                            <td>{counter + 1}</td>
-                            <td>{email.slice(0, -10)}</td>
-                            <td>{status}</td>
-                            <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
-                            <td><button value={product._id} onClick={del}>Delete</button></td>
-                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                            <td><button value={counter++} onClick={Detail}>Detail</button></td>
-                        </tr>
-                    )
-                }) : <BorderExample />}
+                {showSearchValue
+                    ? showSearchValue ? searchData.map((product, counter = 0) => {
+                        const { _id, quantity, productId, userId, price, status } = product
+                        const { productName } = productId
+                        const { email } = userId
+                        return (
+                            <tr>
+                                <td>{counter + 1}</td>
+                                <td>{email.slice(0, -10)}</td>
+                                <td>{status}</td>
+                                <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
+                                <td><button value={product._id} onClick={del}>Delete</button></td>
+                                <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                                <td><button value={counter++} onClick={Detail}>Detail</button></td>
+                            </tr>
+                        )
+                    }) : <BorderExample />
+
+                    : showTag ? Data.map((product, counter = 0) => {
+                        const { _id, quantity, productId, userId, price, status } = product
+                        const { productName } = productId
+                        const { email } = userId
+                        return (
+                            <tr>
+                                <td>{counter + 1}</td>
+                                <td>{email.slice(0, -10)}</td>
+                                <td>{status}</td>
+                                <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
+                                <td><button value={product._id} onClick={del}>Delete</button></td>
+                                <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                                <td><button value={counter++} onClick={Detail}>Detail</button></td>
+                            </tr>
+                        )
+                    }) : <BorderExample />
+                }
             </table>}
 
             {/* =========================================================================================================================== */}
@@ -166,6 +211,7 @@ export default function Adminbuyer() {
                 </tr>
                 {showTag ? Data.map((product, count = 0) => {
                     if (count == check) {
+                        console.log("Product :- ", product)
                         const { _id, quantity, productId, userId, price, status } = product
                         const { email } = userId
                         let counter = -1

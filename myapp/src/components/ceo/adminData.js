@@ -3,14 +3,17 @@ import './ceo.css'
 import { useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
-var data = []
-var adminData = []
-var token = localStorage.getItem("token")
+let data = []
+let adminData = []
+const token = localStorage.getItem("token")
+let searchData = []
 
 export default function AdminData() {
 
     const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
+    const [searchValue, setSearchValue] = useState('')
+    const [showSearchValue, setshowSearchValue] = useState(false)
 
     const SubFunction = async () => {
         try {
@@ -26,10 +29,13 @@ export default function AdminData() {
         catch (e) {
             console.log(e)
         }
-        setShowTag(true);
     }
 
     SubFunction();
+    const timeout = setTimeout(() => {
+        setShowTag(true);
+    }, 3000);
+
     const checkAdminData = async (e) => {
         const id = e.target.value;
         try {
@@ -72,8 +78,50 @@ export default function AdminData() {
         return <Spinner animation="border" className='helloworld' variant="primary" />;
     }
 
+    const searchFun = () => {
+        const SubFunction = async () => {
+            searchData = []
+            try {
+                const checkEmail = `${searchValue}@gmail.com`
+                const a = await fetch(`${process.env.REACT_APP_CEO_URL}/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ email: checkEmail }),
+                })
+
+                const data = await a.json()
+                if (data.data == null) {
+                    setshowSearchValue(false)
+                    setShowTag(true)
+                }
+                else {
+                    searchData.push(data.data)
+                    setShowTag(false)
+                    const timeout2 = setTimeout(() => {
+                        setshowSearchValue(true)
+                    }, 4000);
+                }
+
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+
+        SubFunction();
+    }
+
     return (
         <div className='adminshow' >
+            <div className='SearchCeo'>
+                <button disabled>{"<"}</button>
+                <button disabled>{">"}</button>
+                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <input type="submit" onClick={searchFun} />
+            </div>
             <div id='userdetailshow1' className={isClicked ? 'show' : 'hide'}>
                 <div id='userdetailclose'>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' alt='img' onClick={handleClick} />
@@ -108,25 +156,42 @@ export default function AdminData() {
                 <tr>
                     <th>No.</th>
                     <th>Username</th>
-                    <th>Mobile No.</th>
+                    <th style={showSearchValue ? { display: "none" } : { display: "block" }}>Mobile No.</th>
                     <th>Product</th>
                     <th>Delete</th>
                 </tr>
                 {
-                    showTag ?
-                        adminData.map((admin, counter = 0) => {
-                            counter += 1
-                            const { email, tel, _id } = admin
-                            return (
-                                <tr>
-                                    <td>{counter}</td>
-                                    <td>{email.slice(0, -10)}</td>
-                                    <td>{tel}</td>
-                                    <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
-                                    <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
-                                </tr>
-                            )
-                        }) : <BorderExample />
+                    showSearchValue
+                        ? showSearchValue ?
+                            searchData.map((admin, counter = 0) => {
+                                counter += 1
+                                console.log("dasd :- ", admin)
+                                const { email, tel, _id } = admin
+                                return (
+                                    <tr>
+                                        <td>{counter}</td>
+                                        <td>{email.slice(0, -10)}</td>
+                                        <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
+                                        <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
+                                    </tr>
+                                )
+                            }) : <BorderExample />
+
+
+                        : showTag ?
+                            adminData.map((admin, counter = 0) => {
+                                counter += 1
+                                const { email, tel, _id } = admin
+                                return (
+                                    <tr>
+                                        <td>{counter}</td>
+                                        <td>{email.slice(0, -10)}</td>
+                                        <td>{tel}</td>
+                                        <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
+                                        <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
+                                    </tr>
+                                )
+                            }) : <BorderExample />
                 }
             </table>
         </div>

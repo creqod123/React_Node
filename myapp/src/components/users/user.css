@@ -290,8 +290,13 @@
   background-color: white;
 }
 
-
-#search{
-  /* border: 1px solid black; */
-  padding: 5px;
+.tableSearch {
+  position: absolute;
+  top: -38%;
+  width: 115%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.tableSearch input{
+  padding: 4px;
 }

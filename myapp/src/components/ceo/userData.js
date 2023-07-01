@@ -3,16 +3,17 @@ import './ceo.css'
 import { useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
-var userdatas = []
-var data = []
-var token = localStorage.getItem("token")
+const token = localStorage.getItem("token")
+let userdatas = []
+let data = []
+let searchData = []
 
 export default function UserData() {
 
-    let [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
-    const [detail, setDetail] = useState(false)
-
+    const [searchValue, setSearchValue] = useState('')
+    const [showSearchValue, setshowSearchValue] = useState(false)
 
     const SubFunction = async () => {
         try {
@@ -28,9 +29,12 @@ export default function UserData() {
         catch (e) {
             console.log(e)
         }
-        setShowTag(true);
     }
     SubFunction();
+    const timeout = setTimeout(() => {
+        setShowTag(true)
+    }, 3000);
+
 
     const checkUserData = async (e) => {
         const id = e.target.value;
@@ -47,7 +51,6 @@ export default function UserData() {
         catch (e) {
             console.log(e)
         }
-        setShowTag(true);
         setIsClicked(true);
     }
 
@@ -93,8 +96,48 @@ export default function UserData() {
         return <Spinner animation="border" className='helloworld' variant="primary" />;
     }
 
+    const searchFun = () => {
+        const SubFunction = async () => {
+            try {
+                const checkEmail = `${searchValue}@gmail.com`
+                const a = await fetch(`${process.env.REACT_APP_CEO_URL}/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                    body: JSON.stringify({ email: checkEmail }),
+                })
+                const data = await a.json()
+                searchData = data.data
+                if (searchData == null) {
+                    setshowSearchValue(false)
+                    setShowTag(true)
+                }
+                else {
+                    setShowTag(false)
+                    const timeout = setTimeout(() => {
+                        setshowSearchValue(true)
+                    }, 3000);
+                }
+
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+
+        SubFunction();
+    }
+
     return (
         <div className='adminshow' >
+            <div className='SearchCeo'>
+            <button disabled>{"<"}</button>
+                <button disabled>{">"}</button>
+                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <input type="submit" onClick={searchFun} />
+            </div>
             <div id='userdetailshow1' className={isClicked ? 'show' : 'hide'}>
                 <div id='userdetailclose'>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' alt='img' onClick={handleClick} />
@@ -147,20 +190,41 @@ export default function UserData() {
                     <th>Block</th>
                 </tr>
                 {
-                    showTag ?
-                        userdatas.map((user, counter = 0) => {
-                            counter += 1
-                            const { email, tel, _id } = user
-                            return (
-                                <tr>
-                                    <td>{counter}</td>
-                                    <td>{email.slice(0, -10)}</td>
-                                    <td>{tel}</td>
-                                    <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
-                                    <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
-                                </tr>
-                            )
-                        }) : <BorderExample />
+
+                    showSearchValue ?
+                        showSearchValue ?
+                            searchData.map((user, counter = 0) => {
+                                counter += 1
+                                console.log("dasdasd :- ",user)
+                                const { userId } = user
+                                const { email, tel, _id } = userId
+                                if (counter === 1) {
+                                    return (
+                                        <tr>
+                                            <td>{counter}</td>
+                                            <td>{email.slice(0, -10)}</td>
+                                            <td>{tel}</td>
+                                            <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
+                                            <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
+
+                                        </tr>
+                                    )
+                                }
+                            }) : <BorderExample />
+                        : showTag ?
+                            userdatas.map((user, counter = 0) => {
+                                counter += 1
+                                const { email, tel, _id } = user
+                                return (
+                                    <tr>
+                                        <td>{counter}</td>
+                                        <td>{email.slice(0, -10)}</td>
+                                        <td>{tel}</td>
+                                        <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
+                                        <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
+                                    </tr>
+                                )
+                            }) : <BorderExample />
                 }
             </table>
         </div>

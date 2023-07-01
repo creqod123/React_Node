@@ -132,9 +132,12 @@ export default function Order() {
 
     return (
         <div className='adminshow' >
-
-            {/* <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} /> */}
-            {/* <input type="submit" onClick={searchFun} /> */}
+            <div className='tableSearch'>
+                <button disabled>{"<"}</button>
+                <button disabled>{">"}</button>
+                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <input type="submit" onClick={searchFun} />
+            </div>
 
             {clicked ? <></> : <table>
                 <tr>

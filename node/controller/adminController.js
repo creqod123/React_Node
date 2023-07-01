@@ -3,10 +3,12 @@ const adminProduct = require('../models/adminProduct')
 const register = require('../models/register')
 const checkout = require('../models/checkout');
 const address = require('../models/address');
-
+let emailDetail
 // ============================= Admin get product =========================== 
 
 exports.getAll = ('/admin', async (req, res, next) => {
+
+    console.log("Email :- ", req.body.email)
 
     try {
         const pageNumber = req.body.paginat
@@ -94,15 +96,29 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
 
 
 exports.detail = ('/admin/detail', async (req, res, next) => {
+
     try {
         const check = await register.find({ email: req.body.email })
-        id = check[0]._id
-        var data = await checkout.find({ sellerId: id }).populate('productId').populate('userId').populate('addressId')
-        res.status(200).json({
-            message: "complete",
-            data: data,
-        })
+        if (check[0].type === "user") {
+
+            const id = check[0]._id
+            const data = await checkout.find({ userId: id, sellerId: emailDetail }).populate('productId').populate('userId').populate('addressId')
+            res.status(200).json({
+                message: "complete",
+                data: data,
+            })
+        }
+        else {
+            emailDetail = check[0]._id
+            const id = check[0]._id
+            const data = await checkout.find({ sellerId: id }).populate('productId').populate('userId').populate('addressId')
+            res.status(200).json({
+                message: "complete",
+                data: data,
+            })
+        }
     }
+
     catch (error) {
         res.status(404).json({
             message: "fail",

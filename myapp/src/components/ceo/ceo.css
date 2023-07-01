@@ -59,3 +59,11 @@ button {
     opacity: 0;
     transition: all ease-in-out 0.5s;
 }
+
+.SearchCeo {
+    position: absolute;
+    top: -86px;
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+}

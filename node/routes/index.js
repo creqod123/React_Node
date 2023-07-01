@@ -47,12 +47,12 @@ router.post('/user/search', userController.search);
 //            ============ Controller by admin ============== 
 
 router.get('/ceo', verifyToken, ceoController.getData)
-
 router.post('/ceo/user/detail', verifyToken, ceoController.userDetail)
 router.post('/ceo/user/delete', verifyToken, ceoController.userDelete)
 
 router.post('/ceo/admin/detail', verifyToken, ceoController.adminDetail)
 router.post('/ceo/admin/productremove', verifyToken, ceoController.productRemove)
+router.post('/ceo/search', verifyToken, ceoController.searchData)
 
 //            ============ Get image ============== 
 

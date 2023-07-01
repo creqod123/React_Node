@@ -113,3 +113,30 @@ exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
     }
 });
 
+exports.searchData = ('/ceo/search', async (req, res, next) => {
+    try {
+        const check = await register.find({ email: req.body.email })
+        const id = check[0]._id
+        console.log("id :- ", id)
+        const checkType = check[0].type
+        if (checkType === "user") {
+            const data = await checkout.find({ userId: id }).populate('userId')
+            res.status(200).json({
+                message: "complete",
+                data: data
+            })
+        }
+        else {
+            const data = await adminProduct.find({ adminId: id })
+            res.status(200).json({
+                message: "complete",
+                data: data[0]
+            })
+        }
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "complete fail",
+        })
+    }
+});

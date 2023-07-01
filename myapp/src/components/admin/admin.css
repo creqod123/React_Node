@@ -261,3 +261,11 @@ table tr td {
     transition: all ease-in-out 0.5s;
     opacity: 1;
 }
+
+.SearchBuyer {
+    position: absolute;
+    top: -86px;
+    width: 60%;
+    display: flex;
+    justify-content: space-evenly;
+}
