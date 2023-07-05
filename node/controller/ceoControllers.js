@@ -117,7 +117,6 @@ exports.searchData = ('/ceo/search', async (req, res, next) => {
     try {
         const check = await register.find({ email: req.body.email })
         const id = check[0]._id
-        console.log("id :- ", id)
         const checkType = check[0].type
         if (checkType === "user") {
             const data = await checkout.find({ userId: id }).populate('userId')

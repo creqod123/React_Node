@@ -115,7 +115,6 @@ export default function Order() {
         }
 
         if (fullName.length == 0 || house.length == 0 || area.length == 0 || city.length == 0 || pincode.length == 0) {
-            console.log("first")
         }
         else {
             SubFunction();

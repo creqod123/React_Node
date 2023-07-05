@@ -27,7 +27,6 @@ export default function Adminproduct() {
 
     const socket = io.connect("http://localhost:4200")
     socket.on("hello", (arg) => {
-        console.log("check 1 :- ", arg)
     });
 
 

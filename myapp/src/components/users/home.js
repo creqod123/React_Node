@@ -83,7 +83,6 @@ function Home() {
                     },
                 }
             )
-            console.log("Check :- ", a)
             const check = a.data.data.data.length
             if (check != 0) {
                 Check123 = a.data.data.data

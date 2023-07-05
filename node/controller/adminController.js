@@ -129,8 +129,6 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 
 exports.update = ('/admin/update', async (req, res, next) => {
 
-    console.log("Hello world")
-
     try {
         const data = await register.find({ email: req.body.email })
         await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })

@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { useEffect } from "react";
 import Login from './login_signup/Login'
 import SignUp from './login_signup/Signup';
 import Adminproduct from './components/admin/adminProduct'
@@ -14,9 +14,19 @@ import Home from './components/users/home';
 import Cart from './components/users/cart';
 import Navbar from './components/navbar/navbar'
 
-function App() {
+function App(props) {
 
   var email = localStorage.getItem("email")
+
+  useEffect(() => {
+    if (props.socket) {
+      props.socket.on('hello', res => {
+        console.log('Check res :- ', res);
+      })
+    }
+  }, [])
+
+
   if (email != null) {
     var type = localStorage.getItem("type")
     if (type === "user") {

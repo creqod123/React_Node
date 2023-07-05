@@ -165,7 +165,6 @@ export default function AdminData() {
                         ? showSearchValue ?
                             searchData.map((admin, counter = 0) => {
                                 counter += 1
-                                console.log("dasd :- ", admin)
                                 const { email, tel, _id } = admin
                                 return (
                                     <tr>

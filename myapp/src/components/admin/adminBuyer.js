@@ -211,7 +211,6 @@ export default function Adminbuyer() {
                 </tr>
                 {showTag ? Data.map((product, count = 0) => {
                     if (count == check) {
-                        console.log("Product :- ", product)
                         const { _id, quantity, productId, userId, price, status } = product
                         const { email } = userId
                         let counter = -1
