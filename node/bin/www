@@ -2,11 +2,9 @@ var app = require('../app');
 var debug = require('debug')('exam:server');
 var http = require('http');
 
-const { Server } = require('socket.io')    
+const { Server } = require('socket.io')
 
 const cors = require('cors');
-const socket = require('../socket/script')                      // -----------------------------
-
 var port = normalizePort(process.env.PORT || '4200');
 app.set('port', port);
 app.use(cors());
@@ -22,12 +20,8 @@ const io = new Server(server, {
 })
 
 io.on("connection", (socket) => {
-  console.log(`New user connected id ${socket.id}`)
-  socket.emit("hello", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  socket.on("disconnect", () => {
-    console.log("User disconnect ", socket.id)
-    socket.disconnect()
-  })
+  console.log(`New user connected id ${socket}`)
+  socket.emit("hello", [1, 2, 3, 4, 5]);
 })
 
 // ============================================================
