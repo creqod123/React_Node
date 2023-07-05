@@ -18,9 +18,9 @@ function Home() {
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
-    
+
     // ========================================================== Get Data, add and remove to cart ==================================================================
-    
+
     Data = useSelector((a) => a.getItem)
     const dispatch = useDispatch()
     dispatch(pageNation(paginat))

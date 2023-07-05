@@ -2,6 +2,7 @@ import './admin.css'
 import { useState, useEffect } from "react"
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
+import { io } from "socket.io-client";
 
 
 var email = localStorage.getItem("email");
@@ -22,6 +23,13 @@ export default function Adminproduct() {
     const [searchApi, setSearchApi] = useState('');
     const [searchProduct, setSearchProduct] = useState(false);
     const [image, setImage] = useState('')
+
+
+    const socket = io.connect("http://localhost:4200")
+    socket.on("hello", (arg) => {
+        console.log("check 1 :- ", arg)
+    });
+
 
     // ============================================ All Product get ===================================================== 
 

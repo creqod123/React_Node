@@ -14,13 +14,13 @@ function SignUp() {
     const [CheckPassword, setCheckPassword] = useState(false)
     const [CheckTel, setCheckTel] = useState(false)
     const [CheckType, setCheckType] = useState(false)
-    
-    
+
+
     
     // const [CheckConPassword, setCheckConPassword] = useState(false)
 
-    
-    
+
+
     const pass = { Enter_Password: 'Enter Password', Password_not_same: 'Password not same', Password_Length: 'Password Length' }
 
     const submit = async (e) => {

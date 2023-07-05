@@ -31,7 +31,7 @@ exports.getAll = ('/user', async (req, res, next) => {
     }
     catch (error) {
         res.status(404).json({
-            message: "complete fail",
+            message: "complete fail",   
         })
     }
 

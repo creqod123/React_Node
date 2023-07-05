@@ -13,7 +13,7 @@ exports.register = ('/register', async function (req, res, next) {
         const { email, password, conPassword, tel, type } = req.body
         const pass = await bcrypt.hash(password, saltRounds)
         const check = await register.findOne({ email: email })
-
+        
         const data = {
             email: email,
             password: pass,

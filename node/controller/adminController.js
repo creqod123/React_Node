@@ -9,7 +9,6 @@ let emailDetail
 exports.getAll = ('/admin', async (req, res, next) => {
 
     console.log("Email :- ", req.body.email)
-
     try {
         const pageNumber = req.body.paginat
         const email = req.body.email
@@ -98,6 +97,9 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
 exports.detail = ('/admin/detail', async (req, res, next) => {
 
     try {
+
+        // io.emit('register', "Hello world");         //----------------------------- 
+
         const check = await register.find({ email: req.body.email })
         if (check[0].type === "user") {
 
