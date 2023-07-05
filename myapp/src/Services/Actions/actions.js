@@ -20,3 +20,4 @@ export const pageNation = (data) => {
         data: data
     }
 }
+

@@ -18,15 +18,6 @@ function App(props) {
 
   var email = localStorage.getItem("email")
 
-  useEffect(() => {
-    if (props.socket) {
-      props.socket.on('hello', res => {
-        console.log('Check res :- ', res.data);
-      })
-    }
-  }, [])
-
-
   if (email != null) {
     var type = localStorage.getItem("type")
     if (type === "user") {
@@ -49,10 +40,9 @@ function App(props) {
           <Router>
             <Navbar />
             <Routes>
-              <Route path='/admin/product' element={<Adminproduct />} />
+              <Route path='/admin/product' element={<Adminproduct props={props} />} />
               <Route path='/admin/detail' element={<Adminbuyer />} />
               <Route path='/admin/control' element={<Admincontrol />} />
-
             </Routes>
           </Router>
         </div>

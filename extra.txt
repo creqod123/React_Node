@@ -24,19 +24,22 @@ const timer = setTimeout(() => {
 function myGreeting() {
 }
 
-==================================================================================================================================================
+=================== get socket data from react ===================
 
-{
-  "_id": {
-    "$oid": "648c31e21b5f514f9325639a"
-  },
-  "ids": 1,
-  "image": "image-1686909409807-439574699.png",
-  "email": "helloworld@gmail.com",
-  "productName": "mobile",
-  "price": 60000,
-  "adminId": {
-    "$oid": "6482e35a24b977adab7aa03c"
-  },
-  "__v": 0
+useEffect(() => {
+    if (props.socket) {
+        props.socket.on('hello', res => {
+            console.log('Check res :- ', res);
+        })
+    }
+}, [])
+
+=================== create and get socket data in nodejs  ===================
+
+exports.try = (event, data) => {                  //Create socket
+    global.io.emit(event, mapData(data))
 }
+
+const socket = require('../socket/index');
+const a = socket.try(event, data);
+==================================================================================================================================================

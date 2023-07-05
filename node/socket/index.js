@@ -9,8 +9,8 @@ const mapData = (data, message = '') => {
 }
 
 exports.init = () => {
-
     global.io.on('connection', (socket) => {
+        console.log("Token :- ", socket.handshake.query.token)
         console.log('user connected - ' + socket.id)
     })
 }

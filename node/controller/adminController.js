@@ -10,9 +10,7 @@ let emailDetail
 exports.getAll = ('/admin', async (req, res, next) => {
 
     try {
-
-        const a = socket.try('hello', "Hello world");
-        console.log("Check socket :-", a)
+        socket.try('hello', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
         const pageNumber = req.body.paginat
         const email = req.body.email
@@ -76,6 +74,7 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
 exports.remove = ('/admin/remove', async (req, res, next) => {
     try {
+
         const id = req.body.id
         const email = req.body.email
         await adminProduct.deleteOne({ _id: id })

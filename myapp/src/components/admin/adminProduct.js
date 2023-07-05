@@ -2,7 +2,6 @@ import './admin.css'
 import { useState, useEffect } from "react"
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
-import { io } from "socket.io-client";
 
 
 var email = localStorage.getItem("email");
@@ -14,7 +13,7 @@ let paginatIndex = 0
 let searchPaginatIndex = 0
 let totalLength = 0
 
-export default function Adminproduct() {
+export default function Adminproduct(props) {
 
     const [showTag, setShowTag] = useState(false);
     const [productName, setproductName] = useState('')
@@ -24,11 +23,16 @@ export default function Adminproduct() {
     const [searchProduct, setSearchProduct] = useState(false);
     const [image, setImage] = useState('')
 
+    props = props.props
 
-    const socket = io.connect("http://localhost:4200")
-    socket.on("hello", (arg) => {
-    });
-
+    useEffect(() => {
+        if (props.socket) {
+            props.socket.on('hello', res => {
+                console.log('first :- ', res.data);
+                console.log('second :- ', res.data);
+            })
+        }
+    }, [])
 
     // ============================================ All Product get ===================================================== 
 
