@@ -3,12 +3,17 @@ const adminProduct = require('../models/adminProduct')
 const register = require('../models/register')
 const checkout = require('../models/checkout');
 const address = require('../models/address');
+const socket = require('../socket/index');
 let emailDetail
 // ============================= Admin get product =========================== 
 
 exports.getAll = ('/admin', async (req, res, next) => {
 
     try {
+
+        const a = socket.try('hello', "Hello world");
+        console.log("Check socket :-", a)
+
         const pageNumber = req.body.paginat
         const email = req.body.email
         const data = {};

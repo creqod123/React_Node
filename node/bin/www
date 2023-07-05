@@ -2,15 +2,17 @@ var app = require('../app');
 var debug = require('debug')('exam:server');
 var http = require('http');
 
-const { Server } = require('socket.io')
 
+// ============================== Socket ==============================
+
+const socket = 4400
+const { Server } = require('socket.io')
 const cors = require('cors');
 var port = normalizePort(process.env.PORT || '4200');
 app.set('port', port);
 app.use(cors());
 var server = http.createServer(app);
-
-// ============================== Socket ==============================
+const httpServer = require("http").createServer();
 
 const io = new Server(server, {
   cors: {
@@ -19,12 +21,17 @@ const io = new Server(server, {
   }
 })
 
-io.on("connection", (socket) => {
-  console.log(`New user connected id ${socket}`)
-  socket.emit("hello", [1, 2, 3, 4, 5]);
-})
+global.io = require('socket.io')(httpServer);
+require('../socket/index').init();
+
+httpServer.listen(socket, () => {
+  console.info(`Socket server started on ${socket}`);
+});
+
+
 
 // ==============================        ==============================
+
 
 server.listen(port);
 server.on('error', onError);

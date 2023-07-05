@@ -16,7 +16,7 @@ import { io } from "socket.io-client";
 
 let socket = null;
 const initSocket = (token) => {
-  socket = io(`localhost:4200?token=${token}`, { transports: ['websocket'] });
+  socket = io(`localhost:4400?token=${token}`, { transports: ['websocket'] });
 }
 
 const token = localStorage.getItem('token');

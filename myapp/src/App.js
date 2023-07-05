@@ -21,7 +21,7 @@ function App(props) {
   useEffect(() => {
     if (props.socket) {
       props.socket.on('hello', res => {
-        console.log('Check res :- ', res);
+        console.log('Check res :- ', res.data);
       })
     }
   }, [])
