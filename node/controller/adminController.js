@@ -5,12 +5,13 @@ const checkout = require('../models/checkout');
 const address = require('../models/address');
 const socket = require('../socket/index');
 let emailDetail
+
+
 // ============================= Admin get product =========================== 
 
 exports.getAll = ('/admin', async (req, res, next) => {
 
     try {
-        socket.try('hello', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
         const pageNumber = req.body.paginat
         const email = req.body.email
@@ -25,6 +26,7 @@ exports.getAll = ('/admin', async (req, res, next) => {
             .skip(startIndex)
             .limit(9)
             .exec();
+        socket.try('hello', data.data);
         res.status(200).json({
             message: "complete",
             data: data,
@@ -130,10 +132,10 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 
 // ============================= Admin update show =========================== 
 
-
 exports.update = ('/admin/update', async (req, res, next) => {
 
     try {
+        console.log("First")
         const data = await register.find({ email: req.body.email })
         await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
         res.status(200).json({
@@ -148,7 +150,6 @@ exports.update = ('/admin/update', async (req, res, next) => {
 });
 
 // ============================= Admin Order show =========================== 
-
 
 exports.order = ('/admin/order', async (req, res, next) => {
     try {

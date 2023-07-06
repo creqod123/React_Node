@@ -57,7 +57,8 @@
   gap: 50px 194px;
   position: absolute;
   top: 100px;
-} 
+}
+
 .i {
   display: flex;
   flex-wrap: wrap;
@@ -271,7 +272,7 @@
   padding: 10px 0px;
 }
 
-#hides{
+#hides {
   position: absolute;
   top: 0;
   left: 50%;
@@ -280,7 +281,7 @@
   transition: all ease-in-out 0.5s;
 }
 
-#shows{
+#shows {
   position: absolute;
   top: 0;
   left: 50%;
@@ -292,11 +293,12 @@
 
 .tableSearch {
   position: absolute;
-  top: -38%;
+  top: -186%;
   width: 115%;
   display: flex;
   justify-content: space-evenly;
 }
-.tableSearch input{
+
+.tableSearch input {
   padding: 4px;
 }

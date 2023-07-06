@@ -12,6 +12,8 @@ let Check123
 let paginatIndex = 0
 let searchPaginatIndex = 0
 let totalLength = 0
+let hello = 0
+
 
 export default function Adminproduct(props) {
 
@@ -24,15 +26,15 @@ export default function Adminproduct(props) {
     const [image, setImage] = useState('')
 
     props = props.props
-
     useEffect(() => {
         if (props.socket) {
             props.socket.on('hello', res => {
-                console.log('first :- ', res.data);
-                console.log('second :- ', res.data);
+                Data = res.data
+                setShowTag(true);
             })
         }
-    }, [])
+    }, []);
+
 
     // ============================================ All Product get ===================================================== 
 
@@ -45,18 +47,12 @@ export default function Adminproduct(props) {
                 },
             })
             totalLength = a.data.data.totalPosts
-            Data = a.data.data.data
         }
         catch (e) {
             console.log(e)
         }
     }
     SubFunction(paginatIndex)
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setShowTag(true);
-        }, 1000);
-    }, []);
 
     // ============================================ Remove Product =====================================================
 
@@ -73,7 +69,7 @@ export default function Adminproduct(props) {
         catch (e) {
             console.log(e)
         }
-        window.location.reload()
+        setShowTag(false);
     }
 
     // ============================================ Update Product =====================================================
@@ -87,7 +83,7 @@ export default function Adminproduct(props) {
             if (productName === '' || price === '') {
                 return (" ")
             }
-            await axios.post(`${process.env.REACT_APP_ADMIN_URL} /update`, { email: email, productName: productName, price: price }, {
+            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/update`, { email: email, productName: productName, price: price }, {
                 headers: {
                     'Content-Type': 'application/json',
                     token: token,
@@ -98,9 +94,9 @@ export default function Adminproduct(props) {
             console.log(e)
         }
 
+        setShowTag(false);
         setIsClicked(false);
         SubFunction()
-        window.location.reload()
     }
 
     // ================================================ For Css =================================================
@@ -112,7 +108,6 @@ export default function Adminproduct(props) {
         else {
             setIsClicked(true);
         }
-
     }
 
     // ============================================= searching Prodcut ====================================================

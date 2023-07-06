@@ -108,7 +108,7 @@ function Home() {
     const showProduct = (product) => {
         const { image, productName, price } = product
         return (
-            <>
+            <>  
                 <div className="i">
                     <div className="img-wrapper item">
                         <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
