@@ -212,57 +212,56 @@ export default function Adminproduct(props) {
             </div>
 
             <div className='adminshowproduct position' id={isClicked ? 'updates_first' : 'updates_second'}>
-                {
-                    searchProduct ?
-                        Check123.map((product) => {
-                            const { _id, image, productName, price } = product
-                            return (
-                                <div className="is">
-                                    <div className="img-wrappers itemss">
-                                        <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
-                                    </div>
-                                    <div className="text-wrappers itemss">
-                                        <tr>
-                                            <td>name:- {productName}</td>
-                                        </tr>
-                                        <br />
-                                        <tr>
-                                            <td>Price :- ${price}</td>
-                                        </tr>
-                                    </div>
-                                    <div className='productbuttons'>
-                                        <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
-                                        <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
-                                    </div>
+                {searchProduct ?
+                    Check123.map((product) => {
+                        const { _id, image, productName, price } = product
+                        return (
+                            <div className="is">
+                                <div className="img-wrappers itemss">
+                                    <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
                                 </div>
-                            )
-                        }) :
+                                <div className="text-wrappers itemss">
+                                    <tr>
+                                        <td>name:- {productName}</td>
+                                    </tr>
+                                    <br />
+                                    <tr>
+                                        <td>Price :- ${price}</td>
+                                    </tr>
+                                </div>
+                                <div className='productbuttons'>
+                                    <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
+                                    <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
+                                </div>
+                            </div>
+                        )
+                    }) :
 
-                        showTag ?
-                            Data.map((product) => {
-                                const { _id, image, productName, price } = product
-                                return (
-                                    <div className="is">
-                                        <div className="img-wrappers itemss">
-                                            <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
-                                        </div>
-                                        <div className="text-wrappers itemss">
-                                            <tr>
-                                                <td>name:- {productName}</td>
-                                            </tr>
-                                            <br />
-                                            <tr>
-                                                <td>Price :- ${price}</td>
-                                            </tr>
-                                        </div>
-                                        <div className='productbuttons'>
-                                            <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
-                                            <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
-                                        </div>
-                                    </div>
-                                )
-                            }) :
-                            <BorderExample />}
+                    showTag ? Data.map((product) => {
+                        const { _id, image, productName, price } = product
+                        return (
+                            <div className="is">
+                                <div className="img-wrappers itemss">
+                                    <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
+                                </div>
+                                <div className="text-wrappers itemss">
+                                    <tr>
+                                        <td>name:- {productName}</td>
+                                    </tr>
+                                    <br />
+                                    <tr>
+                                        <td>Price :- ${price}</td>
+                                    </tr>
+                                </div>
+                                <div className='productbuttons'>
+                                    <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
+                                    <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
+                                </div>
+                            </div>
+                        )
+                    })
+                        : <BorderExample />
+                }
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import './ceo.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
 let data = []
@@ -8,12 +8,22 @@ let adminData = []
 const token = localStorage.getItem("token")
 let searchData = []
 
-export default function AdminData() {
+export default function AdminData(props) {
 
     const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [showSearchValue, setshowSearchValue] = useState(false)
+
+    props = props.props
+    useEffect(() => {
+        if (props.socket) {
+            props.socket.on('ceoUserData', res => {
+                adminData = res.data[1]
+                setShowTag(true);
+            })
+        }
+    }, []);
 
     const SubFunction = async () => {
         try {
@@ -24,7 +34,6 @@ export default function AdminData() {
                         token: token,
                     },
                 })
-            adminData = a.data.seller
         }
         catch (e) {
             console.log(e)
@@ -32,9 +41,6 @@ export default function AdminData() {
     }
 
     SubFunction();
-    const timeout = setTimeout(() => {
-        setShowTag(true);
-    }, 3000);
 
     const checkAdminData = async (e) => {
         const id = e.target.value;
@@ -68,6 +74,8 @@ export default function AdminData() {
         catch (e) {
             console.log(e)
         }
+
+        setShowTag(false)
     }
 
     const handleClick = () => {
@@ -175,8 +183,6 @@ export default function AdminData() {
                                     </tr>
                                 )
                             }) : <BorderExample />
-
-
                         : showTag ?
                             adminData.map((admin, counter = 0) => {
                                 counter += 1
