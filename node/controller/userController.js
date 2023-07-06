@@ -23,6 +23,7 @@ exports.getAll = ('/user', async (req, res, next) => {
             .skip(startIndex)
             .limit(9)
             .exec();
+        
         res.status(200).json({
             message: "complete",
             data: result,
@@ -31,11 +32,9 @@ exports.getAll = ('/user', async (req, res, next) => {
     }
     catch (error) {
         res.status(404).json({
-            message: "complete fail",   
+            message: "complete fail",
         })
     }
-
-
 });
 
 // ============================= Cart data show =========================== 

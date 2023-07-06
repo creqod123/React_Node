@@ -12,8 +12,6 @@ let Check123
 let paginatIndex = 0
 let searchPaginatIndex = 0
 let totalLength = 0
-let hello = 0
-
 
 export default function Adminproduct(props) {
 
@@ -35,7 +33,6 @@ export default function Adminproduct(props) {
         }
     }, []);
 
-
     // ============================================ All Product get ===================================================== 
 
     async function SubFunction(paginat) {
@@ -52,6 +49,7 @@ export default function Adminproduct(props) {
             console.log(e)
         }
     }
+
     SubFunction(paginatIndex)
 
     // ============================================ Remove Product =====================================================

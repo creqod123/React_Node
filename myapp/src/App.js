@@ -54,8 +54,8 @@ function App(props) {
           <Router>
             <Navbar />
             <Routes>
-              <Route path='/ceo/user' element={<UserData />} />
-              <Route path='/ceo/admin' element={<AdminData />} />
+              <Route path='/ceo/user' element={<UserData props={props} />} />
+              <Route path='/ceo/admin' element={<AdminData props={props} />} />
             </Routes>
           </Router>
         </div>

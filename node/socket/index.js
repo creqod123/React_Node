@@ -15,9 +15,18 @@ exports.init = () => {
     })
 }
 
-exports.try = (event, data) => {
+exports.adminDataGet = (event, data) => {
     global.io.emit(event, mapData(data))
 }
+
+exports.ceoUserGet = (event, data) => {
+    global.io.emit(event, mapData(data))
+}
+
+exports.ceoAdminGet = (event, data) => {
+    global.io.emit(event, mapData(data))
+}
+
 
 // exports.emitToSocketId = (socketId, eventName, data) => {
 //     global.io.to(socketId).emit(eventName, data);

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import './ceo.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
 const token = localStorage.getItem("token")
@@ -8,12 +8,21 @@ let userdatas = []
 let data = []
 let searchData = []
 
-export default function UserData() {
+export default function UserData(props) {
 
     const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [showSearchValue, setshowSearchValue] = useState(false)
+
+    props = props.props
+    useEffect(() => {
+        if (props.socket) {
+            props.socket.on('ceoUserData', res => {
+                userdatas = res.data[0]
+            })
+        }
+    }, []);
 
     const SubFunction = async () => {
         try {
@@ -24,7 +33,6 @@ export default function UserData() {
                         token: token,
                     },
                 })
-            userdatas = a.data.user
         }
         catch (e) {
             console.log(e)
@@ -35,6 +43,8 @@ export default function UserData() {
         setShowTag(true)
     }, 3000);
 
+
+    // ========================================= Check User Data =========================================
 
     const checkUserData = async (e) => {
         const id = e.target.value;
@@ -54,6 +64,8 @@ export default function UserData() {
         setIsClicked(true);
     }
 
+    // ========================================= Remove user =========================================
+
     const removeUser = async (e) => {
         const id = e.target.value;
         try {
@@ -70,6 +82,8 @@ export default function UserData() {
         }
         window.location.href = "/ceo/user"
     }
+
+    // ========================================= User Product Remove =========================================
 
     const userProductRemove = async (e) => {
         var id = e.target.value
@@ -96,6 +110,10 @@ export default function UserData() {
         return <Spinner animation="border" className='helloworld' variant="primary" />;
     }
 
+
+    // ========================================= Search user =========================================
+
+
     const searchFun = () => {
         const SubFunction = async () => {
             try {
@@ -120,20 +138,19 @@ export default function UserData() {
                         setshowSearchValue(true)
                     }, 3000);
                 }
-
             }
             catch (e) {
                 console.log(e)
             }
         }
-
         SubFunction();
     }
+
 
     return (
         <div className='adminshow' >
             <div className='SearchCeo'>
-            <button disabled>{"<"}</button>
+                <button disabled>{"<"}</button>
                 <button disabled>{">"}</button>
                 <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
                 <input type="submit" onClick={searchFun} />
