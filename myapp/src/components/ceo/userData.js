@@ -8,21 +8,12 @@ let userdatas = []
 let data = []
 let searchData = []
 
-export default function UserData(props) {
+export default function UserData() {
 
     const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [showSearchValue, setshowSearchValue] = useState(false)
-
-    props = props.props
-    useEffect(() => {
-        if (props.socket) {
-            props.socket.on('ceoUserData', res => {
-                userdatas = res.data[0]
-            })
-        }
-    }, []);
 
     const SubFunction = async () => {
         try {
@@ -33,6 +24,7 @@ export default function UserData(props) {
                         token: token,
                     },
                 })
+            userdatas = a.data.user
         }
         catch (e) {
             console.log(e)
