@@ -4,7 +4,6 @@ const register = require('../models/register')
 const checkout = require('../models/checkout');
 const address = require('../models/address');
 const socket = require('../socket/index');
-const { error } = require('console');
 let emailDetail
 
 
@@ -52,7 +51,7 @@ exports.add = ('/admin/add', async (req, res, next) => {
         req.body['adminId'] = check[0]._id
 
         if (check.length != 0) {
-            
+
             const a = await adminProduct.create(req.body)
             const data = await adminProduct.find({ email, email })
 
@@ -139,7 +138,8 @@ exports.update = ('/admin/update', async (req, res, next) => {
     try {
         console.log("First")
         const data = await register.find({ email: req.body.email })
-        await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
+        const a = await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
+        console.log("Data :- ", a)
         res.status(200).json({
             message: "complete",
         })

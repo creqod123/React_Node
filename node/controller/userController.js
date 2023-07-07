@@ -3,7 +3,7 @@ const adminProduct = require('../models/adminProduct')
 const checkout = require('../models/checkout')
 const register = require('../models/register')
 const address = require('../models/address')
-
+const socket = require('../socket/index');
 // ============================= getall data show =========================== 
 
 exports.getAll = ('/user', async (req, res, next) => {
@@ -11,7 +11,6 @@ exports.getAll = ('/user', async (req, res, next) => {
     try {
 
         const email = req.body.email
-
         const id = await register.find({ email: email })
         const pageNumber = req.body.pageNumber;
         const result = {};
@@ -23,7 +22,8 @@ exports.getAll = ('/user', async (req, res, next) => {
             .skip(startIndex)
             .limit(9)
             .exec();
-        
+
+        socket.userDataGet('userData', result.data);
         res.status(200).json({
             message: "complete",
             data: result,

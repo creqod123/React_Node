@@ -16,17 +16,17 @@ import Navbar from './components/navbar/navbar'
 
 function App(props) {
 
-  var email = localStorage.getItem("email")
+  const email = localStorage.getItem("email")
 
   if (email != null) {
-    var type = localStorage.getItem("type")
+    const type = localStorage.getItem("type")
     if (type === "user") {
       return (
         <div className="App">
           <Router>
             <Navbar />
             <Routes>
-              <Route path='/user/shop' element={<Home />} />
+              <Route path='/user/shop' element={<Home props={props} />} />
               <Route path='/user/cart' element={<Cart />} />
               <Route path='/user/order' element={<Order />} />
             </Routes>

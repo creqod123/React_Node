@@ -27,6 +27,9 @@ exports.ceoAdminGet = (event, data) => {
     global.io.emit(event, mapData(data))
 }
 
+exports.userDataGet = (event, data) => {
+    global.io.emit(event, mapData(data))
+}
 
 // exports.emitToSocketId = (socketId, eventName, data) => {
 //     global.io.to(socketId).emit(eventName, data);

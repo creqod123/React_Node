@@ -13,11 +13,18 @@ let Data
 let Check123
 let searchPaginatIndex = 0
 
-function Home() {
+function Home(props) {
 
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
+
+
+    if (props.props.socket) {
+        props.props.socket.on('hello', res => {
+            console.log("Data 1:- ", res)
+        })
+    }
 
     // ========================================================== Get Data, add and remove to cart ==================================================================
 
@@ -108,7 +115,7 @@ function Home() {
     const showProduct = (product) => {
         const { image, productName, price } = product
         return (
-            <>  
+            <>
                 <div className="i">
                     <div className="img-wrapper item">
                         <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
