@@ -33,7 +33,6 @@ export default function getItem(state = [], action) {
         default:
             {
                 return state
-                break;
             }
     }
 }

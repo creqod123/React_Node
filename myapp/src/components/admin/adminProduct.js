@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 const email = localStorage.getItem("email");
 const token = localStorage.getItem("token");
 let Data = []
-let id
+// let id
 let Check123
 let paginatIndex = 0
 let searchPaginatIndex = 0
@@ -21,7 +21,7 @@ export default function Adminproduct() {
     const [isClicked, setIsClicked] = useState(false);
     const [searchApi, setSearchApi] = useState('');
     const [searchProduct, setSearchProduct] = useState(false);
-    const [image, setImage] = useState('')
+    // const [image, setImage] = useState('')
 
     // ============================================ All Product get ===================================================== 
 
@@ -121,7 +121,7 @@ export default function Adminproduct() {
             const { data } = a.data
             const check = data.data.length
 
-            if (check != 0) {
+            if (check !== 0) {
                 paginatIndex = 0
                 Check123 = data.data
                 totalLength = data.totalPosts
@@ -135,7 +135,7 @@ export default function Adminproduct() {
                     setSearchProduct(false)
                     setShowTag(true)
                 }, 400);
-            }
+            }  
 
         }
         catch (e) {

@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
 import Login from './login_signup/Login'
 import SignUp from './login_signup/Signup';
 import Adminproduct from './components/admin/adminProduct'
@@ -34,7 +33,7 @@ function App(props) {
         </div>
       );
     }
-    else if (type == "seller") {
+    else if (type === "seller") {
       return (
         <div className="App">
           <Router>
