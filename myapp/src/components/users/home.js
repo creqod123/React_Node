@@ -1,7 +1,7 @@
 import React from "react"
 import axios from "axios"
 import './user.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
 import { pageNation, addtoCart, RemovetoCart } from "../../Services/Actions/actions"
@@ -19,13 +19,13 @@ function Home(props) {
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
 
-
-    if (props.props.socket) {
-        props.props.socket.on('hello', res => {
-            setShowTag(false)
-        })
-    }
-
+    useEffect(() => {
+        if (props.props.socket) {
+            props.props.socket.on('hello', res => {
+                setShowTag(false)
+            })
+        }
+    })
     // ========================================================== Get Data, add and remove to cart ==================================================================
 
     Data = useSelector((a) => a.getItem)
