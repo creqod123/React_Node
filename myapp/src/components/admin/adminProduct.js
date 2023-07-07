@@ -4,8 +4,8 @@ import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
 
 
-var email = localStorage.getItem("email");
-var token = localStorage.getItem("token");
+const email = localStorage.getItem("email");
+const token = localStorage.getItem("token");
 let Data = []
 let id
 let Check123
@@ -13,7 +13,7 @@ let paginatIndex = 0
 let searchPaginatIndex = 0
 let totalLength = 0
 
-export default function Adminproduct(props) {
+export default function Adminproduct() {
 
     const [showTag, setShowTag] = useState(false);
     const [productName, setproductName] = useState('')
@@ -22,16 +22,6 @@ export default function Adminproduct(props) {
     const [searchApi, setSearchApi] = useState('');
     const [searchProduct, setSearchProduct] = useState(false);
     const [image, setImage] = useState('')
-
-    props = props.props
-    useEffect(() => {
-        if (props.socket) {
-            props.socket.on('hello', res => {
-                Data = res.data
-                setShowTag(true);
-            })
-        }
-    }, []);
 
     // ============================================ All Product get ===================================================== 
 
@@ -44,6 +34,7 @@ export default function Adminproduct(props) {
                 },
             })
             totalLength = a.data.data.totalPosts
+            Data = a.data.data.data
         }
         catch (e) {
             console.log(e)
@@ -51,6 +42,9 @@ export default function Adminproduct(props) {
     }
 
     SubFunction(paginatIndex)
+    const timer = setTimeout(() => {
+        setShowTag(true);
+    }, 2000);
 
     // ============================================ Remove Product =====================================================
 
