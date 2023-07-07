@@ -8,22 +8,12 @@ let adminData = []
 const token = localStorage.getItem("token")
 let searchData = []
 
-export default function AdminData(props) {
+export default function AdminData() {
 
     const [isClicked, setIsClicked] = useState(false);
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [showSearchValue, setshowSearchValue] = useState(false)
-
-    props = props.props
-    useEffect(() => {
-        if (props.socket) {
-            props.socket.on('ceoUserData', res => {
-                adminData = res.data[1]
-                setShowTag(true);
-            })
-        }
-    }, []);
 
     const SubFunction = async () => {
         try {
@@ -34,6 +24,10 @@ export default function AdminData(props) {
                         token: token,
                     },
                 })
+            adminData = a.data.seller
+            const timer = setTimeout(() => {
+                setShowTag(true);
+            }, 1000);
         }
         catch (e) {
             console.log(e)
@@ -112,7 +106,6 @@ export default function AdminData(props) {
                         setshowSearchValue(true)
                     }, 4000);
                 }
-
             }
             catch (e) {
                 console.log(e)
@@ -183,20 +176,19 @@ export default function AdminData(props) {
                                     </tr>
                                 )
                             }) : <BorderExample />
-                        : showTag ?
-                            adminData.map((admin, counter = 0) => {
-                                counter += 1
-                                const { email, tel, _id } = admin
-                                return (
-                                    <tr>
-                                        <td>{counter}</td>
-                                        <td>{email.slice(0, -10)}</td>
-                                        <td>{tel}</td>
-                                        <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
-                                        <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
-                                    </tr>
-                                )
-                            }) : <BorderExample />
+                        : showTag ? adminData.map((admin, counter = 0) => {
+                            counter += 1
+                            const { email, tel, _id } = admin
+                            return (
+                                <tr>
+                                    <td>{counter}</td>
+                                    <td>{email.slice(0, -10)}</td>
+                                    <td>{tel}</td>
+                                    <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
+                                    <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
+                                </tr>
+                            )
+                        }) : <BorderExample />
                 }
             </table>
         </div>
