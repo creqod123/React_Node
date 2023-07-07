@@ -228,7 +228,7 @@
 
 #pagination {
   position: fixed;
-  top: 6%;
+  top: -26%;
   left: 50%;
   transform: translate(-50%);
 }

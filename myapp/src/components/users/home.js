@@ -22,7 +22,7 @@ function Home(props) {
 
     if (props.props.socket) {
         props.props.socket.on('hello', res => {
-            console.log("Data 1:- ", res)
+            setShowTag(false)
         })
     }
 
