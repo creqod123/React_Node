@@ -143,7 +143,6 @@ export default function Adminbuyer() {
         SubFunction(`${searchValue}@gmail.com`);
     }
 
-
     return (
         <div className='adminshow' >
             <div className='SearchBuyer'>
