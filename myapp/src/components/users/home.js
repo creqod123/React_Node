@@ -22,25 +22,28 @@ function Home(props) {
     const [searchData, setSearchData] = useState(false);
     const dispatch = useDispatch()
     Data = useSelector((a) => a.getItem)
+    dispatch(pageNation(paginat))
+    totalLength = Data[Data.length - 1]
+
+    useEffect(() => {
+        setTimeout(() => {
+            setShowTag(true);
+        }, 1000);
+    }, [])
 
     useEffect(() => {
         if (props.props.socket) {
             props.props.socket.on('hello', res => {
+                console.log("Hello check :- ", res.data)
                 setShowTag(false)
+                setTimeout(() => {
+                    setShowTag(true)
+                }, 1000)
             })
         }
-    })
-    // ========================================================== Get Data, add and remove to cart ==================================================================
-
-    useEffect(() => {
-        dispatch(pageNation(paginat))
-        totalLength = Data[Data.length - 1]
-        Data.pop()
     }, [])
 
-    const timeout = setTimeout(() => {
-        setShowTag(true);
-    }, 3500);
+    // ========================================================== Get Data, add and remove to cart ==================================================================
 
     const add = (e) => {
         dispatch(addtoCart(JSON.parse(e.target.value)))
@@ -61,7 +64,9 @@ function Home(props) {
             else {
                 dispatch(pageNation(++paginat))
             }
-            const callReload = timeout
+            setTimeout(() => {
+                setShowTag(true);
+            }, 800);
         }
         else {
             if (check === "previous") {
@@ -117,27 +122,30 @@ function Home(props) {
     // ========================================================== Display All product ==================================================================
 
     const showProduct = (product) => {
-        const { image, productName, price } = product
-        return (
-            <>
-                <div className="i">
-                    <div className="img-wrapper item">
-                        <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
+
+        if (product.image != null) {
+            const { image, productName, price } = product
+            return (
+                <>
+                    <div className="i">
+                        <div className="img-wrapper item">
+                            <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
+                        </div>
+                        <div className="text-wrapper item">
+                            <span>{productName}</span>
+                            <br />
+                            <span>Price ${price}</span>
+                        </div>
+                        <div className="button-wrapper item">
+                            <button value={JSON.stringify(product)} onClick={add}>Add to cart</button>
+                        </div>
+                        <div className="button-wrapper item">
+                            <button value={JSON.stringify(product)} onClick={remove}>Remove</button>
+                        </div>
                     </div>
-                    <div className="text-wrapper item">
-                        <span>{productName}</span>
-                        <br />
-                        <span>Price ${price}</span>
-                    </div>
-                    <div className="button-wrapper item">
-                        <button value={JSON.stringify(product)} onClick={add}>Add to cart</button>
-                    </div>
-                    <div className="button-wrapper item">
-                        <button value={JSON.stringify(product)} onClick={remove}>Remove</button>
-                    </div>
-                </div>
-            </>
-        )
+                </>
+            )
+        }
     }
 
     return (
@@ -150,7 +158,7 @@ function Home(props) {
                 }
                 {
                     searchData ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
-                        : searchPaginatIndex < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                        : paginat < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
                 }
                 <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
                 <input type="submit" onClick={searchFun} />

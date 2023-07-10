@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 const email = localStorage.getItem("email");
 const token = localStorage.getItem("token");
 let Data = []
-// let id
+let updateProduct
 let Check123
 let paginatIndex = 0
 let searchPaginatIndex = 0
@@ -26,7 +26,6 @@ export default function Adminproduct() {
     // ============================================ All Product get ===================================================== 
 
     async function SubFunction(paginat) {
-        console.log("Hello world")
         try {
             const a = await axios.post(`${process.env.REACT_APP_ADMIN_URL}`, { email: email, paginat: paginat }, {
                 headers: {
@@ -42,12 +41,10 @@ export default function Adminproduct() {
         }
     }
 
-    useEffect(() => {
-        SubFunction(paginatIndex)
-        const timer = setTimeout(() => {
-            setShowTag(true);
-        }, 2000);
-    }, [])
+    SubFunction(paginatIndex)
+    const timer = setTimeout(() => {
+        setShowTag(true);
+    }, 2000);
 
     // ============================================ Remove Product =====================================================
 
@@ -74,11 +71,12 @@ export default function Adminproduct() {
     }
 
     const update = async (e) => {
+        console.log("Value check :- ", updateProduct)
         try {
             if (productName === '' || price === '') {
                 return (" ")
             }
-            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/update`, { email: email, productName: productName, price: price }, {
+            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/update`, { email: email, productName: productName, price: price, id: updateProduct }, {
                 headers: {
                     'Content-Type': 'application/json',
                     token: token,
@@ -101,6 +99,7 @@ export default function Adminproduct() {
             setIsClicked(false);
         }
         else {
+            updateProduct = e.target.value
             setIsClicked(true);
         }
     }
@@ -195,11 +194,11 @@ export default function Adminproduct() {
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
                 </label>
                 <label>
-                    Product name :- <input type="text" placeholder="Product Name" value={productName} onChange={(e) => setproductName(e.target.value)} name="productName" />
+                    Product name :- <input type="text" placeholder="Product Name" onChange={(e) => setproductName(e.target.value)} name="productName" />
                 </label>
                 <p className='updatewarm'>asd</p>
                 <label>
-                    Product Price :- <input type="text" placeholder="Product Price" value={price} onChange={(e) => setPrice(e.target.value)} name="price" />
+                    Product Price :- <input type="text" placeholder="Product Price" onChange={(e) => setPrice(e.target.value)} name="price" />
                 </label>
                 <p className='updatewarm'>asd</p>
                 <label id='submit'>

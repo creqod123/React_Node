@@ -25,9 +25,6 @@ exports.getAll = ('/admin', async (req, res, next) => {
             .skip(startIndex)
             .limit(9)
             .exec();
-        
-        console.log("Check :- ........... ",data)
-        socket.adminDataGet('hello', data.data);
         res.status(200).json({
             message: "complete",
             data: data,
@@ -55,6 +52,7 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
             const a = await adminProduct.create(req.body)
             const data = await adminProduct.find({ email, email })
+            socket.adminDataGet('hello', data.data);
 
             res.status(200).json({
                 message: "complete",
@@ -137,10 +135,10 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 exports.update = ('/admin/update', async (req, res, next) => {
 
     try {
-        console.log("First")
-        const data = await register.find({ email: req.body.email })
-        const a = await adminProduct.updateOne({ adminId: data[0]._id }, { productName: req.body.productName, price: req.body.price })
-        console.log("Data :- ", a)
+        const id = req.body.id
+        const a = await adminProduct.updateOne({ _id: req.body.id }, { productName: req.body.productName, price: req.body.price })
+        const data = await adminProduct.find({ _id: req.body.id })
+        socket.adminDataGet('hello', data);
         res.status(200).json({
             message: "complete",
         })

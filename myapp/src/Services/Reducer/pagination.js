@@ -26,7 +26,6 @@ export default function getItem(state = [], action) {
     switch (action.type) {
         case "PAGINATION":
             {
-                console.log("Hello world")
                 const pageLength = action.data
                 pagination(pageLength)
                 return state = paginat
