@@ -1,5 +1,5 @@
 import './admin.css'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -21,11 +21,12 @@ export default function Adminproduct() {
     const [isClicked, setIsClicked] = useState(false);
     const [searchApi, setSearchApi] = useState('');
     const [searchProduct, setSearchProduct] = useState(false);
-    // const [image, setImage] = useState('')
+
 
     // ============================================ All Product get ===================================================== 
 
     async function SubFunction(paginat) {
+        console.log("Hello world")
         try {
             const a = await axios.post(`${process.env.REACT_APP_ADMIN_URL}`, { email: email, paginat: paginat }, {
                 headers: {
@@ -41,10 +42,12 @@ export default function Adminproduct() {
         }
     }
 
-    SubFunction(paginatIndex)
-    const timer = setTimeout(() => {
-        setShowTag(true);
-    }, 2000);
+    useEffect(() => {
+        SubFunction(paginatIndex)
+        const timer = setTimeout(() => {
+            setShowTag(true);
+        }, 2000);
+    }, [])
 
     // ============================================ Remove Product =====================================================
 
@@ -174,7 +177,6 @@ export default function Adminproduct() {
     return (
         <div>
             <div id='Searching'>
-
                 {
                     searchProduct ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
                         : paginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
@@ -193,11 +195,11 @@ export default function Adminproduct() {
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
                 </label>
                 <label>
-                    Product name :- <input type="text" placeholder="Product Name" onChange={(e) => setproductName(e.target.value)} name="productName" />
+                    Product name :- <input type="text" placeholder="Product Name" value={productName} onChange={(e) => setproductName(e.target.value)} name="productName" />
                 </label>
                 <p className='updatewarm'>asd</p>
                 <label>
-                    Product Price :- <input type="text" placeholder="Product Price" onChange={(e) => setPrice(e.target.value)} name="price" />
+                    Product Price :- <input type="text" placeholder="Product Price" value={price} onChange={(e) => setPrice(e.target.value)} name="price" />
                 </label>
                 <p className='updatewarm'>asd</p>
                 <label id='submit'>

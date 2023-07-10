@@ -1,5 +1,5 @@
 import './admin.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 
 let Data = []
@@ -44,10 +44,13 @@ export default function Adminbuyer() {
             console.log(e)
         }
     }
-    SubFunction(email);
-    const timeout = setTimeout(() => {
-        setShowTag(true)
-    }, 1000);
+
+    useEffect(() => {
+        SubFunction(email);
+        const timeout = setTimeout(() => {
+            setShowTag(true)
+        }, 1000);
+    }, [])
 
 
     const BorderExample = () => {

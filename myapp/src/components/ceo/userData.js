@@ -30,10 +30,13 @@ export default function UserData() {
             console.log(e)
         }
     }
-    SubFunction();
-    const timeout = setTimeout(() => {
-        setShowTag(true)
-    }, 3000);
+
+    useEffect(() => {
+        SubFunction();
+        const timeout = setTimeout(() => {
+            setShowTag(true)
+        }, 3000);
+    }, [])
 
 
     // ========================================= Check User Data =========================================

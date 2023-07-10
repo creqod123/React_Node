@@ -6,18 +6,22 @@ import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
 import { pageNation, addtoCart, RemovetoCart } from "../../Services/Actions/actions"
 
+
 let paginat = 0
 const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let Data
 let Check123
 let searchPaginatIndex = 0
+let totalLength
 
 function Home(props) {
 
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
+    const dispatch = useDispatch()
+    Data = useSelector((a) => a.getItem)
 
     useEffect(() => {
         if (props.props.socket) {
@@ -28,11 +32,11 @@ function Home(props) {
     })
     // ========================================================== Get Data, add and remove to cart ==================================================================
 
-    Data = useSelector((a) => a.getItem)
-    const dispatch = useDispatch()
-    dispatch(pageNation(paginat))
-    const totalLength = Data[Data.length - 1]
-    Data.pop()
+    useEffect(() => {
+        dispatch(pageNation(paginat))
+        totalLength = Data[Data.length - 1]
+        Data.pop()
+    }, [])
 
     const timeout = setTimeout(() => {
         setShowTag(true);
@@ -138,7 +142,6 @@ function Home(props) {
 
     return (
         <div className="items position">
-            {searchData ? Check123.map((product) => showProduct(product)) : showTag ? Data.map((product) => showProduct(product)) : <BorderExample />}
 
             <div id="pagination">
                 {
@@ -147,11 +150,12 @@ function Home(props) {
                 }
                 {
                     searchData ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
-                        : paginat < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                        : searchPaginatIndex < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
                 }
                 <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
                 <input type="submit" onClick={searchFun} />
             </div>
+            {searchData ? Check123.map((product) => showProduct(product)) : showTag ? Data.map((product) => showProduct(product)) : <BorderExample />}
         </div>
     );
 }

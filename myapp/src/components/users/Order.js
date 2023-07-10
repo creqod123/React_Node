@@ -40,10 +40,12 @@ export default function Order() {
         }
     }
 
-    SubFunction();
-    const timeout = setTimeout(() => {
-        setShowTag(true)
-    }, 1000);
+    useEffect(() => {
+        SubFunction();
+        const timeout = setTimeout(() => {
+            setShowTag(true)
+        }, 1000);
+    }, [])
 
     const BorderExample = () => {
 

@@ -6,8 +6,15 @@ export default function Navbar() {
 
     const history = useNavigate('')
     const type = localStorage.getItem("type")
-
     const cartLength = useSelector((a) => a.cardItems)
+
+
+    const signout = () => {
+        localStorage.removeItem("type")
+        localStorage.removeItem("email")
+        localStorage.removeItem("token")
+    }
+
     const submit1 = (e) => {
         e.preventDefault()
         history('/user/shop')
@@ -94,11 +101,4 @@ export default function Navbar() {
             </div>
         )
     }
-}
-
-
-function signout() {
-    localStorage.removeItem("type")
-    localStorage.removeItem("email")
-    localStorage.removeItem("token")
 }

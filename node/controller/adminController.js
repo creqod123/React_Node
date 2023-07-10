@@ -6,7 +6,6 @@ const address = require('../models/address');
 const socket = require('../socket/index');
 let emailDetail
 
-
 // ============================= Admin get product =========================== 
 
 exports.getAll = ('/admin', async (req, res, next) => {
@@ -26,6 +25,8 @@ exports.getAll = ('/admin', async (req, res, next) => {
             .skip(startIndex)
             .limit(9)
             .exec();
+        
+        console.log("Check :- ........... ",data)
         socket.adminDataGet('hello', data.data);
         res.status(200).json({
             message: "complete",

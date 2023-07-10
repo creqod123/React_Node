@@ -33,8 +33,9 @@ export default function AdminData() {
             console.log(e)
         }
     }
-
-    SubFunction();
+    useEffect(() => {
+        SubFunction();
+    }, [])
 
     const checkAdminData = async (e) => {
         const id = e.target.value;

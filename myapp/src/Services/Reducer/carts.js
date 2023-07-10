@@ -26,8 +26,6 @@ export default function cardItems(state = length, action) {
                 ...state,
             ]
             break;
-        case "GET_PRODUCT_DATA":
-            break;
         default:
             return state
     }

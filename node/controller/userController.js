@@ -4,6 +4,8 @@ const checkout = require('../models/checkout')
 const register = require('../models/register')
 const address = require('../models/address')
 const socket = require('../socket/index');
+
+
 // ============================= getall data show =========================== 
 
 exports.getAll = ('/user', async (req, res, next) => {

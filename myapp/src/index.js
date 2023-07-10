@@ -26,9 +26,11 @@ if (token) {
 const store = createStore(index)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <App socket={socket} />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <App socket={socket} />
+    </Provider>
+  </React.StrictMode>
 );
 
 reportWebVitals();

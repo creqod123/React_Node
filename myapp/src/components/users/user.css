@@ -228,9 +228,8 @@
 
 #pagination {
   position: fixed;
-  top: -26%;
-  left: 50%;
-  transform: translate(-50%);
+  top: 8%;
+  left: 39%;
 }
 
 #pagination table tr th:hover {
