@@ -19,9 +19,7 @@ function Cart() {
     const [pincode, setPincode] = useState('');
 
     const dispatch = useDispatch()
-
     let prop = useSelector((a) => a.cardItems)
-    let helloworld = useSelector((a) => a.cardItems)
 
     const check1 = async () => {
         setShowTag(true)

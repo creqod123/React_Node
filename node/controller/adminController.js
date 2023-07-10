@@ -45,14 +45,19 @@ exports.add = ('/admin/add', async (req, res, next) => {
     try {
         const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
-
         req.body['adminId'] = check[0]._id
 
+
+
+
         if (check.length != 0) {
+            console.log("check ;- ", req.body)
+
 
             const a = await adminProduct.create(req.body)
             const data = await adminProduct.find({ email, email })
-            socket.adminDataGet('hello', data.data);
+            socket.adminDataGet('hello', data);
+
 
             res.status(200).json({
                 message: "complete",
@@ -79,9 +84,12 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
 
         const id = req.body.id
         const email = req.body.email
+
         await adminProduct.deleteOne({ _id: id })
         await checkout.deleteOne({ productId: id })
+
         const send = await adminProduct.find({ email: email })
+        socket.adminDataGet('hello', data);
 
         res.status(200).json({
             message: "complete",
@@ -95,9 +103,7 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
     }
 });
 
-
 // ============================= Admin detail show =========================== 
-
 
 exports.detail = ('/admin/detail', async (req, res, next) => {
 

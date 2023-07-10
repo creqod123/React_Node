@@ -78,8 +78,7 @@ export default function Order() {
         }, 100);
     }
 
-    const handleInputUpdate = (check) => {
-        setShowTag(false)
+    const handleInputUpdate = () => {
         setAddress(false)
         setUpdateAddress(false)
         setClicked(false)

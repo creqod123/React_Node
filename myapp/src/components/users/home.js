@@ -34,7 +34,6 @@ function Home(props) {
     useEffect(() => {
         if (props.props.socket) {
             props.props.socket.on('hello', res => {
-                console.log("Hello check :- ", res.data)
                 setShowTag(false)
                 setTimeout(() => {
                     setShowTag(true)
