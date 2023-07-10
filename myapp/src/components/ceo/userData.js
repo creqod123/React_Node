@@ -78,7 +78,7 @@ export default function UserData() {
     // ========================================= User Product Remove =========================================
 
     const userProductRemove = async (e) => {
-        var id = e.target.value
+        const id = e.target.value
         try {
             await axios.post(`${process.env.REACT_APP_CEO_URL}/user/delete`, { id: id },
                 {

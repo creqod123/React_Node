@@ -8,7 +8,7 @@ export default function cardItems(state = length, action) {
             ]
             break;
         case "REMOVE_TO_CART":
-            var check = action.data._id
+            const check = action.data._id
             let del
             for (const property in state) {
                 if (state[property].cardData._id == check) {

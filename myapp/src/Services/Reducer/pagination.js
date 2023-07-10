@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const email = localStorage.getItem("email")
-var token = localStorage.getItem("token")
+const token = localStorage.getItem("token")
 let paginat = []
 
 export default function getItem(state = [], action) {

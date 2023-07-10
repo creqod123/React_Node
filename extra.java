@@ -7,7 +7,7 @@ localStorage.setItem("data", JSON.stringify(data))
 =================== get localstorage ===================
 
 localStorage.getItem("token",token)
-var storedNames = JSON.parse(localStorage.getItem("names"));
+const storedNames = JSON.parse(localStorage.getItem("names"));
 
 ========================================================
 
@@ -43,6 +43,3 @@ exports.try = (event, data) => {                  //Create socket
 const socket = require('../socket/index');
 const a = socket.try(event, data);
 ==================================================================================================================================================
-
-
-varachha bank :- 7069055413

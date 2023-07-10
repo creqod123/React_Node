@@ -1,5 +1,5 @@
-var mongoose = require('mongoose')
-var register = require('../models/register')
+const mongoose = require('mongoose')
+const register = require('../models/register')
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
 const jwt = require('jsonwebtoken')

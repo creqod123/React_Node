@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 export default function Navbar() {
 
     const history = useNavigate('')
-    var type = localStorage.getItem("type")
+    const type = localStorage.getItem("type")
 
     const cartLength = useSelector((a) => a.cardItems)
     const submit1 = (e) => {

@@ -8,7 +8,7 @@ export default function Admincontrol() {
     const [productName, setproductName] = useState('')
     const [price, setPrice] = useState('')
     const [image, setImage] = useState('')
-    var email = localStorage.getItem("email")
+    const email = localStorage.getItem("email")
 
     const productAdd = async (e) => {
         const formData = new FormData();

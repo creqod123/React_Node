@@ -24,7 +24,7 @@ export default function Order() {
 
     const SubFunction = async () => {
         try {
-            var response = await fetch(`${process.env.REACT_APP_USER_URL}/detail`, {
+            const response = await fetch(`${process.env.REACT_APP_USER_URL}/detail`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export default function Order() {
         const email = e.target.value
         const SubFunction = async () => {
             try {
-                var response = await fetch(`${process.env.REACT_APP_USER_URL}/order`, {
+                const response = await fetch(`${process.env.REACT_APP_USER_URL}/order`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

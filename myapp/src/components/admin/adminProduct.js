@@ -27,7 +27,7 @@ export default function Adminproduct() {
 
     async function SubFunction(paginat) {
         try {
-            var a = await axios.post(`${process.env.REACT_APP_ADMIN_URL}`, { email: email, paginat: paginat }, {
+            const a = await axios.post(`${process.env.REACT_APP_ADMIN_URL}`, { email: email, paginat: paginat }, {
                 headers: {
                     'Content-Type': 'application/json',
                     token: token,
@@ -135,7 +135,7 @@ export default function Adminproduct() {
                     setSearchProduct(false)
                     setShowTag(true)
                 }, 400);
-            }  
+            }
 
         }
         catch (e) {

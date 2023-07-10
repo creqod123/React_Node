@@ -1,6 +1,6 @@
-var mongoose = require('mongoose')
-var register = require('../models/register')
-var bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
+const register = require('../models/register')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 // ============================= Admin and user Login ============================= 
