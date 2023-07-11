@@ -35,17 +35,17 @@ export default function Adminproduct() {
             })
             totalLength = a.data.data.totalPosts
             Data = a.data.data.data
+
         }
         catch (e) {
             console.log(e)
         }
-        const timer = setTimeout(() => {
-            setShowTag(true);
-        }, 2000);
     }
 
     SubFunction(paginatIndex)
-
+    setTimeout(() => {
+        setShowTag(true);
+    }, 3000);
     // ============================================ Remove Product =====================================================
 
     const handleInputRemove = async (e) => {
@@ -67,7 +67,7 @@ export default function Adminproduct() {
     // ============================================ Update Product =====================================================
 
     const BorderExample = () => {
-        return <Spinner animation="border" />;
+        return <Spinner animation="border" id='spinner' />;
     }
 
     const update = async (e) => {
@@ -89,7 +89,6 @@ export default function Adminproduct() {
 
         setShowTag(false);
         setIsClicked(false);
-        SubFunction()
     }
 
     // ================================================ For Css =================================================

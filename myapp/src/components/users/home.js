@@ -34,8 +34,6 @@ function Home(props) {
     useEffect(() => {
         if (props.props.socket) {
             props.props.socket.on('updateProduct', res => {
-                console.log("=======================", res.data)
-                console.log("=======================", Data)
                 setShowTag(false)
                 setTimeout(() => {
                     setShowTag(true)
@@ -96,7 +94,7 @@ function Home(props) {
     }
 
     const BorderExample = () => {
-        return <Spinner animation="border" />;
+        return <Spinner animation="border" id="spinner"/>;
     }
 
     // ========================================================== Search Function ==================================================================

@@ -20,7 +20,8 @@ exports.ceoUserGet = (event, data) => {
     global.io.emit(event, mapData(data))
 }
 
-// CEO data
+// admin to user data
+
 exports.addProduct = (event, data) => {
     global.io.emit(event, mapData(data))
 }
@@ -28,6 +29,12 @@ exports.updateProduct = (event, data) => {
     global.io.emit(event, mapData(data))
 }
 exports.removeProduct = (event, data) => {
+    global.io.emit(event, mapData(data))
+}
+exports.conformOrder = (event, data) => {
+    global.io.emit(event, mapData(data))
+}
+exports.productCheckout = (event, data) => {
     global.io.emit(event, mapData(data))
 }
 

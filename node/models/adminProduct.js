@@ -6,6 +6,7 @@ const adminProduct = new Schema({
     email: String,
     productName: String,
     price: Number,
+    stock: Number,
     adminId: {
 
         type: mongoose.Schema.Types.ObjectId,

@@ -9,7 +9,7 @@ let order = []
 let email = localStorage.getItem("email")
 let token = localStorage.getItem("token")
 
-export default function Adminbuyer() {
+export default function Adminbuyer(props) {
 
     const [showTag, setShowTag] = useState(false);
     const [address, setAddress] = useState(false);
@@ -28,6 +28,7 @@ export default function Adminbuyer() {
                 },
                 body: JSON.stringify({ email: check }),
             })
+
             const data = await response.json();
 
             if (data.message !== "fail") {
@@ -35,23 +36,36 @@ export default function Adminbuyer() {
                 searchData = Data
             }
             else {
-                setShowTag(true)
                 setshowSearchValue(false)
+                setShowTag(true)
             }
-
         }
         catch (e) {
             console.log(e)
         }
     }
 
-    useEffect(() => {
-        SubFunction(email);
-        const timeout = setTimeout(() => {
-            setShowTag(true)
-        }, 1000);
-    }, [])
+    SubFunction(email);
+    const timeout = setTimeout(() => {
+        setShowTag(true)
+    }, 3000);
 
+
+    useEffect(() => {
+
+
+        // if (props.props.socket) {
+        //     props.props.socket.on('conformOrder', res => {
+        //         console.log("hello world")
+        //         setShowTag(false)
+        //         setTimeout(() => {
+        //             setShowTag(true)
+        //         }, 1000)
+        //     })
+
+        // }
+
+    }, [])
 
     const BorderExample = () => {
 
@@ -112,6 +126,7 @@ export default function Adminbuyer() {
             }
         }
         SubFunction();
+        setShowTag(false)
     }
 
     const Detail = (e) => {

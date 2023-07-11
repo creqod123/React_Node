@@ -3,6 +3,7 @@ const adminProduct = require('../models/adminProduct')
 const checkout = require('../models/checkout')
 const register = require('../models/register')
 const address = require('../models/address')
+const socket = require('../socket/index');
 
 // ============================= getall data show =========================== 
 
@@ -106,7 +107,7 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
                 status: "Pending"
             })
         })
-
+        socket.productCheckout('productCheckout');
         res.status(200).json({
             message: "complete",
         })

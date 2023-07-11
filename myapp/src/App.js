@@ -27,7 +27,7 @@ function App(props) {
             <Routes>
               <Route path='/user/shop' element={<Home props={props} />} />
               <Route path='/user/cart' element={<Cart />} />
-              <Route path='/user/order' element={<Order />} />
+              <Route path='/user/order' element={<Order props={props} />} />
             </Routes>
           </Router>
         </div>
@@ -40,7 +40,7 @@ function App(props) {
             <Navbar />
             <Routes>
               <Route path='/admin/product' element={<Adminproduct />} />
-              <Route path='/admin/detail' element={<Adminbuyer />} />
+              <Route path='/admin/detail' element={<Adminbuyer props={props}/>} />
               <Route path='/admin/control' element={<Admincontrol />} />
             </Routes>
           </Router>

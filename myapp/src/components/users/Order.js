@@ -9,7 +9,7 @@ const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let id
 
-export default function Order() {
+export default function Order(props) {
     const [showTag, setShowTag] = useState(false);
     const [address, setAddress] = useState(false);
     const [updateAddress, setUpdateAddress] = useState(false);
@@ -40,11 +40,19 @@ export default function Order() {
         }
     }
 
+    SubFunction();
+    const timeout = setTimeout(() => {
+        setShowTag(true)
+    }, 1000);
+
+
     useEffect(() => {
-        SubFunction();
-        const timeout = setTimeout(() => {
-            setShowTag(true)
-        }, 1000);
+
+        if (props.props.socket) {
+            props.props.socket.on('conformOrder', res => {
+                setShowTag(false)
+            })
+        }
     }, [])
 
     const BorderExample = () => {

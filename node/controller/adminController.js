@@ -46,20 +46,11 @@ exports.add = ('/admin/add', async (req, res, next) => {
         const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
         req.body['adminId'] = check[0]._id
-
-
-
-
         if (check.length != 0) {
             console.log("check ;- ", req.body)
-
-
             const a = await adminProduct.create(req.body)
             const data = await adminProduct.find({ email, email })
-            console.log("========================================================")
             socket.removeProduct('addProduct');
-            
-            
             res.status(200).json({
                 message: "complete",
                 data: data
@@ -82,17 +73,17 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
 exports.remove = ('/admin/remove', async (req, res, next) => {
     try {
-        
+
         const id = req.body.id
         const email = req.body.email
-        
+
         await adminProduct.deleteOne({ _id: id })
         await checkout.deleteOne({ productId: id })
-        
+
         const send = await adminProduct.find({ email: email })
         console.log("========================================================")
         socket.addProduct('removeProduct');
-        
+
         res.status(200).json({
             message: "complete",
             data: send
@@ -185,6 +176,7 @@ exports.status = ('/admin/status', async (req, res, next) => {
 
         if (status === 'conform') {
             await checkout.updateOne({ _id: id }, { status: 'Conform' })
+            socket.conformOrder('conformOrder');
         }
         else {
 

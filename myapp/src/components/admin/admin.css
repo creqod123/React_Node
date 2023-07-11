@@ -207,6 +207,7 @@ table tr td {
     transition: all ease-in-out 0.5s;
     box-shadow: 6px 6px 24px black;
 }
+
 #updates_first {
     visibility: hidden;
     transition: all ease-in-out 0.5s;
@@ -236,7 +237,7 @@ table tr td {
     opacity: 1;
 }
 
-#close{
+#close {
     position: absolute;
     height: 40px;
     width: 40px;
@@ -245,7 +246,7 @@ table tr td {
     cursor: pointer;
 }
 
-#hide{
+#hide {
     position: absolute;
     top: 0;
     left: 50%;
@@ -254,7 +255,7 @@ table tr td {
     transition: all ease-in-out 0.5s;
 }
 
-#show{
+#show {
     position: absolute;
     top: 0;
     left: 50%;
@@ -269,4 +270,11 @@ table tr td {
     width: 60%;
     display: flex;
     justify-content: space-evenly;
+}
+
+#spinner {
+    position: absolute;
+    padding: 10px 0px;
+    top: 50%;
+    left: 50%;
 }
