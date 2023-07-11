@@ -39,12 +39,12 @@ export default function Adminproduct() {
         catch (e) {
             console.log(e)
         }
+        const timer = setTimeout(() => {
+            setShowTag(true);
+        }, 2000);
     }
 
     SubFunction(paginatIndex)
-    const timer = setTimeout(() => {
-        setShowTag(true);
-    }, 2000);
 
     // ============================================ Remove Product =====================================================
 

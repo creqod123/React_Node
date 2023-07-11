@@ -144,7 +144,7 @@ exports.update = ('/admin/update', async (req, res, next) => {
         const id = req.body.id
         const a = await adminProduct.updateOne({ _id: req.body.id }, { productName: req.body.productName, price: req.body.price })
         const data = await adminProduct.find({ _id: req.body.id })
-        socket.adminDataGet('hello', data);
+        socket.adminDataGet('updateProduct', data);
         res.status(200).json({
             message: "complete",
         })

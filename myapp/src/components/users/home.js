@@ -33,7 +33,7 @@ function Home(props) {
 
     useEffect(() => {
         if (props.props.socket) {
-            props.props.socket.on('hello', res => {
+            props.props.socket.on('updateProduct', res => {
                 setShowTag(false)
                 setTimeout(() => {
                     setShowTag(true)

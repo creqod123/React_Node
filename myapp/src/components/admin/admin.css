@@ -47,13 +47,14 @@
 /* ================================================= Admin Product ================================================ */
 
 .adminshowproduct {
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: grid !important;
+    grid-template-columns: auto auto auto !important;
     padding: 10px;
-    gap: 46px 132px;
+    gap: 46px 132px !important;
     position: absolute;
     top: 75px;
-    margin-left: 8%;
+    margin-left: 2%;
+    width: 100%;
 }
 
 .position {
