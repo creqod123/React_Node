@@ -135,6 +135,7 @@ function Home(props) {
 
     const showProduct = (product) => {
 
+
         if (product.image != null) {
             const { image, productName, price } = product
             return (

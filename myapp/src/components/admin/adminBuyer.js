@@ -223,7 +223,8 @@ export default function Adminbuyer(props) {
                     <th>Quantity</th>
                     <th>Status</th>
                 </tr>
-                {showTag ? Data.map((product, count = 0) => {
+                {
+                showTag ? Data.map((product, count = 0) => {
                     if (count == check) {
                         const { _id, quantity, productId, userId, price, status } = product
                         const { email } = userId
