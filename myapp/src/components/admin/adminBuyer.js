@@ -38,6 +38,9 @@ export default function Adminbuyer(props) {
             else {
                 setshowSearchValue(false)
                 setShowTag(true)
+                const timeout = setTimeout(() => {
+                    setShowTag(true)
+                }, 2000);
             }
         }
         catch (e) {

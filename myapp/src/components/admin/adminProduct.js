@@ -35,7 +35,6 @@ export default function Adminproduct() {
             })
             totalLength = a.data.data.totalPosts
             Data = a.data.data.data
-
         }
         catch (e) {
             console.log(e)
@@ -43,9 +42,10 @@ export default function Adminproduct() {
     }
 
     SubFunction(paginatIndex)
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
         setShowTag(true);
     }, 3000);
+
     // ============================================ Remove Product =====================================================
 
     const handleInputRemove = async (e) => {
@@ -86,7 +86,6 @@ export default function Adminproduct() {
         catch (e) {
             console.log(e)
         }
-
         setShowTag(false);
         setIsClicked(false);
     }
