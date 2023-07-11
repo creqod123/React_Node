@@ -56,9 +56,10 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
             const a = await adminProduct.create(req.body)
             const data = await adminProduct.find({ email, email })
-            socket.adminDataGet('hello', data);
-
-
+            console.log("========================================================")
+            socket.removeProduct('addProduct');
+            
+            
             res.status(200).json({
                 message: "complete",
                 data: data
@@ -81,16 +82,17 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
 exports.remove = ('/admin/remove', async (req, res, next) => {
     try {
-
+        
         const id = req.body.id
         const email = req.body.email
-
+        
         await adminProduct.deleteOne({ _id: id })
         await checkout.deleteOne({ productId: id })
-
+        
         const send = await adminProduct.find({ email: email })
-        socket.adminDataGet('hello', data);
-
+        console.log("========================================================")
+        socket.addProduct('removeProduct');
+        
         res.status(200).json({
             message: "complete",
             data: send
@@ -144,7 +146,7 @@ exports.update = ('/admin/update', async (req, res, next) => {
         const id = req.body.id
         const a = await adminProduct.updateOne({ _id: req.body.id }, { productName: req.body.productName, price: req.body.price })
         const data = await adminProduct.find({ _id: req.body.id })
-        socket.adminDataGet('updateProduct', data);
+        socket.updateProduct('updateProduct', data);
         res.status(200).json({
             message: "complete",
         })

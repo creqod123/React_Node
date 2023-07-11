@@ -15,23 +15,19 @@ exports.init = () => {
     })
 }
 
-exports.adminDataGet = (event, data) => {
-    global.io.emit(event, mapData(data))
-}
-
+// CEO data
 exports.ceoUserGet = (event, data) => {
     global.io.emit(event, mapData(data))
 }
 
-exports.ceoAdminGet = (event, data) => {
+// CEO data
+exports.addProduct = (event, data) => {
     global.io.emit(event, mapData(data))
 }
-
-exports.userDataGet = (event, data) => {
+exports.updateProduct = (event, data) => {
     global.io.emit(event, mapData(data))
 }
-
-exports.orderConform = (event, data) => {
+exports.removeProduct = (event, data) => {
     global.io.emit(event, mapData(data))
 }
 
