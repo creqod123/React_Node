@@ -94,7 +94,7 @@ function Home(props) {
     }
 
     const BorderExample = () => {
-        return <Spinner animation="border" id="spinner"/>;
+        return <Spinner animation="border" id="spinner" />;
     }
 
     // ========================================================== Search Function ==================================================================
@@ -159,10 +159,8 @@ function Home(props) {
             )
         }
     }
-
     return (
         <div className="items position">
-
             <div id="pagination">
                 {
                     searchData ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>

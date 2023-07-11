@@ -53,21 +53,15 @@ export default function Adminbuyer(props) {
         setShowTag(true)
     }, 3000);
 
-
     useEffect(() => {
-
-
-        // if (props.props.socket) {
-        //     props.props.socket.on('conformOrder', res => {
-        //         console.log("hello world")
-        //         setShowTag(false)
-        //         setTimeout(() => {
-        //             setShowTag(true)
-        //         }, 1000)
-        //     })
-
-        // }
-
+        if (props.props.socket) {
+            props.props.socket.on('productCheckout', res => {
+                setShowTag(false)
+                setTimeout(() => {
+                    setShowTag(true)
+                }, 1000)
+            })
+        }
     }, [])
 
     const BorderExample = () => {

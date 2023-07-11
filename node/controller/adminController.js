@@ -49,6 +49,7 @@ exports.add = ('/admin/add', async (req, res, next) => {
         if (check.length != 0) {
             console.log("check ;- ", req.body)
             const a = await adminProduct.create(req.body)
+                console.log("Check stock :- ",a)
             const data = await adminProduct.find({ email, email })
             socket.removeProduct('addProduct');
             res.status(200).json({

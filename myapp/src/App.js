@@ -40,7 +40,7 @@ function App(props) {
             <Navbar />
             <Routes>
               <Route path='/admin/product' element={<Adminproduct />} />
-              <Route path='/admin/detail' element={<Adminbuyer props={props}/>} />
+              <Route path='/admin/detail' element={<Adminbuyer props={props} />} />
               <Route path='/admin/control' element={<Admincontrol />} />
             </Routes>
           </Router>
