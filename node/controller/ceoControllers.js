@@ -25,8 +25,6 @@ exports.getData = (async (req, res, next) => {
 // =========================================  User Detail =========================================
 
 exports.userDetail = (async (req, res, next) => {
-
-
     try {
         const id = req.body.id
         const data = await checkout.find({ userId: id }, { quantity: 1, price: 1, productId: 1 }).populate('productId')

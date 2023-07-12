@@ -16,7 +16,7 @@ function SignUp() {
     const [CheckType, setCheckType] = useState(false)
 
 
-    
+
     // const [CheckConPassword, setCheckConPassword] = useState(false)
 
 

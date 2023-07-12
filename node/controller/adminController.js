@@ -43,8 +43,6 @@ exports.getAll = (async (req, res, next) => {
 exports.add = (async (req, res, next) => {
 
     try {
-        console.log("Check :- ", req.user)
-
         const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
         req.body['adminId'] = check[0]._id

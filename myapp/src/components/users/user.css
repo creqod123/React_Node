@@ -9,8 +9,8 @@
 #imageSiza {
   width: 286px;
   height: 180px;
-  border: 3px solid black;
-  border-radius: 1%;
+  border: 1px solid black;
+  border-radius: 1px 1px 65px 65px;
 }
 
 #cartButton {

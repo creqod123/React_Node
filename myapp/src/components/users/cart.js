@@ -138,7 +138,7 @@ function Cart() {
         return (
             <div id="showProductUser">
                 <div>
-                    <Card style={{ width: '18rem',border: '1px solid black', borderRadius: '1%' }}>
+                    <Card style={{ width: '18rem', border: '1px solid black', borderRadius: '1%' }}>
                         <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
                         <Card.Body>
                             <Card.Title>{productName}</Card.Title>

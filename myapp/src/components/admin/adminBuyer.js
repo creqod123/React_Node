@@ -65,7 +65,6 @@ export default function Adminbuyer(props) {
     }, [])
 
     const BorderExample = () => {
-
         return <Spinner animation="border" className='helloworld' variant="primary" />;
     }
 
@@ -224,31 +223,31 @@ export default function Adminbuyer(props) {
                     <th>Status</th>
                 </tr>
                 {
-                showTag ? Data.map((product, count = 0) => {
-                    if (count == check) {
-                        const { _id, quantity, productId, userId, price, status } = product
-                        const { email } = userId
-                        let counter = -1
-                        return (
-                            <>
-                                {
-                                    quantity.map(() => {
-                                        ++counter
-                                        return (
-                                            <tr>
-                                                <td>{productId[counter].productName}</td>
-                                                <td>{price[counter]}</td>
-                                                <td>{quantity[counter]}</td>
-                                                <td>{status}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </>
-                        )
-                    }
-                    ++count
-                }) : <BorderExample />}
+                    showTag ? Data.map((product, count = 0) => {
+                        if (count == check) {
+                            const { _id, quantity, productId, userId, price, status } = product
+                            const { email } = userId
+                            let counter = -1
+                            return (
+                                <>
+                                    {
+                                        quantity.map(() => {
+                                            ++counter
+                                            return (
+                                                <tr>
+                                                    <td>{productId[counter].productName}</td>
+                                                    <td>{price[counter]}</td>
+                                                    <td>{quantity[counter]}</td>
+                                                    <td>{status}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </>
+                            )
+                        }
+                        ++count
+                    }) : <BorderExample />}
             </table> : <></>}
 
             {/* ========================================================================================================== */}
