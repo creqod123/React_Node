@@ -137,23 +137,25 @@ function Cart() {
         const { image, productName, price, quantity, stock } = product
         return (
             <div id="showProductUser">
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
-                    <Card.Body>
-                        <Card.Title>{productName}</Card.Title>
-                        <Card.Text>
-                            Price ::-- {price}
-                        </Card.Text>
-                        <Card.Text>
-                            InStock ::-- {stock}
-                        </Card.Text>
-                        <div id="cartButton">
-                            <Button variant="primary" value={JSON.stringify(product)} onClick={add}>+</Button>
-                            <p id="productCounter">{quantity}</p>
-                            <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
-                        </div>
-                    </Card.Body>
-                </Card>
+                <div>
+                    <Card style={{ width: '18rem',border: '1px solid black', borderRadius: '1%' }}>
+                        <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
+                        <Card.Body>
+                            <Card.Title>{productName}</Card.Title>
+                            <Card.Text>
+                                Price ::-- {price}
+                            </Card.Text>
+                            <Card.Text>
+                                InStock ::-- {stock}
+                            </Card.Text>
+                            <div id="cartButton">
+                                <Button variant="primary" value={JSON.stringify(product)} onClick={add}>+</Button>
+                                <p id="productCounter">{quantity}</p>
+                                <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </div>
             </div>
         );
     }

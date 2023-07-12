@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import './user.css'
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 
 let check
 let Data = []
@@ -139,128 +140,139 @@ export default function Order(props) {
 
 
     return (
-        <div className='adminshow' >
-            <div className='tableSearch'>
-                <button disabled>{"<"}</button>
-                <button disabled>{">"}</button>
-                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                <input type="submit" onClick={searchFun} />
-            </div>
-
-            {clicked ? <></> : <table>
-                <tr>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Detail</th>
-                </tr>
-                {showTag ? Data.map((product, counter = 0) => {
-                    const { _id, quantity, productId, userId, price, status } = product
-                    const { email } = userId
-
-                    return (
-                        <tr>
-                            <td>{email.slice(0, -10)}</td>
-                            <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                            <td><button value={counter++} onClick={Detail}>Detail</button></td>
-                        </tr>
-                    )
-                }) : <BorderExample />}
-            </table>}
-
-            {/* =========================================================================================================================== */}
-
-            {detail ? <table>
-                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
-                <tr>
-                    <th>productName</th>
-                    <th>ProductPrice</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                </tr>
-                {showTag ? Data.map((product, count = 0) => {
-                    if (count == check) {
-                        const { quantity, productId, userId, price, status } = product
-                        const { email } = userId
-                        let counter = -1
-                        return (
-                            <>
-                                {
-                                    quantity.map(() => {
-                                        ++counter
-                                        return (
-                                            <tr>
-                                                <td>{productId[counter].productName}</td>
-                                                <td>{price[counter]}</td>
-                                                <td>{quantity[counter]}</td>
-                                                <td>{status}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </>
-                        )
-                    }
-                    ++count
-
-                }) : <BorderExample />}
-            </table> : <></>}
-
-            {/* ========================================================================================================== */}
-
-            {address ?
-                <div id={clicked ? 'show' : 'hide'}>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
-                    <table>
-                        <tr>
-                            <th>Full Name</th>
-                            <th>House NO and Name</th>
-                            <th>Area</th>
-                            <th>City</th>
-                            <th>Pincode</th>
-                            <th>update</th>
-                        </tr>
-                        {address ? order.map((product) => {
-                            const { fullName, house, area, city, pincode, _id } = product
-                            return (
-                                <tr>
-                                    <td>{fullName}</td>
-                                    <td>{house}</td>
-                                    <td>{area}</td>
-                                    <td>{city}</td>
-                                    <td>{pincode}</td>
-                                    <td>{<button value={_id} onClick={addressUpdate}>Update</button>}</td>
-                                </tr>
-                            )
-                        }) : <></>}
-                    </table>
-
-                    {updateAddress ?
-                        <div id='updateOrder'>
-                            <label id='updateclose'>
-                                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={handleInputUpdate} />
-                            </label>
-                            <label>
-                                Full Name <input type="text" placeholder="Full name" name="productName" onChange={(e) => setfullName(e.target.value)} />
-                            </label>
-                            <label>
-                                House <input type="text" placeholder="Building No and Name" name="productName" onChange={(e) => setHouse(e.target.value)} />
-                            </label>
-                            <label>
-                                Area <input type="text" placeholder="Area" name="price" onChange={(e) => setArea(e.target.value)} />
-                            </label>
-                            <label>
-                                City <input type="text" placeholder="City" name="price" onChange={(e) => setCity(e.target.value)} />
-                            </label>
-                            <label>
-                                Pincode <input type="tel" max={6} min={6} placeholder="Pincode" name="price" onChange={(e) => setPincode(e.target.value)} />
-                            </label>
-                            <label id='submit'>
-                                <input type='submit' onClick={orderUpdate} />
-                            </label>
-                        </div>
-                        : <></>}
+        <div>
+            <div className='pagination'>
+            <div id="searchPaginat">
+                <div id="paginate">
+                    <button disabled>{"<"}</button>
+                    <button disabled>{">"}</button>
                 </div>
-                : <></>}
+                <div id="searchTag">
+                    <MDBInputGroup>
+                        <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                        <MDBBtn rippleColor='dark'>
+                            <MDBIcon type='submit' icon='search' onClick={searchFun} />
+                        </MDBBtn>
+                    </MDBInputGroup>
+                </div>
+            </div>
+            </div>
+            <div className='adminshow' >
+                {clicked ? <></> : <table>
+                    <tr>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Detail</th>
+                    </tr>
+                    {showTag ? Data.map((product, counter = 0) => {
+                        const { _id, quantity, productId, userId, price, status } = product
+                        const { email } = userId
+
+                        return (
+                            <tr>
+                                <td>{email.slice(0, -10)}</td>
+                                <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                                <td><button value={counter++} onClick={Detail}>Detail</button></td>
+                            </tr>
+                        )
+                    }) : <BorderExample />}
+                </table>}
+
+                {/* =========================================================================================================================== */}
+
+                {detail ? <table>
+                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
+                    <tr>
+                        <th>productName</th>
+                        <th>ProductPrice</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                    {showTag ? Data.map((product, count = 0) => {
+                        if (count == check) {
+                            const { quantity, productId, userId, price, status } = product
+                            const { email } = userId
+                            let counter = -1
+                            return (
+                                <>
+                                    {
+                                        quantity.map(() => {
+                                            ++counter
+                                            return (
+                                                <tr>
+                                                    <td>{productId[counter].productName}</td>
+                                                    <td>{price[counter]}</td>
+                                                    <td>{quantity[counter]}</td>
+                                                    <td>{status}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </>
+                            )
+                        }
+                        ++count
+
+                    }) : <BorderExample />}
+                </table> : <></>}
+
+                {/* ========================================================================================================== */}
+
+                {address ?
+                    <div id={clicked ? 'show' : 'hide'}>
+                        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
+                        <table>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>House NO and Name</th>
+                                <th>Area</th>
+                                <th>City</th>
+                                <th>Pincode</th>
+                                <th>update</th>
+                            </tr>
+                            {address ? order.map((product) => {
+                                const { fullName, house, area, city, pincode, _id } = product
+                                return (
+                                    <tr>
+                                        <td>{fullName}</td>
+                                        <td>{house}</td>
+                                        <td>{area}</td>
+                                        <td>{city}</td>
+                                        <td>{pincode}</td>
+                                        <td>{<button value={_id} onClick={addressUpdate}>Update</button>}</td>
+                                    </tr>
+                                )
+                            }) : <></>}
+                        </table>
+
+                        {updateAddress ?
+                            <div id='updateOrder'>
+                                <label id='updateclose'>
+                                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={handleInputUpdate} />
+                                </label>
+                                <label>
+                                    Full Name <input type="text" placeholder="Full name" name="productName" onChange={(e) => setfullName(e.target.value)} />
+                                </label>
+                                <label>
+                                    House <input type="text" placeholder="Building No and Name" name="productName" onChange={(e) => setHouse(e.target.value)} />
+                                </label>
+                                <label>
+                                    Area <input type="text" placeholder="Area" name="price" onChange={(e) => setArea(e.target.value)} />
+                                </label>
+                                <label>
+                                    City <input type="text" placeholder="City" name="price" onChange={(e) => setCity(e.target.value)} />
+                                </label>
+                                <label>
+                                    Pincode <input type="tel" max={6} min={6} placeholder="Pincode" name="price" onChange={(e) => setPincode(e.target.value)} />
+                                </label>
+                                <label id='submit'>
+                                    <input type='submit' onClick={orderUpdate} />
+                                </label>
+                            </div>
+                            : <></>}
+                    </div>
+                    : <></>}
+            </div>
         </div>
     )
 }

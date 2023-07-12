@@ -3,10 +3,11 @@ import axios from "axios"
 import './user.css'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import Spinner from 'react-bootstrap/Spinner';
 import { pageNation, addtoCart, RemovetoCart } from "../../Services/Actions/actions"
+import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 
 let paginat = 0
 const email = localStorage.getItem("email")
@@ -138,15 +139,15 @@ function Home(props) {
             const { image, productName, price, stock } = product
             return (
                 <div id="showProductUser">
-                    <Card style={{ width: '18rem' }}>
+                    <Card style={{ width: '18rem', border: '1px solid black', borderRadius: '1%' }}>
                         <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
                         <Card.Body>
                             <Card.Title>{productName}</Card.Title>
                             <Card.Text>
-                                Price ::-- {price}
+                                Price ::-- <span className="stockPrice">{price}</span>
                             </Card.Text>
                             <Card.Text>
-                                InStock ::-- {stock}
+                                InStock ::-- <span className="stockPrice">{stock}</span>
                             </Card.Text>
                             <div id="cartButton">
                                 <Button variant="primary" value={JSON.stringify(product)} onClick={add}>Add to cart</Button>
@@ -161,20 +162,30 @@ function Home(props) {
 
     return (
         <div className="items">
-            <div id="pagination">
-                {
-                    searchData ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
-                        : paginat > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
-                }
-                {
-                    searchData ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
-                        : paginat < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
-                }
-                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                <input type="submit" onClick={searchFun} />
+            <div className="pagination">
+                <div id="searchPaginat">
+                    <div id="paginate">
+                        {
+                            searchData ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
+                                : paginat > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
+                        }
+                        {
+                            searchData ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                                : paginat < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                        }
+                    </div>
+                    <div id="searchTag">
+                        <MDBInputGroup>
+                            <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                            <MDBBtn rippleColor='dark'>
+                                <MDBIcon type='submit' icon='search' onClick={searchFun} />
+                            </MDBBtn>
+                        </MDBInputGroup>
+                    </div>
+                </div>
             </div>
             <div className="position">
-            {searchData ? Check123.map((product) => BasicExample(product)) : showTag ? Data.map((product) => BasicExample(product)) : <BorderExample />}
+                {searchData ? Check123.map((product) => BasicExample(product)) : showTag ? Data.map((product) => BasicExample(product)) : <BorderExample />}
             </div>
         </div>
     );
