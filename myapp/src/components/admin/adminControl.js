@@ -42,7 +42,7 @@ export default function Admincontrol() {
                 </label>
                 Stock :-
                 <label>
-                    <input type='number' onChange={(e) => setStock(e.target.value)} name="stock" />
+                    <input type='number' onChange={(e) => setStock(e.target.value)} name="stock" placeholder="Enter Stock"/>
                 </label>
                 <label id='submit'>
                     <input type='submit' onClick={productAdd} />

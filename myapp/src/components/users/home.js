@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from 'react-bootstrap/Spinner';
 import { pageNation, addtoCart, RemovetoCart } from "../../Services/Actions/actions"
-
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 let paginat = 0
 const email = localStorage.getItem("email")
@@ -132,36 +133,34 @@ function Home(props) {
     }
 
     // ========================================================== Display All product ==================================================================
-
-    const showProduct = (product) => {
-
-
+    const BasicExample = (product) => {
         if (product.image != null) {
-            const { image, productName, price } = product
+            const { image, productName, price, stock } = product
             return (
-                <>
-                    <div className="i">
-                        <div className="img-wrapper item">
-                            <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
-                        </div>
-                        <div className="text-wrapper item">
-                            <span>{productName}</span>
-                            <br />
-                            <span>Price ${price}</span>
-                        </div>
-                        <div className="button-wrapper item">
-                            <button value={JSON.stringify(product)} onClick={add}>Add to cart</button>
-                        </div>
-                        <div className="button-wrapper item">
-                            <button value={JSON.stringify(product)} onClick={remove}>Remove</button>
-                        </div>
-                    </div>
-                </>
-            )
+                <div id="showProductUser">
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
+                        <Card.Body>
+                            <Card.Title>{productName}</Card.Title>
+                            <Card.Text>
+                                Price ::-- {price}
+                            </Card.Text>
+                            <Card.Text>
+                                InStock ::-- {stock}
+                            </Card.Text>
+                            <div id="cartButton">
+                                <Button variant="primary" value={JSON.stringify(product)} onClick={add}>Add to cart</Button>
+                                <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>Remove</Button>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </div>
+            );
         }
     }
+
     return (
-        <div className="items position">
+        <div className="items">
             <div id="pagination">
                 {
                     searchData ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
@@ -174,7 +173,9 @@ function Home(props) {
                 <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
                 <input type="submit" onClick={searchFun} />
             </div>
-            {searchData ? Check123.map((product) => showProduct(product)) : showTag ? Data.map((product) => showProduct(product)) : <BorderExample />}
+            <div className="position">
+            {searchData ? Check123.map((product) => BasicExample(product)) : showTag ? Data.map((product) => BasicExample(product)) : <BorderExample />}
+            </div>
         </div>
     );
 }
