@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 // ============================= Admin and user Login ============================= 
 
-exports.login = ('/login', async (req, res, next) => {
+exports.login = (async (req, res, next) => {
 
     try {
         const { email, password } = req.body

@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 
 // ============================= Admin and user register =========================== 
 
-exports.register = ('/register', async function (req, res, next) {
+exports.register = (async function (req, res, next) {
 
     try {
 

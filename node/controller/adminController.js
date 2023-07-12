@@ -8,7 +8,7 @@ let emailDetail
 
 // ============================= Admin get product =========================== 
 
-exports.getAll = ('/admin', async (req, res, next) => {
+exports.getAll = (async (req, res, next) => {
 
     try {
 
@@ -40,9 +40,11 @@ exports.getAll = ('/admin', async (req, res, next) => {
 
 // ============================= Admin add product =========================== 
 
-exports.add = ('/admin/add', async (req, res, next) => {
+exports.add = (async (req, res, next) => {
 
     try {
+        console.log("Check :- ", req.user)
+
         const check = await register.find({ email: req.body.email })
         req.body.image = req.file.path
         req.body['adminId'] = check[0]._id
@@ -72,7 +74,7 @@ exports.add = ('/admin/add', async (req, res, next) => {
 
 // ============================= Admin remove product =========================== 
 
-exports.remove = ('/admin/remove', async (req, res, next) => {
+exports.remove = (async (req, res, next) => {
     try {
 
         const id = req.body.id
@@ -99,7 +101,7 @@ exports.remove = ('/admin/remove', async (req, res, next) => {
 
 // ============================= Admin detail show =========================== 
 
-exports.detail = ('/admin/detail', async (req, res, next) => {
+exports.detail = (async (req, res, next) => {
 
     try {
         const check = await register.find({ email: req.body.email })
@@ -132,7 +134,7 @@ exports.detail = ('/admin/detail', async (req, res, next) => {
 
 // ============================= Admin update show =========================== 
 
-exports.update = ('/admin/update', async (req, res, next) => {
+exports.update = (async (req, res, next) => {
 
     try {
         const id = req.body.id
@@ -152,7 +154,7 @@ exports.update = ('/admin/update', async (req, res, next) => {
 
 // ============================= Admin Order show =========================== 
 
-exports.order = ('/admin/order', async (req, res, next) => {
+exports.order = (async (req, res, next) => {
     try {
         const data = await address.find({ _id: req.body.email })
         res.status(200).json({
@@ -170,7 +172,7 @@ exports.order = ('/admin/order', async (req, res, next) => {
 // ============================= Admin status update show =========================== 
 
 
-exports.status = ('/admin/status', async (req, res, next) => {
+exports.status = (async (req, res, next) => {
     try {
         const id = req.body.id
         const status = req.body.status
@@ -203,7 +205,7 @@ exports.status = ('/admin/status', async (req, res, next) => {
 
 // ============================= search added product =========================== 
 
-exports.search = ('/admin/search', async (req, res, next) => {
+exports.search = (async (req, res, next) => {
     try {
         const Data = {}
         const pageNumber = req.body.paginat

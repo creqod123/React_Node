@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Check from './login_signup/check'
 import Login from './login_signup/Login'
 import SignUp from './login_signup/Signup';
 import Adminproduct from './components/admin/adminProduct'
@@ -69,6 +70,7 @@ function App(props) {
           <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<SignUp />} />
+            <Route path='/check' element={<Check />} />
           </Routes>
         </Router>
       </div>

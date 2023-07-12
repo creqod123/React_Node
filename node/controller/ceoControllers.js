@@ -4,7 +4,7 @@ const register = require('../models/register')
 const checkout = require('../models/checkout');
 const socket = require('../socket/index');
 
-exports.getData = ('/ceo', async (req, res, next) => {
+exports.getData = (async (req, res, next) => {
     try {
         const user = await register.find({ type: "user" }, { _id: 1, email: 1, tel: 1, type: 1 })
         const seller = await register.find({ type: "seller" })
@@ -24,7 +24,7 @@ exports.getData = ('/ceo', async (req, res, next) => {
 
 // =========================================  User Detail =========================================
 
-exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
+exports.userDetail = (async (req, res, next) => {
 
 
     try {
@@ -43,7 +43,7 @@ exports.userDetail = ('/ceo/user/detail', async (req, res, next) => {
     }
 });
 
-exports.userDelete = ('/ceo/user/delete', async (req, res, next) => {
+exports.userDelete = (async (req, res, next) => {
 
     try {
         const registerid = req.body.id
@@ -71,7 +71,7 @@ exports.userDelete = ('/ceo/user/delete', async (req, res, next) => {
 
 // ========================================= Admin detail and remove ====================================   
 
-exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
+exports.adminDetail = (async (req, res, next) => {
 
     try {
         const id = req.body.id
@@ -88,7 +88,7 @@ exports.adminDetail = ('/ceo/admin/detail', async (req, res, next) => {
     }
 });
 
-exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
+exports.productRemove = (async (req, res, next) => {
 
     try {
         const id = req.body.id
@@ -114,7 +114,7 @@ exports.productRemove = ('/ceo/admin/productremove', async (req, res, next) => {
     }
 });
 
-exports.searchData = ('/ceo/search', async (req, res, next) => {
+exports.searchData = (async (req, res, next) => {
     try {
         const check = await register.find({ email: req.body.email })
         const id = check[0]._id

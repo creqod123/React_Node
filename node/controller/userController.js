@@ -7,7 +7,7 @@ const socket = require('../socket/index');
 
 // ============================= getall data show =========================== 
 
-exports.getAll = ('/user', async (req, res, next) => {
+exports.getAll = (async (req, res, next) => {
 
     try {
 
@@ -38,7 +38,7 @@ exports.getAll = ('/user', async (req, res, next) => {
 
 // ============================= Cart data show =========================== 
 
-exports.userCart = ('/user/cart', async (req, res, next) => {
+exports.userCart = (async (req, res, next) => {
 
     try {
         res.status(200).json({
@@ -55,7 +55,7 @@ exports.userCart = ('/user/cart', async (req, res, next) => {
 
 // ============================= data checkout =========================== 
 
-exports.checkout = ('/user/checkout', async (req, res, next) => {
+exports.checkout = (async (req, res, next) => {
 
     try {
         const userEmail = req.body[1]
@@ -122,7 +122,7 @@ exports.checkout = ('/user/checkout', async (req, res, next) => {
 // ============================= user detail show =========================== 
 
 
-exports.detail = ('/user/detail', async (req, res, next) => {
+exports.detail = (async (req, res, next) => {
 
 
     try {
@@ -144,7 +144,7 @@ exports.detail = ('/user/detail', async (req, res, next) => {
 
 // ============================= user order show =========================== 
 
-exports.order = ('/user/order', async (req, res, next) => {
+exports.order = (async (req, res, next) => {
     try {
         const data = await address.find({ _id: req.body.email })
         res.status(200).json({
@@ -162,7 +162,7 @@ exports.order = ('/user/order', async (req, res, next) => {
 
 // ============================= user order update =========================== 
 
-exports.orderUpdate = ('/user/orderupdate', async (req, res, next) => {
+exports.orderUpdate = (async (req, res, next) => {
     try {
         await address.updateOne({ _id: req.body.id }, { fullName: req.body.fullName, house: req.body.house, area: req.body.area, city: req.body.city, pincode: req.body.pincode })
         res.status(200).json({
@@ -178,7 +178,7 @@ exports.orderUpdate = ('/user/orderupdate', async (req, res, next) => {
 
 // ============================= search order =========================== 
 
-exports.search = ('/user/search', async (req, res, next) => {
+exports.search = (async (req, res, next) => {
     try {
         const Data = {}
         const pageNumber = req.body.paginat

@@ -2,7 +2,7 @@ let fs = require('fs');
 let p = require('path')
 
 
-exports.getIma = ('/image',(req, res, next) => {
+exports.getIma = ((req, res, next) => {
 
   try {
     let { path } = req.query;
