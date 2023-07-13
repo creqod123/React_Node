@@ -229,9 +229,7 @@ export default function Adminbuyer(props) {
             {/* =========================================================================================================================== */}
             <div className='SearchBuyer'>
                 {detail ? <table>
-                    <tr>
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
-                    </tr>
+                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
                     <tr>
                         <th>ProductName</th>
                         <th>Stock</th>
