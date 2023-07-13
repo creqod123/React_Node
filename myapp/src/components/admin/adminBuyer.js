@@ -1,7 +1,7 @@
 import './admin.css'
 import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
-import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBFile } from 'mdb-react-ui-kit';
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 
 let Data = []
 let searchData = []
