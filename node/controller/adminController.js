@@ -47,9 +47,7 @@ exports.add = (async (req, res, next) => {
         req.body.image = req.file.path
         req.body['adminId'] = check[0]._id
         if (check.length != 0) {
-            console.log("check ;- ", req.body)
             const a = await adminProduct.create(req.body)
-            console.log("Check stock :- ", a)
             const data = await adminProduct.find({ email, email })
             socket.removeProduct('addProduct');
             res.status(200).json({
@@ -82,7 +80,6 @@ exports.remove = (async (req, res, next) => {
         await checkout.deleteOne({ productId: id })
 
         const send = await adminProduct.find({ email: email })
-        console.log("========================================================")
         socket.addProduct('removeProduct');
 
         res.status(200).json({

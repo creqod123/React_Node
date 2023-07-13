@@ -61,52 +61,30 @@ exports.checkout = (async (req, res, next) => {
         const userEmail = req.body[1]
         const check = await register.find({ email: userEmail })
         const userId = check[0]._id
-        const adminIdStore = []
         let data = req.body[0]
-        const { fullName, house, area, city, pincode } = data[0].cardData
-        const id = await address.create({
-            fullName: fullName,
-            house: house,
-            area: area,
-            city: city,
-            pincode: pincode
-        })
+
 
         data.map(async (product) => {
-            adminIdStore.push(product.cardData.adminId)
-        })
-
-        for (let i = 0; i < adminIdStore.length; i++) {
-            for (let j = i + 1; j < adminIdStore.length; j++) {
-                if (adminIdStore[i] === adminIdStore[j]) {
-                    adminIdStore.splice(j, 1)
-                    j--
-                }
-            }
-        }
-
-        adminIdStore.map(async (adminIdGet) => {
-            const productIds = []
-            const quantitys = []
-            const prices = []
-            data.map(async (product) => {
-                const { quantity, _id, adminId, price } = product.cardData
-                if (adminId === adminIdGet) {
-                    productIds.push(_id)
-                    quantitys.push(quantity)
-                    prices.push(price)
-                }
+            const { _id, productName, price, quantity, fullName, house, area, city, pincode } = product.cardData
+            const sellerId = await adminProduct.findOne({ _id: _id })
+            const id = await address.create({
+                fullName: fullName,
+                house: house,
+                area: area,
+                city: city,
+                pincode: pincode
             })
             await checkout.create({
-                quantity: quantitys,
-                price: prices,
-                productId: productIds,
+                quantity: quantity,
+                price: price,
+                status: "Pending",
+                productId: _id,
                 userId: userId,
-                sellerId: adminIdGet,
-                addressId: id._id,
-                status: "Pending"
+                sellerId: sellerId.adminId,
+                addressId: id._id
             })
         })
+
         socket.productCheckout('productCheckout');
         res.status(200).json({
             message: "complete",

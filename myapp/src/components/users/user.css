@@ -76,9 +76,9 @@ input::-webkit-inner-spin-button {
 
 .pagination {
   position: absolute;
-  top: 1%;
+  top: 0.6%;
   left: 40%;
-  width: 24%;
+  width: 26%;
 }
 
 #searchPaginat {

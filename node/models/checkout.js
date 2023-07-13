@@ -3,20 +3,20 @@ const Schema = mongoose.Schema
 
 const checkout = new Schema({
 
-    quantity: [{
+    quantity: {
         type: Number
-    }],
-    price: [{
+    },
+    price: {
         type: Number
-    }],
+    },
     status: {
         type: String
     },
-    productId: [{
+    productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "adminProduct",
         required: true
-    }],
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "register",

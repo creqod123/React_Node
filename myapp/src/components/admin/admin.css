@@ -1,50 +1,20 @@
 /* ======================================= Admin control ================================================ */
 
-.admincontrol {
-    border: 1px solid black;
-    border-radius: 10px;
-    height: auto;
-    width: fit-content;
-    padding: 15px;
+form {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    width: 28%;
+    padding: 2%;
+    transform: translate(-50%,-50%);
+    box-shadow: 6px 6px 24px black;
 }
 
-.product-add {
-    display: flex;
-    flex-direction: column;
+.mb-3{
+    width: 185%;
 }
 
-.product-add label {
-    margin: 10px 0px;
-}
-
-.product-add input {
-
-    padding: 10px;
-    border: 1px solid black;
-
-}
-
-#submit input {
-    width: 100px;
-    padding: 6px;
-    border-radius: 50px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    transition: all ease-in-out 0.3s;
-}
-
-#submit input:hover {
-    background-color: white;
-    color: black;
-}
-
-/* ================================================= Admin Product ================================================ */
+/* ================================================= Admin Buyer ================================================ */
 
 .adminshowproduct {
     display: grid !important;
@@ -72,47 +42,6 @@
     height: fit-content;
 }
 
-.itemss {
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
-
-.img-wrappers img {
-    height: 100px;
-    width: 100px;
-}
-
-.text-wrappers {
-    height: 55px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-.productbuttons {
-    display: flex;
-    position: relative;
-    bottom: 0px;
-    left: 22%;
-    height: 21px;
-    width: 160px;
-    justify-content: space-evenly;
-}
-
-.productbuttons button {
-    cursor: pointer;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 0px 10px;
-    font-size: 15px;
-}
-
-.adminshow {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-}
 
 .nohave {
     position: absolute;
@@ -146,7 +75,6 @@ table tr td {
 
 
 #update_first input {
-    border: 1px solid black;
     padding: 10px;
 }
 
@@ -154,16 +82,11 @@ table tr td {
     text-align: center;
 }
 
-.updatewarm {
-    visibility: hidden;
-    margin-top: -15px;
-    font-size: 13px;
-}
-
-
-
 #updateclose {
+    position: absolute;
     height: 40px;
+    top: 0;
+    right: 0;
 }
 
 #updateclose img {
@@ -196,16 +119,16 @@ table tr td {
     flex-direction: column;
     justify-content: space-evenly;
     width: 25%;
-    height: 26%;
+    height: 30%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid black;
     visibility: visible;
     opacity: 1;
     transition: all ease-in-out 0.5s;
     box-shadow: 6px 6px 24px black;
+    padding: 2%;
 }
 
 #updates_first {
@@ -219,16 +142,16 @@ table tr td {
     flex-direction: column;
     justify-content: space-evenly;
     width: 20%;
-    height: 26%;
+    height: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid black;
     visibility: hidden;
     opacity: 0;
     transition: all ease-in-out 0.5s;
     box-shadow: 6px 6px 24px black;
+    padding: 2%;
 }
 
 #updates_second {
@@ -239,10 +162,12 @@ table tr td {
 
 #close {
     position: absolute;
+    top: 0;
+    right: 0;
+    transition: all ease-in-out 0.3s;
+    rotate: 45deg;
     height: 40px;
     width: 40px;
-    right: -10%;
-    top: -10px;
     cursor: pointer;
 }
 
@@ -266,10 +191,12 @@ table tr td {
 
 .SearchBuyer {
     position: absolute;
-    top: -86px;
+    top: 10%;
+    left: 50%;
     width: 60%;
     display: flex;
     justify-content: space-evenly;
+    transform: translate(-50%);
 }
 
 #spinner {
@@ -277,4 +204,13 @@ table tr td {
     padding: 10px 0px;
     top: 50%;
     left: 50%;
+}
+
+button#stockUpdate {
+    padding: 15px;
+    display: inline-flex;
+    font-size: 10px;
+    height: 26px;
+    width: 25%;
+    margin-left: 40px;
 }

@@ -2,7 +2,9 @@ import './admin.css'
 import { useState, useEffect } from "react"
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
-
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBFile } from 'mdb-react-ui-kit';
 
 const email = localStorage.getItem("email");
 const token = localStorage.getItem("token");
@@ -21,6 +23,7 @@ export default function Adminproduct() {
     const [isClicked, setIsClicked] = useState(false);
     const [searchApi, setSearchApi] = useState('');
     const [searchProduct, setSearchProduct] = useState(false);
+
 
 
     // ============================================ All Product get ===================================================== 
@@ -71,7 +74,6 @@ export default function Adminproduct() {
     }
 
     const update = async (e) => {
-        console.log("Value check :- ", updateProduct)
         try {
             if (productName === '' || price === '') {
                 return (" ")
@@ -105,7 +107,6 @@ export default function Adminproduct() {
     // ============================================= searching Prodcut ====================================================
 
     const searchFunc = async () => {
-
         setSearchProduct(false)
         setShowTag(false)
 
@@ -144,7 +145,6 @@ export default function Adminproduct() {
     }
 
     const changePage = (check) => {
-
         if (showTag === true) {
             setShowTag(false)
             if (check === "previous") {
@@ -170,92 +170,95 @@ export default function Adminproduct() {
         }
     }
 
-
     return (
         <div>
-            <div id='Searching'>
-                {
-                    searchProduct ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
-                        : paginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
-                }
-                {
-                    searchProduct ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
-                        : paginatIndex < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
-                }
-
-                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchApi(e.target.value)} value={searchApi} />
-                <input type="submit" onClick={searchFunc} />
+            <div className="pagination">
+                <div id="searchPaginat">
+                    <div id="paginate">
+                        {
+                            searchProduct ? searchPaginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
+                                : paginatIndex > 0 ? <button name="previous" onClick={() => changePage("previous")}>{"<"}</button> : <button disabled>{"<"}</button>
+                        }
+                        {
+                            searchProduct ? searchPaginatIndex > Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                                : paginatIndex < Math.floor(totalLength / 9) ? <button onClick={() => changePage("forward")}>{">"}</button> : <button disabled>{">"}</button>
+                        }
+                    </div>
+                    <div id="searchTag">
+                        <MDBInputGroup>
+                            <MDBInput label='Search' onChange={(e) => setSearchApi(e.target.value)} value={searchApi} />
+                            <MDBBtn rippleColor='dark' role='button' onClick={searchFunc}>
+                                <MDBIcon type='submit' icon='search' onClick={searchFunc} />
+                            </MDBBtn>
+                        </MDBInputGroup>
+                    </div>
+                </div>
             </div>
 
             <div id={isClicked ? 'update_first' : 'update_second'}>
                 <label id='updateclose'>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
                 </label>
-                <label>
-                    Product name :- <input type="text" placeholder="Product Name" onChange={(e) => setproductName(e.target.value)} name="productName" />
-                </label>
-                <p className='updatewarm'>asd</p>
-                <label>
-                    Product Price :- <input type="text" placeholder="Product Price" onChange={(e) => setPrice(e.target.value)} name="price" />
-                </label>
-                <p className='updatewarm'>asd</p>
-                <label id='submit'>
-                    <input type='submit' onClick={update} />
-                </label>
+                <MDBInput label='Product Name' name='Proname' type='text' onChange={(e) => setproductName(e.target.value)} required />
+                <MDBInput label='Price' type='text' onChange={(e) => setPrice(e.target.value)} required />
+                <MDBFile id='formFileDisabled' required name='Fileselect' />
+                <MDBBtn color='success' type='submit' onClick={update}>Submit</MDBBtn>
             </div>
 
             <div className='adminshowproduct position' id={isClicked ? 'updates_first' : 'updates_second'}>
                 {searchProduct ?
                     Check123.map((product) => {
-                        const { _id, image, productName, price } = product
+                        const { _id, image, productName, stock, price } = product
                         return (
-                            <div className="is">
-                                <div className="img-wrappers itemss">
-                                    <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
-                                </div>
-                                <div className="text-wrappers itemss">
-                                    <tr>
-                                        <td>name:- {productName}</td>
-                                    </tr>
-                                    <br />
-                                    <tr>
-                                        <td>Price :- ${price}</td>
-                                    </tr>
-                                </div>
-                                <div className='productbuttons'>
-                                    <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
-                                    <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
-                                </div>
+                            <div>
+                                <Card style={{ width: '18rem', border: '1px solid black', borderRadius: '1%' }}>
+                                    <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
+                                    <Card.Body>
+                                        <Card.Title>{productName}</Card.Title>
+                                        <Card.Text>
+                                            Price ::-- <span className="stockPrice">{price}</span>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            InStock ::-- <span className="stockPrice">{stock}</span>
+                                            <Button variant="success" value={_id}>Remove</Button>
+                                        </Card.Text>
+                                        <div id="cartButton">
+                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
+                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
+                                        </div>
+                                    </Card.Body>
+                                </Card>
                             </div>
                         )
                     }) :
 
                     showTag ? Data.map((product) => {
-                        const { _id, image, productName, price } = product
+                        const { _id, image, productName, stock, price } = product
                         return (
-                            <div className="is">
-                                <div className="img-wrappers itemss">
-                                    <img src={process.env.REACT_APP_GET_IMAGE + image} alt="" />
-                                </div>
-                                <div className="text-wrappers itemss">
-                                    <tr>
-                                        <td>name:- {productName}</td>
-                                    </tr>
-                                    <br />
-                                    <tr>
-                                        <td>Price :- ${price}</td>
-                                    </tr>
-                                </div>
-                                <div className='productbuttons'>
-                                    <button value={_id} role='button' onClick={e => handleInputRemove(e)}>remove</button>
-                                    <button value={_id} role='button' onClick={e => handleInputUpdate(e)}>update</button>
-                                </div>
+                            <div>
+                                <Card style={{ width: '18rem', border: '1px solid black', borderRadius: '1%' }}>
+                                    <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
+                                    <Card.Body>
+                                        <Card.Title>{productName}</Card.Title>
+                                        <Card.Text>
+                                            Price ::-- <span className="stockPrice">{price}</span>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            InStock ::-- <span className="stockPrice">{stock}</span>
+                                            <Button variant="success" value={_id} id='stockUpdate'>stock update</Button>
+                                        </Card.Text>
+                                        <div id="cartButton">
+                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
+                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
+                                        </div>
+                                    </Card.Body>
+                                </Card>
                             </div>
                         )
                     })
                         : <BorderExample />
                 }
             </div>
-        </div>
+        </div >
     )
 }

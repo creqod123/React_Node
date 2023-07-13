@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import './user.css'
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 let check
 let Data = []
@@ -20,8 +24,8 @@ export default function Order(props) {
     const [area, setArea] = useState('');
     const [city, setCity] = useState('');
     const [pincode, setPincode] = useState('');
-    const [detail, setDetail] = useState(false)
     const [searchValue, setSearchValue] = useState('');
+    const [validated, setValidated] = useState(false);
 
     const SubFunction = async () => {
         try {
@@ -91,7 +95,6 @@ export default function Order(props) {
         setAddress(false)
         setUpdateAddress(false)
         setClicked(false)
-        setDetail(false)
     }
 
     const addressUpdate = (e) => {
@@ -99,38 +102,39 @@ export default function Order(props) {
         setUpdateAddress(true)
     }
 
-    const Detail = (e) => {
-        check = e.target.value
-        setDetail(true)
-        setClicked(true)
-    }
+    const orderUpdate = (event) => {
 
-    const orderUpdate = () => {
-
-        const SubFunction = async () => {
-            try {
-                await fetch(`${process.env.REACT_APP_USER_URL}/orderupdate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        token: token,
-                    },
-                    body: JSON.stringify({ id: id, fullName: fullName, house: house, area: area, city: city, pincode: pincode }),
-                })
-            }
-            catch (e) {
-                console.log(e)
-            }
-            setUpdateAddress(false)
-        }
-
-        if (fullName.length == 0 || house.length == 0 || area.length == 0 || city.length == 0 || pincode.length == 0) {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
         }
         else {
-            SubFunction();
-        }
-    }
+            const SubFunction = async () => {
+                try {
+                    await fetch(`${process.env.REACT_APP_USER_URL}/orderupdate`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            token: token,
+                        },
+                        body: JSON.stringify({ id: id, fullName: fullName, house: house, area: area, city: city, pincode: pincode }),
+                    })
+                }
+                catch (e) {
+                    console.log(e)
+                }
+                setUpdateAddress(false)
+            }
 
+            if (fullName.length == 0 || house.length == 0 || area.length == 0 || city.length == 0 || pincode.length == 0) {
+            }
+            else {
+                SubFunction();
+            }
+        }
+        setValidated(true)
+    }
 
     // ============================================================================================
 
@@ -142,81 +146,43 @@ export default function Order(props) {
     return (
         <div>
             <div className='pagination'>
-            <div id="searchPaginat">
-                <div id="paginate">
-                    <button disabled>{"<"}</button>
-                    <button disabled>{">"}</button>
+                <div id="searchPaginat">
+                    <div id="paginate">
+                        <button disabled>{"<"}</button>
+                        <button disabled>{">"}</button>
+                    </div>
+                    <div id="searchTag">
+                        <MDBInputGroup>
+                            <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                            <MDBBtn rippleColor='dark' role='button' onClick={searchFun}>
+                                <MDBIcon type='submit' icon='search' onClick={searchFun} />
+                            </MDBBtn>
+                        </MDBInputGroup>
+                    </div>
                 </div>
-                <div id="searchTag">
-                    <MDBInputGroup>
-                        <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                        <MDBBtn rippleColor='dark'>
-                            <MDBIcon type='submit' icon='search' onClick={searchFun} />
-                        </MDBBtn>
-                    </MDBInputGroup>
-                </div>
-            </div>
             </div>
             <div className='adminshow' >
                 {clicked ? <></> : <table>
-                    <tr>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Detail</th>
-                    </tr>
-                    {showTag ? Data.map((product, counter = 0) => {
-                        const { _id, quantity, productId, userId, price, status } = product
-                        const { email } = userId
-
-                        return (
-                            <tr>
-                                <td>{email.slice(0, -10)}</td>
-                                <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                                <td><button value={counter++} onClick={Detail}>Detail</button></td>
-                            </tr>
-                        )
-                    }) : <BorderExample />}
-                </table>}
-
-                {/* =========================================================================================================================== */}
-
-                {detail ? <table>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
                     <tr>
                         <th>productName</th>
                         <th>ProductPrice</th>
                         <th>Quantity</th>
                         <th>Status</th>
+                        <th>Address</th>
                     </tr>
-                    {showTag ? Data.map((product, count = 0) => {
-                        if (count == check) {
-                            const { quantity, productId, userId, price, status } = product
-                            const { email } = userId
-                            let counter = -1
-                            return (
-                                <>
-                                    {
-                                        quantity.map(() => {
-                                            ++counter
-                                            return (
-                                                <tr>
-                                                    <td>{productId[counter].productName}</td>
-                                                    <td>{price[counter]}</td>
-                                                    <td>{quantity[counter]}</td>
-                                                    <td>{status}</td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </>
-                            )
-                        }
-                        ++count
-
+                    {showTag ? Data.map((product) => {
+                        const { quantity, productId, price, status } = product
+                        return (
+                            <tr>
+                                <td>{productId.productName}</td>
+                                <td>{price}</td>
+                                <td>{quantity}</td>
+                                <td>{status}</td>
+                                <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                            </tr>
+                        )
                     }) : <BorderExample />}
-                </table> : <></>}
-
-                {/* ========================================================================================================== */}
+                </table>}
 
                 {address ?
                     <div id={clicked ? 'show' : 'hide'}>
@@ -246,29 +212,42 @@ export default function Order(props) {
                         </table>
 
                         {updateAddress ?
-                            <div id='updateOrder'>
-                                <label id='updateclose'>
-                                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={handleInputUpdate} />
-                                </label>
-                                <label>
-                                    Full Name <input type="text" placeholder="Full name" name="productName" onChange={(e) => setfullName(e.target.value)} />
-                                </label>
-                                <label>
-                                    House <input type="text" placeholder="Building No and Name" name="productName" onChange={(e) => setHouse(e.target.value)} />
-                                </label>
-                                <label>
-                                    Area <input type="text" placeholder="Area" name="price" onChange={(e) => setArea(e.target.value)} />
-                                </label>
-                                <label>
-                                    City <input type="text" placeholder="City" name="price" onChange={(e) => setCity(e.target.value)} />
-                                </label>
-                                <label>
-                                    Pincode <input type="tel" max={6} min={6} placeholder="Pincode" name="price" onChange={(e) => setPincode(e.target.value)} />
-                                </label>
-                                <label id='submit'>
-                                    <input type='submit' onClick={orderUpdate} />
-                                </label>
-                            </div>
+                            <Form noValidate validated={validated} onSubmit={orderUpdate}>
+                                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={handleInputUpdate} id='imageSizaClose' />
+                                <Form.Group className="mb-3" controlId="formGridAddress1">
+                                    <Form.Label>Full Name</Form.Label>
+                                    <Form.Control placeholder="Full Name." name="productName" onChange={(e) => setfullName(e.target.value)} required />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formGridAddress1" >
+                                    <Form.Label>Address</Form.Label>
+                                    <Form.Control placeholder="12 - Floor, building name" onChange={(e) => setHouse(e.target.value)} required />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                    <Row>
+                                        <Col xs={7}>
+                                            <Form.Control placeholder="Area" onChange={(e) => setArea(e.target.value)} required />
+                                            <Form.Control.Feedback type="invalid">
+                                                Please provide a valid area.
+                                            </Form.Control.Feedback>
+                                        </Col>
+                                        <Col>
+                                            <Form.Control placeholder="City" onChange={(e) => setCity(e.target.value)} required />
+                                            <Form.Control.Feedback type="invalid">
+                                                Please provide a valid city.
+                                            </Form.Control.Feedback>
+                                        </Col>
+                                        <Col>
+                                            <Form.Control type="number" min={111111} max={999999} placeholder="Pincode" onChange={(e) => setPincode(e.target.value)} required />
+                                            <Form.Control.Feedback type="invalid">
+                                                Please provide a valid pincode  .
+                                            </Form.Control.Feedback>
+                                        </Col>
+                                    </Row>
+                                </Form.Group>
+                                <Button variant="primary" type="submit">Submit</Button>
+                            </Form>
                             : <></>}
                     </div>
                     : <></>}

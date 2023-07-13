@@ -1,7 +1,11 @@
 import axios from "axios"
 import { useState } from "react"
 import './admin.css'
-
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 export default function Admincontrol() {
 
@@ -10,44 +14,67 @@ export default function Admincontrol() {
     const [image, setImage] = useState('')
     const [stock, setStock] = useState('')
     const email = localStorage.getItem("email")
+    const [validated, setValidated] = useState(false);
 
-    const productAdd = async (e) => {
-        const formData = new FormData();
-        formData.append('productName', productName);
-        formData.append('price', price);
-        formData.append('image', image);
-        formData.append('email', email)
-        formData.append('stock', stock)
-        try {
-            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/add`, formData)
+    const productAdd = async (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-        catch (e) {
-            console.log(e)
+        else {
+            const formData = new FormData();
+            formData.append('productName', productName);
+            formData.append('price', price);
+            formData.append('image', image);
+            formData.append('email', email)
+            formData.append('stock', stock)
+            try {
+                await axios.post(`${process.env.REACT_APP_ADMIN_URL}/add`, formData)
+            }
+            catch (e) {
+                console.log(e)
+            }
         }
+        setValidated(true);
     }
 
     return (
-        <div className="admincontrol">
-            <form className="product-add">
-                <label>
-                    Product name :-
-                </label>
-                <input type="text" placeholder="Product Name" onChange={(e) => setproductName(e.target.value)} name="productName" />
-                <label>
-                    Product Price :-
-                </label>
-                <input type="text" placeholder="Product Price" onChange={(e) => setPrice(e.target.value)} name="price" />
-                <label>
-                    <input type='file' accept="image/png, image/gif, image/jpeg" onChange={(e) => setImage(e.target.files[0])} name="image" />
-                </label>
-                Stock :-
-                <label>
-                    <input type='number' onChange={(e) => setStock(e.target.value)} name="stock" placeholder="Enter Stock"/>
-                </label>
-                <label id='submit'>
-                    <input type='submit' onClick={productAdd} />
-                </label>
-            </form>
-        </div>
+        <Form noValidate validated={validated} onSubmit={productAdd}>
+            <Row className="mb-3">
+                <Form.Group as={Col} md="4" controlId="validationCustom01" >
+                    <FloatingLabel controlId="floatingInput" label="Product Product." className="mb-3" >
+                        <Form.Control type="text" required placeholder="Product Product." onChange={(e) => setproductName(e.target.value)} />
+                        <Form.Control.Feedback type="invalid">Enter valid product price.</Form.Control.Feedback>
+
+                    </FloatingLabel>
+                </Form.Group>
+            </Row>
+            <Row className="mb-3">
+                <Form.Group as={Col} md="4" controlId="validationCustom01">
+                    <FloatingLabel controlId="floatingInput" label="Product Price." className="mb-3">
+                        <Form.Control required type="text" placeholder="Product Price." onChange={(e) => setPrice(e.target.value)} />
+                        <Form.Control.Feedback type="invalid">Enter valid product price.</Form.Control.Feedback>
+                    </FloatingLabel>
+                </Form.Group>
+            </Row>
+            <Row className="mb-3">
+                <Form.Group as={Col} md="4" controlId="validationCustom01" >
+                    <FloatingLabel controlId="floatingInput" label="Product Stock." className="mb-3">
+                        <Form.Control required type="text" placeholder="Product Stock" onChange={(e) => setStock(e.target.value)} />
+                        <Form.Control.Feedback type="invalid">Enter valid product price.</Form.Control.Feedback>
+                    </FloatingLabel>
+                </Form.Group>
+            </Row>
+            <Row className="mb-3">
+                <Form.Group as={Col} md="4" controlId="validationCustom01">
+                    <Form.Group controlId="formFile" className="mb-3">
+                        <Form.Control type="file" required accept="image/png, image/gif, image/jpeg" onChange={(e) => setImage(e.target.files[0])} />
+                        <Form.Control.Feedback type="invalid">Choose valid file</Form.Control.Feedback>
+                    </Form.Group>
+                </Form.Group>
+            </Row>
+            <Button type="submit">Submit form</Button>
+        </Form>
     )
-}   
+}       

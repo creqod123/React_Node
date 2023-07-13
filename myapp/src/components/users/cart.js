@@ -47,8 +47,6 @@ function Cart() {
 
     const conformOrder = async (event) => {
         const form = event.currentTarget;
-        console.log("Check :- ", form.checkValidity === false)
-
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -100,10 +98,10 @@ function Cart() {
             catch (e) {
                 console.log(e)
             }
-            counter.map((e) => prop.push(e))
-            totalcost = 0
-            total = 0
-            window.location.href = '/user/shop'
+            // counter.map((e) => prop.push(e))
+            // totalcost = 0
+            // total = 0
+            // window.location.href = '/user/shop'
         }
 
         setValidated(true);
@@ -206,7 +204,10 @@ function Cart() {
     return (
         <div className="items">
             {showTag ?
-                <div id='orderconfrom'> {GridComplexExample()} </div>
+                <>
+                    <div className="cartprop">{counter.map((e) => prop.push(e))}</div>
+                    <div id='orderconfrom'> {GridComplexExample()} </div>
+                </>
                 : <div>
                     <div id="totalcost">
                         {
