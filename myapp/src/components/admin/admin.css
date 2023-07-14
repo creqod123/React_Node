@@ -20,7 +20,7 @@
     width: 185%;
 }
 
-/* ================================================= Admin Buyer ================================================ */
+/* ================================================= Admin Product ================================================ */
 
 .adminshowproduct {
     display: grid !important;
@@ -37,47 +37,8 @@
     position: relative;
 }
 
-.is {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    border: 1px solid #ccc;
-    width: 310px;
-    padding: 10px 0px;
-    height: fit-content;
-}
 
-
-.nohave {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 30px;
-}
-
-/* ================================================= Admin Product ================================================ */
-
-table {
-    padding: 10px;
-    border: 1px solid black;
-}
-
-table tr th {
-    padding: 10px;
-    border: 1px solid black;
-}
-
-table tr td {
-    padding: 10px;
-    border: 1px solid black;
-}
-
-
-/* ================================================= Admin Product ================================================ */
-
-
+/* ================================================= Admin Buyer ================================================ */
 
 
 #update_first input {
@@ -202,6 +163,14 @@ table tr td {
     transform: translate(-50%);
 }
 
+.SearchBuyer th {
+    font-size: 20px;
+}
+
+.SearchBuyer td {
+    font-size: 18px;
+}
+
 #spinner {
     position: absolute;
     padding: 10px 0px;
@@ -211,8 +180,7 @@ table tr td {
 
 
 #update_first input,
-#update_first .form-outline
- {
+#update_first .form-outline {
     width: 40vh;
 }
 
@@ -232,4 +200,13 @@ button#stockUpdate {
     flex-direction: column;
     justify-content: space-between;
     height: 85%;
+}
+
+.userTableProduct th {
+    font-size: 20px;
+    text-align: center;
+}
+
+.userTableProduct td {
+    font-size: 20px;
 }

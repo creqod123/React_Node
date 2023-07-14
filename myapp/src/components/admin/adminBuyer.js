@@ -2,6 +2,7 @@ import './admin.css'
 import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBBadge, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 
 let Data = []
 let searchData = []
@@ -178,81 +179,124 @@ export default function Adminbuyer(props) {
                 </div>
             </div>
             <div className='SearchBuyer'>
-                {clicked ? <></> : <table>
-                    <tr>
-                        <th>No.</th>
-                        <th>Username</th>
-                        <th>status</th>
-                        <th>Conform</th>
-                        <th>Delete</th>
-                        <th>Address</th>
-                        <th>Detail</th>
-                    </tr>
-                    {showSearchValue
-                        ? showSearchValue ? searchData.map((product, counter = 0) => {
-                            const { _id, quantity, productId, userId, price, status } = product
-                            const { productName } = productId
-                            const { email } = userId
-                            return (
-                                <tr>
-                                    <td>{counter + 1}</td>
-                                    <td>{email.slice(0, -10)}</td>
-                                    <td>{status}</td>
-                                    <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
-                                    <td><button value={product._id} onClick={del}>Delete</button></td>
-                                    <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                                    <td><button value={counter++} onClick={Detail}>Detail</button></td>
-                                </tr>
-                            )
-                        }) : <BorderExample />
+                {clicked ? <></> :
+                    <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <tr>
+                                <th scope='col'>No.</th>
+                                <th scope='col'>Username</th>
+                                <th scope='col'>status</th>
+                                <th scope='col'>Conform</th>
+                                <th scope='col'>Delete</th>
+                                <th scope='col'>Address</th>
+                                <th scope='col'>Detail</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {showSearchValue
+                                ? showSearchValue ? searchData.map((product, counter = 0) => {
+                                    const { _id, quantity, productId, userId, price, status } = product
+                                    const { productName } = productId
+                                    const { email } = userId
+                                    return (
+                                        <tr>
+                                            <td>{counter + 1}</td>
+                                            <td>{email.slice(0, -10)}</td>
+                                            <td>
+                                                <MDBBadge color='success' pill>{status}</MDBBadge>
+                                            </td>
+                                            <td>{status === 'Conform' ? '-' :
+                                                <MDBBtn color='link' rounded size='sm' value={product._id} onClick={conform}>
+                                                    conform
+                                                </MDBBtn>}
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='danger' rounded size='sm' value={product._id} onClick={del}>
+                                                    Delete
+                                                </MDBBtn>
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='dark' rounded size='sm' value={product.addressId._id} onClick={checkAddress}>
+                                                    Check Address
+                                                </MDBBtn>
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='info ' rounded size='sm' value={counter++} onClick={Detail}>
+                                                    Detail
+                                                </MDBBtn>
+                                            </td>
+                                        </tr>
+                                    )
+                                }) : <BorderExample />
 
-                        : showTag ? Data.map((product, counter = 0) => {
-                            const { _id, quantity, productId, userId, price, status } = product
-                            const { productName } = productId
-                            const { email } = userId
-                            return (
-                                <tr>
-                                    <td>{counter + 1}</td>
-                                    <td>{email.slice(0, -10)}</td>
-                                    <td>{status}</td>
-                                    <td>{status === 'Conform' ? '-' : <button value={product._id} onClick={conform} >Conform</button>}</td>
-                                    <td><button value={product._id} onClick={del}>Delete</button></td>
-                                    <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
-                                    <td><button value={counter++} onClick={Detail}>Detail</button></td>
-                                </tr>
-                            )
-                        }) : <BorderExample />
-                    }
-                </table>}
+                                : showTag ? Data.map((product, counter = 0) => {
+                                    const { _id, quantity, productId, userId, price, status } = product
+                                    const { productName } = productId
+                                    const { email } = userId
+                                    return (
+                                        <tr>
+                                            <td>{counter + 1}</td>
+                                            <td>{email.slice(0, -10)}</td>
+                                            <td>
+                                                <MDBBadge color={status === 'Conform' ? 'success' : 'warning'} pill>{status}</MDBBadge>
+                                            </td>
+                                            <td>{status === 'Conform' ? '-' :
+                                                <MDBBtn color='link' rounded size='sm' value={product._id} onClick={conform}>
+                                                    conform
+                                                </MDBBtn>}
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='danger' rounded size='sm' value={product._id} onClick={del}>
+                                                    Delete
+                                                </MDBBtn>
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='dark' rounded size='sm' value={product.addressId._id} onClick={checkAddress}>
+                                                    Check Address
+                                                </MDBBtn>
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='info ' rounded size='sm' value={counter++} onClick={Detail}>
+                                                    Detail
+                                                </MDBBtn>
+                                            </td>
+                                        </tr>
+                                    )
+                                }) : <BorderExample />
+                            }
+                        </MDBTableBody>
+                    </MDBTable>}
             </div>
 
             {/* =========================================================================================================================== */}
             <div className='SearchBuyer'>
-                {detail ? <table>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
-                    <tr>
-                        <th>ProductName</th>
-                        <th>Stock</th>
-                        <th>ProductPrice</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
-                    </tr>
-                    {
-                        showTag ? Data.map((product) => {
-                            const { quantity, productId, price, status } = product
-                            const { productName, stock } = productId
-                            return (
-                                <tr>
-                                    <td>{productName}</td>
-                                    <td>{stock}</td>
-                                    <td>{price}</td>
-                                    <td>{quantity}</td>
-                                    <td>{status}</td>
-                                </tr>
-                            )
-                        }) : <BorderExample />}
-                </table> : <></>}
-
+                {detail ?
+                    <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
+                            <tr>
+                                <th scope='col'>ProductName</th>
+                                <th scope='col'>Stock</th>
+                                <th scope='col'>ProductPrice</th>
+                                <th scope='col'>Quantity</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                showTag ? Data.map((product) => {
+                                    const { quantity, productId, price, status } = product
+                                    const { productName, stock } = productId
+                                    return (
+                                        <tr>
+                                            <td>{productName}</td>
+                                            <td>{stock}</td>
+                                            <td>{price}</td>
+                                            <td>{quantity}</td>
+                                        </tr>
+                                    )
+                                }) : <BorderExample />}
+                        </MDBTableBody>
+                    </MDBTable> : <></>}
             </div>
             {/* ========================================================================================================== */}
 
@@ -260,30 +304,35 @@ export default function Adminbuyer(props) {
                 {address ?
                     <div>
                         <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
-                        <table>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>House NO and Name</th>
-                                <th>Area</th>
-                                <th>City</th>
-                                <th>Pincode</th>
-                            </tr>
-                            {address ? order.map((product) => {
-                                const { fullName, house, area, city, pincode } = product
-                                return (
-                                    <tr>
-                                        <td>{fullName}</td>
-                                        <td>{house}</td>
-                                        <td>{area}</td>
-                                        <td>{city}</td>
-                                        <td>{pincode}</td>
-                                    </tr>
-                                )
-                            }) : <></>}
-                        </table>
+                        <MDBTable align='middle'>
+                            <MDBTableHead>
+                                <tr>
+                                    <th scope='col'>Full Name</th>
+                                    <th scope='col'>House NO and Name</th>
+                                    <th scope='col'>Area</th>
+                                    <th scope='col'>City</th>
+                                    <th scope='col'>Pincode</th>
+                                </tr>
+                            </MDBTableHead>
+                            <MDBTableBody>
+
+                                {address ? order.map((product) => {
+                                    const { fullName, house, area, city, pincode } = product
+                                    return (
+                                        <tr>
+                                            <td>{fullName}</td>
+                                            <td>{house}</td>
+                                            <td>{area}</td>
+                                            <td>{city}</td>
+                                            <td>{pincode}</td>
+                                        </tr>
+                                    )
+                                }) : <></>}
+                            </MDBTableBody>
+                        </MDBTable>
                     </div>
                     : <></>}
             </div>
-        </div>
+        </div >
     )
 }

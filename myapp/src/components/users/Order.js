@@ -186,12 +186,12 @@ export default function Order(props) {
                                                 <div className='d-flex align-items-center'>
                                                     <div className='ms-3'>
                                                         <p className='fw-bold mb-1'>{productId.productName}</p>
-                                                        <p className='text-muted mb-0'>john.doe@gmail.com</p>
+                                                        <p className='text-muted mb-0'>{email}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p className='fw-normal mb-1'>₹{price}</p>
+                                                <p className='fw-normal mb-1'>₹ {price}</p>
                                             </td>
                                             <td>
                                                 <p className='fw-normal mb-1'>{quantity}</p>
