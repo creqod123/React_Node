@@ -157,7 +157,6 @@ export default function UserData() {
                 <div id='userdetailshow2'>
                     <table id='getss'>
                         <tr>
-                            <td>S.R no</td>
                             <td>product Name</td>
                             <td>price</td>
                             <td>qantity</td>
@@ -165,28 +164,17 @@ export default function UserData() {
                         {
                             0 !== data.length ?
                                 data.map((user) => {
-                                    const { quantity, price } = user
-                                    const loop = user.productId
-                                    let count = -1
-                                    let counter = 0
+                                    console.log("User :- ", user)
+                                    const { quantity, productId, price } = user
+                                    const { productName, _id } = productId
                                     return (
-                                        <>
-                                            {
-                                                loop.map((product) => {
-                                                    ++count
-                                                    const { productName, _id } = product
-                                                    return (
-                                                        <tr>
-                                                            <td>{++counter}</td>
-                                                            <td>{productName}</td>
-                                                            <td>{price[count]}</td>
-                                                            <td>{quantity[count]}</td>
-                                                            <td><button value={_id} onClick={e => userProductRemove(e)}>Remove</button></td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </>
+                                        <tr>
+                                            <td>{productName}</td>
+                                            <td>{price}</td>
+                                            <td>{quantity}</td>
+                                            <td><button value={_id} onClick={e => userProductRemove(e)}>Remove</button></td>
+                                        </tr>
+
                                     )
                                 }) : <h1>Product not order </h1>
                         }
@@ -201,31 +189,13 @@ export default function UserData() {
                     <th>Full Detail</th>
                     <th>Block</th>
                 </tr>
-                {
-
+                {showSearchValue ?
                     showSearchValue ?
-                        showSearchValue ?
-                            searchData.map((user, counter = 0) => {
-                                counter += 1
-                                const { userId } = user
-                                const { email, tel, _id } = userId
-                                if (counter === 1) {
-                                    return (
-                                        <tr>
-                                            <td>{counter}</td>
-                                            <td>{email.slice(0, -10)}</td>
-                                            <td>{tel}</td>
-                                            <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
-                                            <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
-
-                                        </tr>
-                                    )
-                                }
-                            }) : <BorderExample />
-                        : showTag ?
-                            userdatas.map((user, counter = 0) => {
-                                counter += 1
-                                const { email, tel, _id } = user
+                        searchData.map((user, counter = 0) => {
+                            counter += 1
+                            const { userId } = user
+                            const { email, tel, _id } = userId
+                            if (counter === 1) {
                                 return (
                                     <tr>
                                         <td>{counter}</td>
@@ -233,9 +203,25 @@ export default function UserData() {
                                         <td>{tel}</td>
                                         <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
                                         <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
+
                                     </tr>
                                 )
-                            }) : <BorderExample />
+                            }
+                        }) : <BorderExample />
+                    : showTag ?
+                        userdatas.map((user, counter = 0) => {
+                            counter += 1
+                            const { email, tel, _id } = user
+                            return (
+                                <tr>
+                                    <td>{counter}</td>
+                                    <td>{email.slice(0, -10)}</td>
+                                    <td>{tel}</td>
+                                    <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
+                                    <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
+                                </tr>
+                            )
+                        }) : <BorderExample />
                 }
             </table>
         </div>

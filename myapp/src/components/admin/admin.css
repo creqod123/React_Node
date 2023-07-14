@@ -1,16 +1,16 @@
 /* ======================================= Admin control ================================================ */
 
-form {
+#adminControlForm {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 28%;
     padding: 2%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     box-shadow: 6px 6px 24px black;
 }
 
-.mb-3{
+#adminControlForm .mb-3 {
     width: 185%;
 }
 
@@ -108,9 +108,9 @@ table tr td {
 }
 
 
-.helloworld {
+.spinLoader {
     position: absolute;
-    top: 100%;
+    top: 30%;
     left: 50%;
 }
 
@@ -172,21 +172,13 @@ table tr td {
 }
 
 #hide {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-40%);
     opacity: 0;
     transition: all ease-in-out 0.5s;
 }
 
 #show {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-40%);
-    transition: all ease-in-out 0.5s;
     opacity: 1;
+    transition: all ease-in-out 0.5s;
 }
 
 .SearchBuyer {

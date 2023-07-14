@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import './user.css'
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBBadge, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Modal from 'react-bootstrap/Modal';
 
 let check
 let Data = []
@@ -62,7 +65,7 @@ export default function Order(props) {
 
     const BorderExample = () => {
 
-        return <Spinner animation="border" className='helloworld' variant="primary" />;
+        return <Spinner animation="border" className='spinLoader' variant="primary" />;
     }
 
     const checkAddress = (e) => {
@@ -162,96 +165,149 @@ export default function Order(props) {
                 </div>
             </div>
             <div className='adminshow' >
-                {clicked ? <></> : <table>
-                    <tr>
-                        <th>productName</th>
-                        <th>ProductPrice</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
-                        <th>Address</th>
-                    </tr>
-                    {showTag ? Data.map((product) => {
-                        const { quantity, productId, price, status } = product
-                        return (
-                            <tr>
-                                <td>{productId.productName}</td>
-                                <td>{price}</td>
-                                <td>{quantity}</td>
-                                <td>{status}</td>
-                                <td><button value={product.addressId._id} onClick={checkAddress}>address</button></td>
+                {clicked ? <></> :
+                    <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <tr className='userTableProduct'>
+                                <th scope='col' >Product Name.</th>
+                                <th scope='col' >Product Price</th>
+                                <th scope='col' >Quantity</th>
+                                <th scope='col' >Status</th>
+                                <th scope='col' >Address</th>
                             </tr>
-                        )
-                    }) : <BorderExample />}
-                </table>}
+                        </MDBTableHead>
+                        < MDBTableBody >
+                            {showTag ? Data.map((product) => {
+                                const { quantity, productId, price, status } = product
+                                return (
+                                    < tr className='userTableProduct'>
+                                        <td>
+                                            <div className='d-flex align-items-center'>
+                                                <div className='ms-3'>
+                                                    <p className='fw-bold mb-1'>{productId.productName}</p>
+                                                    <p className='text-muted mb-0'>john.doe@gmail.com</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p className='fw-normal mb-1'>₹{price}</p>
+                                        </td>
+                                        <td>
+                                            <p className='fw-normal mb-1'>{quantity}</p>
+                                        </td>
+                                        <td>
+                                            <MDBBadge color='success' pill>
+                                                {status}
+                                            </MDBBadge>
+                                        </td>
+                                        <td>
+                                            <MDBBtn color='link' rounded size='sm' value={product.addressId._id} onClick={checkAddress}>
+                                                address
+                                            </MDBBtn>
+                                        </td>
+                                    </tr>
+                                )
+                            }) : <BorderExample />}
+                        </MDBTableBody>
+                    </MDBTable>}
 
                 {address ?
                     <div id={clicked ? 'show' : 'hide'}>
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' id='close' onClick={e => handleInputUpdate(0)} />
-                        <table>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>House NO and Name</th>
-                                <th>Area</th>
-                                <th>City</th>
-                                <th>Pincode</th>
-                                <th>update</th>
-                            </tr>
-                            {address ? order.map((product) => {
-                                const { fullName, house, area, city, pincode, _id } = product
-                                return (
-                                    <tr>
-                                        <td>{fullName}</td>
-                                        <td>{house}</td>
-                                        <td>{area}</td>
-                                        <td>{city}</td>
-                                        <td>{pincode}</td>
-                                        <td>{<button value={_id} onClick={addressUpdate}>Update</button>}</td>
-                                    </tr>
-                                )
-                            }) : <></>}
-                        </table>
-
+                        <MDBTable align='middle'>
+                            <MDBTableHead>
+                                <tr className='userTableProduct'>
+                                    <th scope='col' >Full Name.</th>
+                                    <th scope='col' >House NO and Name</th>
+                                    <th scope='col' >Area</th>
+                                    <th scope='col' >City</th>
+                                    <th scope='col' >Pincode</th>
+                                    <th scope='col' >update</th>
+                                </tr>
+                            </MDBTableHead>
+                            < MDBTableBody >
+                                {address ? order.map((product) => {
+                                    const { fullName, house, area, city, pincode, _id } = product
+                                    return (
+                                        < tr className='userTableProduct'>
+                                            <td>
+                                                <div className='d-flex align-items-center'>
+                                                    <div className='ms-3'>
+                                                        <p className='fw-bold mb-1'>{fullName}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p className='fw-normal mb-1'>{house}</p>
+                                            </td>
+                                            <td>
+                                                <p className='fw-normal mb-1'>{area}</p>
+                                            </td>
+                                            <td>
+                                                <p className='fw-normal mb-1'>{city}</p>
+                                            </td><td>
+                                                <p className='fw-normal mb-1'>{pincode}</p>
+                                            </td>
+                                            <td>
+                                                <MDBBtn color='link' rounded size='sm' value={_id} onClick={addressUpdate}>
+                                                    Update
+                                                </MDBBtn>
+                                            </td>
+                                        </tr>
+                                    )
+                                }) : <BorderExample />}
+                                <Button variant="secondary" onClick={handleInputUpdate} id='userTableClose'>Close</Button>
+                            </MDBTableBody>
+                        </MDBTable>
                         {updateAddress ?
-                            <Form noValidate validated={validated} onSubmit={orderUpdate}>
-                                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={handleInputUpdate} id='imageSizaClose' />
-                                <Form.Group className="mb-3" controlId="formGridAddress1">
-                                    <Form.Label>Full Name</Form.Label>
-                                    <Form.Control placeholder="Full Name." name="productName" onChange={(e) => setfullName(e.target.value)} required />
-                                </Form.Group>
+                            <div className="modal show" style={{ display: 'block', position: 'initial' }}>
+                                <Modal.Dialog>
+                                    <Modal.Header >
+                                        <Form noValidate validated={validated} onSubmit={orderUpdate}>
+                                            <Form.Group className="mb-3" controlId="formGridAddress1">
+                                                <Form.Label>Full Name</Form.Label>
+                                                <Form.Control placeholder="Full Name." name="productName" onChange={(e) => setfullName(e.target.value)} required />
+                                            </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress1" >
-                                    <Form.Label>Address</Form.Label>
-                                    <Form.Control placeholder="12 - Floor, building name" onChange={(e) => setHouse(e.target.value)} required />
-                                </Form.Group>
+                                            <Form.Group className="mb-3" controlId="formGridAddress1" >
+                                                <Form.Label>Address</Form.Label>
+                                                <Form.Control placeholder="12 - Floor, building name" onChange={(e) => setHouse(e.target.value)} required />
+                                            </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
-                                    <Row>
-                                        <Col xs={7}>
-                                            <Form.Control placeholder="Area" onChange={(e) => setArea(e.target.value)} required />
-                                            <Form.Control.Feedback type="invalid">
-                                                Please provide a valid area.
-                                            </Form.Control.Feedback>
-                                        </Col>
-                                        <Col>
-                                            <Form.Control placeholder="City" onChange={(e) => setCity(e.target.value)} required />
-                                            <Form.Control.Feedback type="invalid">
-                                                Please provide a valid city.
-                                            </Form.Control.Feedback>
-                                        </Col>
-                                        <Col>
-                                            <Form.Control type="number" min={111111} max={999999} placeholder="Pincode" onChange={(e) => setPincode(e.target.value)} required />
-                                            <Form.Control.Feedback type="invalid">
-                                                Please provide a valid pincode  .
-                                            </Form.Control.Feedback>
-                                        </Col>
-                                    </Row>
-                                </Form.Group>
-                                <Button variant="primary" type="submit">Submit</Button>
-                            </Form>
+                                            <Form.Group className="mb-3" controlId="formGridAddress2">
+                                                <Row>
+                                                    <Col xs={7}>
+                                                        <Form.Control placeholder="Area" onChange={(e) => setArea(e.target.value)} required />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            Provide valid area.
+                                                        </Form.Control.Feedback>
+                                                    </Col>
+                                                    <Col>
+                                                        <Form.Control placeholder="City" onChange={(e) => setCity(e.target.value)} required />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            Enter valid city
+                                                        </Form.Control.Feedback>
+                                                    </Col>
+                                                    <Col>
+                                                        <Form.Control type="number" min={111111} max={999999} placeholder="Pincode" onChange={(e) => setPincode(e.target.value)} required />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            Enter valid Pincode
+                                                        </Form.Control.Feedback>
+                                                    </Col>
+                                                </Row>
+                                            </Form.Group>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={handleInputUpdate}>Close</Button>
+                                                <Button variant="primary" type="submit">Save changes</Button>
+                                            </Modal.Footer>
+                                        </Form>
+                                    </Modal.Header>
+                                </Modal.Dialog>
+                            </div>
                             : <></>}
                     </div>
-                    : <></>}
-            </div>
-        </div>
+                    : <></>
+                }
+            </div >
+        </div >
     )
 }

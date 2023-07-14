@@ -40,20 +40,19 @@ export default function Admincontrol() {
     }
 
     return (
-        <Form noValidate validated={validated} onSubmit={productAdd}>
+        <Form noValidate validated={validated} onSubmit={productAdd} id="adminControlForm">
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="validationCustom01" >
                     <FloatingLabel controlId="floatingInput" label="Product Product." className="mb-3" >
-                        <Form.Control type="text" required placeholder="Product Product." onChange={(e) => setproductName(e.target.value)} />
+                        <Form.Control type="textarea" required placeholder="Product Product." onChange={(e) => setproductName(e.target.value)} />
                         <Form.Control.Feedback type="invalid">Enter valid product price.</Form.Control.Feedback>
-
                     </FloatingLabel>
                 </Form.Group>
             </Row>
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="validationCustom01">
                     <FloatingLabel controlId="floatingInput" label="Product Price." className="mb-3">
-                        <Form.Control required type="text" placeholder="Product Price." onChange={(e) => setPrice(e.target.value)} />
+                        <Form.Control required type="number" placeholder="Product Price." onChange={(e) => setPrice(e.target.value)} />
                         <Form.Control.Feedback type="invalid">Enter valid product price.</Form.Control.Feedback>
                     </FloatingLabel>
                 </Form.Group>
@@ -61,7 +60,7 @@ export default function Admincontrol() {
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="validationCustom01" >
                     <FloatingLabel controlId="floatingInput" label="Product Stock." className="mb-3">
-                        <Form.Control required type="text" placeholder="Product Stock" onChange={(e) => setStock(e.target.value)} />
+                        <Form.Control required type="number" placeholder="Product Stock" onChange={(e) => setStock(e.target.value)} />
                         <Form.Control.Feedback type="invalid">Enter valid product price.</Form.Control.Feedback>
                     </FloatingLabel>
                 </Form.Group>

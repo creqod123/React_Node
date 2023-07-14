@@ -101,7 +101,6 @@ exports.detail = (async (req, res, next) => {
     try {
         const check = await register.find({ email: req.body.email })
         if (check[0].type === "user") {
-
             const id = check[0]._id
             const data = await checkout.find({ userId: id, sellerId: emailDetail }).populate('productId').populate('userId').populate('addressId')
             res.status(200).json({

@@ -34,23 +34,6 @@
   padding: 1%;
 }
 
-#imageSizaClose {
-  height: 11%;
-  width: 4.%;
-  position: absolute;
-  top: 0%;
-  right: 0%;
-  cursor: pointer;
-  transition: all ease-in-out 0.3s;
-  transform: rotate(40deg);
-}
-
-#imageSizaClose:hover {
-  height: 13%;
-  width: 5.%;
-  transform: rotate(180deg);
-}
-
 #productCounter {
   border: 1px solid black;
   padding: 0px 12px;
@@ -86,4 +69,20 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.userTableProduct th {
+  font-size: 20px;
+  text-align: center;
+}
+
+.userTableProduct td {
+  font-size: 20px;
+}
+
+#userTableClose {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 1%;
 }

@@ -1,13 +1,14 @@
 import React from "react"
 import axios from "axios"
 import './user.css'
+import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { pageNation, addtoCart, RemovetoCart } from "../../Services/Actions/actions"
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 
 let paginat = 0
 const email = localStorage.getItem("email")
@@ -16,6 +17,7 @@ let Data
 let Check123
 let searchPaginatIndex = 0
 let totalLength
+let dataStock
 
 function Home(props) {
 
@@ -23,7 +25,11 @@ function Home(props) {
     const [searchValue, setSearchValue] = useState('');
     const [searchData, setSearchData] = useState(false);
     const dispatch = useDispatch()
+    const history = useNavigate('')
+
+
     Data = useSelector((a) => a.getItem)
+    dataStock = useSelector((a) => a.cardItems)
     dispatch(pageNation(paginat))
     totalLength = Data[Data.length - 1]
 
@@ -64,6 +70,9 @@ function Home(props) {
     }
     const remove = (e) => {
         dispatch(RemovetoCart(JSON.parse(e.target.value)))
+    }
+    const goToCart = () => {
+        history('/user/cart')
     }
 
     // ========================================================== Previous forward and spinner ==================================================================
@@ -134,9 +143,12 @@ function Home(props) {
     }
 
     // ========================================================== Display All product ==================================================================
+
     const BasicExample = (product) => {
         if (product.image != null) {
-            const { image, productName, price, stock } = product
+            const { image, productName, price, stock, _id } = product
+            let cartCheck
+            let stockLimit
             return (
                 <div id="showProductUser">
                     <Card style={{ width: '18rem', border: '1px solid black', borderRadius: '1%' }}>
@@ -149,10 +161,34 @@ function Home(props) {
                             <Card.Text>
                                 InStock ::-- <span className="stockPrice">{stock}</span>
                             </Card.Text>
-                            <div id="cartButton">
-                                <Button variant="primary" value={JSON.stringify(product)} onClick={add}>Add to cart</Button>
-                                <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>Remove</Button>
-                            </div>
+
+                            {
+                                dataStock.map((product) => {
+                                    if (product.cardData._id === _id) {
+                                        cartCheck = true
+                                    }
+                                })
+                            }
+
+                            {stock === 0 ? stockLimit == true : <></>}
+
+                            {cartCheck ?
+                                <div id="cartButton">
+                                    <Button variant="success" onClick={goToCart}>go to cart</Button>
+                                    <Button variant="danger" value={JSON.stringify(product)} onClick={remove}>Remove</Button>
+                                </div> :
+                                <div id="cartButton">
+                                    {stock ?
+                                        <>
+                                            <Button variant="primary" value={JSON.stringify(product)} onClick={add}>Add to cart</Button>
+                                            <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>Remove</Button>
+                                        </> :
+                                        <>
+                                            <Button variant="danger" disabled>Out of Stock</Button>
+                                        </>
+                                    }
+                                </div>
+                            }
                         </Card.Body>
                     </Card>
                 </div>
@@ -177,7 +213,7 @@ function Home(props) {
                     <div id="searchTag">
                         <MDBInputGroup>
                             <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                            <MDBBtn rippleColor='dark'>
+                            <MDBBtn rippleColor='dark' onClick={searchFun}>
                                 <MDBIcon type='submit' icon='search' onClick={searchFun} />
                             </MDBBtn>
                         </MDBInputGroup>

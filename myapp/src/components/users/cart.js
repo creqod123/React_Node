@@ -23,6 +23,7 @@ function Cart() {
     const [city, setCity] = useState('');
     const [pincode, setPincode] = useState('');
     const [validated, setValidated] = useState(false);
+    const [stockValue, setStockValue] = useState(false);
 
     const dispatch = useDispatch()
     let prop = useSelector((a) => a.cardItems)
@@ -144,13 +145,23 @@ function Cart() {
                                 Price ::-- {price}
                             </Card.Text>
                             <Card.Text>
-                                InStock ::-- {stock}
+                                InStock ::-- {stock - quantity}
                             </Card.Text>
-                            <div id="cartButton">
-                                <Button variant="primary" value={JSON.stringify(product)} onClick={add}>+</Button>
-                                <p id="productCounter">{quantity}</p>
-                                <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
-                            </div>
+                            {
+                                stock > quantity
+                                    ?
+                                    <div id="cartButton">
+                                        <Button variant="primary" value={JSON.stringify(product)} onClick={add}>+</Button>
+                                        <p id="productCounter">{quantity}</p>
+                                        <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
+                                    </div>
+                                    :
+                                    <div id="cartButton">
+                                        <Button variant="primary" disabled>+</Button>
+                                        <p id="productCounter">{quantity}</p>
+                                        <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
+                                    </div>
+                            }
                         </Card.Body>
                     </Card>
                 </div>
