@@ -1,3 +1,7 @@
+.back {
+  filter: blur(20px);
+}
+
 .position {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -85,4 +89,27 @@ input::-webkit-inner-spin-button {
   left: 50%;
   transform: translate(-50%);
   margin-top: 1%;
+}
+
+#main .modal-header {
+  transition: all ease-in-out 0.5s;
+  box-shadow: 6px 6px 24px black;
+}
+
+#imageSizaClose {
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  transition: all ease-in-out 0.2s;
+}
+
+#imageSizaClose:hover {
+  rotate: 720deg;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  top: 2px;
 }

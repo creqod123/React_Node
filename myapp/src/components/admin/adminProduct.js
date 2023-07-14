@@ -1,10 +1,16 @@
 import './admin.css'
+import React from "react"
 import { useState, useEffect } from "react"
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBFile } from 'mdb-react-ui-kit';
+import Modal from 'react-bootstrap/Modal';
+
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBFile } from 'mdb-react-ui-kit';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 const email = localStorage.getItem("email");
 const token = localStorage.getItem("token");
@@ -23,10 +29,41 @@ export default function Adminproduct() {
     const [isClicked, setIsClicked] = useState(false);
     const [searchApi, setSearchApi] = useState('');
     const [searchProduct, setSearchProduct] = useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
+    const [validated, setValidated] = useState(false);
 
+    // ============================================ Update stock Modal  ==============================================
 
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        setValidated(true);
+    };
 
-    // ============================================ All Product get ===================================================== 
+    function MyVerticallyCenteredModal(props) {
+        return (
+            <Modal {...props} size="sm" aria-labelledby="contained-modal-title-vcenter" centered >
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                <Form.Control type="number" placeholder="Stock" required />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid Stock.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Row>
+                        <Button type="submit">Submit form</Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+    // ============================================ All Product get ================================================== 
 
     async function SubFunction(paginat) {
         try {
@@ -73,23 +110,32 @@ export default function Adminproduct() {
         return <Spinner animation="border" id='spinner' />;
     }
 
-    const update = async (e) => {
-        try {
-            if (productName === '' || price === '') {
-                return (" ")
+    const update = async (event) => {
+
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        else {
+            try {
+                if (productName === '' || price === '') {
+                    return (" ")
+                }
+                await axios.post(`${process.env.REACT_APP_ADMIN_URL}/update`, { email: email, productName: productName, price: price, id: updateProduct }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: token,
+                    },
+                })
             }
-            await axios.post(`${process.env.REACT_APP_ADMIN_URL}/update`, { email: email, productName: productName, price: price, id: updateProduct }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    token: token,
-                },
-            })
+            catch (e) {
+                console.log(e)
+            }
+            setShowTag(false);
+            setIsClicked(false);
         }
-        catch (e) {
-            console.log(e)
-        }
-        setShowTag(false);
-        setIsClicked(false);
+        setValidated(true);
     }
 
     // ================================================ For Css =================================================
@@ -199,10 +245,29 @@ export default function Adminproduct() {
                 <label id='updateclose'>
                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
                 </label>
-                <MDBInput label='Product Name' name='Proname' type='text' onChange={(e) => setproductName(e.target.value)} required />
-                <MDBInput label='Price' type='text' onChange={(e) => setPrice(e.target.value)} required />
-                <MDBFile id='formFileDisabled' required name='Fileselect' />
-                <MDBBtn color='success' type='submit' onClick={update}>Submit</MDBBtn>
+                <Form noValidate validated={validated} onSubmit={update}>
+                    <Row className="mb-3">
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <MDBInput label='Product Name' name='Proname' type='text' onChange={(e) => setproductName(e.target.value)} required />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a valid Stock.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <MDBInput label='Price' type='text' onChange={(e) => setPrice(e.target.value)} required />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a valid Stock.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                            <MDBFile id='formFileDisabled' required name='Fileselect' />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a valid Stock.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                    <Button color='success' type="submit">Submit form</Button>
+                </Form>
             </div>
 
             <div className='adminshowproduct position' id={isClicked ? 'updates_first' : 'updates_second'}>
@@ -223,8 +288,8 @@ export default function Adminproduct() {
                                             <Button variant="success" value={_id}>Remove</Button>
                                         </Card.Text>
                                         <div id="cartButton">
-                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
-                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
+                                            <Button variant="danger" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
+                                            <Button variant="info" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
                                         </div>
                                     </Card.Body>
                                 </Card>
@@ -245,11 +310,12 @@ export default function Adminproduct() {
                                         </Card.Text>
                                         <Card.Text>
                                             InStock ::-- <span className="stockPrice">{stock}</span>
-                                            <Button variant="success" value={_id} id='stockUpdate'>stock update</Button>
+                                            <Button variant="primary" onClick={() => setModalShow(true)} value={_id} id='stockUpdate'>stock update</Button>
+                                            <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
                                         </Card.Text>
                                         <div id="cartButton">
-                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
-                                            <Button variant="primary" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
+                                            <Button variant="danger" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
+                                            <Button variant="info" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
                                         </div>
                                     </Card.Body>
                                 </Card>

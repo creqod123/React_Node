@@ -1,3 +1,9 @@
+/* ======================================= Modal ================================================ */
+
+.modal-backdrop {
+    opacity: 0.1 !important;
+}
+
 /* ======================================= Admin control ================================================ */
 
 #adminControlForm {
@@ -118,8 +124,8 @@ table tr td {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 25%;
-    height: 30%;
+    width: 26%;
+    height: 40vh;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -129,6 +135,11 @@ table tr td {
     transition: all ease-in-out 0.5s;
     box-shadow: 6px 6px 24px black;
     padding: 2%;
+}
+
+#update_first form {
+    height: 100%;
+    width: 100%;
 }
 
 #updates_first {
@@ -198,11 +209,27 @@ table tr td {
     left: 50%;
 }
 
+
+#update_first input,
+#update_first .form-outline
+ {
+    width: 40vh;
+}
+
 button#stockUpdate {
+    position: absolute;
     padding: 15px;
     display: inline-flex;
     font-size: 10px;
     height: 26px;
     width: 25%;
-    margin-left: 40px;
+    right: 50px;
+    bottom: 21%;
+}
+
+.mb-3.row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85%;
 }

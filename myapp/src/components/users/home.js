@@ -213,7 +213,7 @@ function Home(props) {
                     <div id="searchTag">
                         <MDBInputGroup>
                             <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                            <MDBBtn rippleColor='dark' onClick={searchFun}>
+                            <MDBBtn rippleColor='dark'>
                                 <MDBIcon type='submit' icon='search' onClick={searchFun} />
                             </MDBBtn>
                         </MDBInputGroup>
