@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 
 export default function Navbar() {
 
@@ -96,6 +96,7 @@ export default function Navbar() {
                 <ul>
                     <li>
                         <a href='/register' id='l-s-check'>Register</a>
+                        <a href='/check' id='l-s-check'>Check</a>
                     </li>
                 </ul>
             </div>

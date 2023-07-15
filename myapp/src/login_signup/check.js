@@ -1,33 +1,145 @@
 import React, { useState } from 'react';
 import './l-s.css'
-
-import {
-    MDBContainer,
-    MDBTabs,
-    MDBTabsItem,
-    MDBTabsLink,
-    MDBTabsContent,
-    MDBTabsPane,
-    MDBBtn,
-    MDBInput,
-    MDBCheckbox
-}
-    from 'mdb-react-ui-kit';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 function Check() {
 
-    const [justifyActive, setJustifyActive] = useState('tab1');;
-
-    const handleJustifyClick = (value) => {
-        if (value === justifyActive) {
-            return;
+    const [validated, setValidated] = useState(false);
+    const loginHandleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-
-        setJustifyActive(value);
+        setValidated(true);
     };
 
+    // // ============================================================= Login Form =============================================================
+
+    // const type = localStorage.getItem("type")
+    // const [email, setEmail] = useState('')
+    // const [password, setPassword] = useState('')
+    // const [checkEmail, setCheckEmail] = useState(false)
+    // const [checkPassword, setCheckPassword] = useState(false)
+
+    // const login = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //         const res = await axios.post(process.env.REACT_APP_LOGIN_URL, {
+    //             email, password
+    //         })
+    //         if (res.data.message === "Enter vaild email") {
+    //             setCheckEmail(true)
+    //             setCheckPassword(false)
+    //         }
+    //         else if (res.data.message === "Password_not_same") {
+    //             setCheckEmail(false)
+    //             setCheckPassword(true)
+    //         }
+    //         else {
+    //             localStorage.setItem("email", res.data.email)
+    //             localStorage.setItem("token", res.data.token)
+    //             localStorage.setItem("type", res.data.type)
+    //             if (res.data.type == "seller") {
+    //                 window.location.href = "/admin/control"
+    //             }
+    //             else if (res.data.type == "user") {
+    //                 window.location.href = "/user/shop"
+    //             }
+    //             else {
+    //                 window.location.href = "/ceo/user"
+    //             }
+    //         }
+    //     }
+    //     catch (e) {
+    //         console.log(e)
+    //     }
+    // }
+
+
+
+    // // ============================================================= Register Form =============================================================
+
+
+    // const [tel, setTel] = useState('')
+
+    // const [emailRegister, setEmailRegister] = useState('')
+    // const [passwordRegister, setPasswordRegister] = useState('')
+    // const [typeRegister, setTypeRegister] = useState('')
+    // const [checkEmailRegister, setCheckEmailRegister] = useState(false)
+    // const [CheckPasswordRegister, setCheckPasswordRegister] = useState(false)
+
+    // const [CheckTel, setCheckTel] = useState(false)
+    // const [CheckType, setCheckType] = useState(false)
+    // const [conPassword, setConpassword] = useState('')
+
+
+
+    // // const [CheckConPassword, setCheckConPassword] = useState(false)
+
+
+
+    // const pass = { Enter_Password: 'Enter Password', Password_not_same: 'Password not same', Password_Length: 'Password Length' }
+
+    // const register = async (e) => {
+    //     e.preventDefault()
+    //     let res
+    //     try {
+    //         res = await axios.post(process.env.REACT_APP_REGISTER_URL, {
+    //             email, password, conPassword, tel, type
+    //         })
+    //         if (res.data.message === "Enter vaild email" || res.data.message === "email already exist") {
+    //             setCheckEmail(true)
+    //             setCheckPassword(false)
+    //             setCheckTel(false)
+    //             setCheckType(false)
+    //         }
+    //         else if (res.data.message === "Password_not_same") {
+    //             setCheckEmail(false)
+    //             setCheckPassword(true)
+    //             setCheckTel(false)
+    //             setCheckType(false)
+    //         }
+    //         else if (res.data.message === "check number") {
+    //             setCheckEmail(false)
+    //             setCheckPassword(false)
+    //             setCheckTel(true)
+    //             setCheckType(false)
+    //         }
+    //         else if (res.data.message === "type") {
+    //             setCheckEmail(false)
+    //             setCheckPassword(false)
+    //             setCheckTel(false)
+    //             setCheckType(true)
+    //         }
+    //         else if (res.data.message === "Succesfull") {
+    //             localStorage.setItem("email", res.data.email)
+    //             localStorage.setItem("type", res.data.type)
+    //             document.getElementById('l-s-check').innerHTML = "Signout"
+    //             if (res.data.type == "seller") {
+    //                 window.location.href = "/admin/control"
+    //             }
+    //             else {
+    //                 window.location.href = "/user/shop"
+    //             }
+    //         }
+    //     }
+    //     catch (e) {
+    //         console.log(e)
+    //     }
+    // }
+
+
+
+
+
+
+
     return (
-        <div>
+        <div className='ls-Form'>
             <div class="section">
                 <div class="container">
                     <div class="row full-height justify-content-center">
@@ -41,37 +153,63 @@ function Check() {
                                         <div class="card-front">
                                             <div class="center-wrap">
                                                 <div class="section text-center">
-                                                    <h4 class="mb-4 pb-3">Log In</h4>
-                                                    <div class="form-group">
-                                                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off"/>
-                                                            <i class="input-icon uil uil-at"></i>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
-                                                            <i class="input-icon uil uil-lock-alt"></i>
-                                                    </div>
-                                                    <a href="#" class="btn mt-4">submit</a>
-                                                    <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                                                    <Form noValidate validated={validated} onSubmit={loginHandleSubmit}>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Control type="text" placeholder="Enter Email" required id='userName' />
+                                                                <Form.Control.Feedback type="invalid">Please provide a valid city.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Control type="text" placeholder="Enter Password" required id='password' />
+                                                                <Form.Control.Feedback type="invalid">Please provide a valid city.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Button type="submit">Submit form</Button>
+                                                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                                                    </Form>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-back">
                                             <div class="center-wrap">
                                                 <div class="section text-center">
-                                                    <h4 class="mb-4 pb-3">Sign Up</h4>
-                                                    <div class="form-group">
-                                                        <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off" />
-                                                            <i class="input-icon uil uil-user"></i>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off" />
-                                                            <i class="input-icon uil uil-at"></i>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
-                                                            <i class="input-icon uil uil-lock-alt"></i>
-                                                    </div>
-                                                    <a href="#" class="btn mt-4">submit</a>
+                                                    <Form noValidate validated={validated} onSubmit={loginHandleSubmit}>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Control type="text" placeholder="Enter Email" required id='userName' />
+                                                                <Form.Control.Feedback type="invalid">Please provide a valid Email.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Control type="text" placeholder="Enter Password" required id='password' />
+                                                                <Form.Control.Feedback type="invalid">Please provide a valid Password.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Control type="text" placeholder="Enter Password" required id='password' />
+                                                                <Form.Control.Feedback type="invalid">Please provide a valid Password.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Control type="number" placeholder="Enter Number" required id='password' />
+                                                                <Form.Control.Feedback type="invalid">Please provide a valid Number.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Row className="mb-3">
+                                                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                                                <Form.Check type="radio" name='check' label="User" aria-label="radio 1" className='checkRadio' required />
+                                                                <Form.Check type="radio" name='check' label="Seller" aria-label="radio 1" className='checkRadio' required />
+                                                                <Form.Control.Feedback type="invalid">Please Check any one.</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Row>
+                                                        <Button type="submit">Submit form</Button>
+                                                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                                                    </Form>
                                                 </div>
                                             </div>
                                         </div>

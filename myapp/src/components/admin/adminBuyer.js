@@ -98,7 +98,7 @@ export default function Adminbuyer(props) {
 
     }
 
-
+    
     const handleInputUpdate = () => {
         setShowTag(true)
         setAddress(false)
@@ -283,17 +283,19 @@ export default function Adminbuyer(props) {
                         </MDBTableHead>
                         <MDBTableBody>
                             {
-                                showTag ? Data.map((product) => {
+                                showTag ? Data.map((product, counter = 0) => {
                                     const { quantity, productId, price, status } = product
                                     const { productName, stock } = productId
-                                    return (
-                                        <tr>
-                                            <td>{productName}</td>
-                                            <td>{stock}</td>
-                                            <td>{price}</td>
-                                            <td>{quantity}</td>
-                                        </tr>
-                                    )
+                                    if (counter === 0) {
+                                        return (
+                                            <tr>
+                                                <td>{productName}</td>
+                                                <td>{stock}</td>
+                                                <td>{price}</td>
+                                                <td>{quantity}</td>
+                                            </tr>
+                                        )
+                                    }
                                 }) : <BorderExample />}
                         </MDBTableBody>
                     </MDBTable> : <></>}
