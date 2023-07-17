@@ -44,11 +44,12 @@ exports.getAll = (async (req, res, next) => {
 exports.add = (async (req, res, next) => {
 
     try {
+        console.log("asdasd ", req.body)
+        console.log("second :- ", req.body._id)
         const check = await register.find({ _id: req.body._id })
         req.body.image = req.file.path
         req.body['adminId'] = req.body._id
         delete req.body._id
-        console.log(req.body)
         if (check.length != 0) {
             await adminProduct.create(req.body)
             socket.addProduct('addProduct');

@@ -21,6 +21,8 @@ let stockUpdateId
 let paginatIndex = 0
 let searchPaginatIndex = 0
 let totalLength = 0
+let productNameSet
+let priceSet
 
 export default function Adminproduct() {
 
@@ -34,8 +36,6 @@ export default function Adminproduct() {
     const [validated, setValidated] = useState(false);
     const [changeStock, setChangeStock] = useState('');
 
-    let productNameSet
-    let priceSet
 
     // ============================================ Update stock Modal  ==============================================
 
@@ -164,10 +164,6 @@ export default function Adminproduct() {
         setValidated(true);
     }
 
-    const updateProductModal = () => {
-        alert("helloworld")
-    }
-
     // ================================================ For Css =================================================
 
     const handleInputUpdate = (e, check) => {
@@ -280,35 +276,39 @@ export default function Adminproduct() {
 
             {/* ============================================================================================================================================ */}
 
-            <div id={isClicked ? 'update_first' : 'update_second'}>
-                <label id='updateclose'>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
-                </label>
-                <Form noValidate validated={validated} onSubmit={update}>
-                    {isClicked ? <></> : <></>}
-                    <Row className="mb-3">
-                        <Form.Group as={Col} md="6" controlId="validationCustom01">
-                            <MDBInput label='Product Name' name='Proname' defaultValue={`${productNameSet}`} type='text' onChange={(e) => setproductName(e.target.value)} required />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid Stock.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="validationCustom01">
-                            <MDBInput label='Price' type='text' value={priceSet} onChange={(e) => setPrice(e.target.value)} required />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid Stock.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="validationCustom01">
-                            <MDBFile id='formFileDisabled' required name='Fileselect' />
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a valid Stock.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Row>
-                    <Button color='success' type="submit">Submit form</Button>
-                </Form>
-            </div>
+            {
+                isClicked ?
+                    <div id='update_first' >
+                        <label id='updateclose'>
+                            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={e => handleInputUpdate(e, 0)} />
+                        </label>
+                        <Form noValidate validated={validated} onSubmit={update}>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                    <MDBInput label='Product Name' name='Proname' defaultValue={`${productNameSet}`} type='text' onChange={(e) => setproductName(e.target.value)} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please provide a valid Stock.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                    <MDBInput label='Price' type='text' value={priceSet} onChange={(e) => setPrice(e.target.value)} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please provide a valid Stock.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                    <MDBFile id='formFileDisabled' required name='Fileselect' />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please provide a valid Stock.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Row>
+                            <Button color='success' type="submit">Submit form</Button>
+                        </Form>
+                    </div>
+                    :
+                    <></>
+            }
 
             <div className='adminshowproduct position' id={isClicked ? 'updates_first' : 'updates_second'}>
                 {searchProduct ?
