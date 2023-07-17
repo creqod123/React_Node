@@ -180,7 +180,6 @@ function Home(props) {
                                     {stock ?
                                         <>
                                             <Button variant="primary" value={JSON.stringify(product)} onClick={add}>Add to cart</Button>
-                                            <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>Remove</Button>
                                         </> :
                                         <>
                                             <Button variant="danger" disabled>Out of Stock</Button>

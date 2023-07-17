@@ -14,7 +14,7 @@ exports.getAll = (async (req, res, next) => {
 
         const pageNumber = req.body.paginat
         const data = {};
-        const objectid = await register.find({ _id: req.body._id })
+        await register.find({ _id: req.body._id })
         const id = req.body._id
 
 

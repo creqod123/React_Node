@@ -206,11 +206,11 @@ export default function Adminbuyer(props) {
                                             <td>{
                                                 status === 'Conform' ?
                                                     <MDBBadge color='success' rounded size='sm' value={product._id} pill>
-                                                        {status}
+                                                        conform
                                                     </MDBBadge>
                                                     :
                                                     <MDBBtn color='warning' rounded size='sm' role='button' value={product._id} onClick={conform} pill>
-                                                        {status}
+                                                        conform
                                                     </MDBBtn>
                                             }
                                             </td>
@@ -251,11 +251,11 @@ export default function Adminbuyer(props) {
                                                 {
                                                     status === 'Conform' ?
                                                         <MDBBadge color='success' rounded size='sm' value={product._id} pill>
-                                                            {status}
+                                                            conform
                                                         </MDBBadge>
                                                         :
                                                         <MDBBtn color='warning' rounded size='sm' role='button' value={product._id} onClick={conform} pill>
-                                                            {status}
+                                                            Conform
                                                         </MDBBtn>
                                                 }
                                             </td>

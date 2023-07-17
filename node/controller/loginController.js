@@ -15,17 +15,6 @@ exports.login = (async (req, res, next) => {
                 message: "Enter vaild email",
             })
         }
-        else if (check.email === "ceo@gmail.com" && password === "ceo") {               //=========================================
-            const token = jwt.sign({
-                data: 'foobar'
-            }, process.env.JWT_SECRET_KEY);
-            res.status(200).json({
-                message: "complete",
-                email: check.email,
-                type: check.type,
-                token: token
-            })
-        }
         else if (check != null) {
             const checkPass = await bcrypt.compareSync(password, check.password)
             if (checkPass) {
