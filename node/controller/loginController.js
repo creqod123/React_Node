@@ -15,7 +15,7 @@ exports.login = (async (req, res, next) => {
                 message: "Enter vaild email",
             })
         }
-        else if (check.email === "ceo@gmail.com" && password === "ceo") {
+        else if (check.email === "ceo@gmail.com" && password === "ceo") {               //=========================================
             const token = jwt.sign({
                 data: 'foobar'
             }, process.env.JWT_SECRET_KEY);
@@ -36,6 +36,7 @@ exports.login = (async (req, res, next) => {
                     message: "complete",
                     email: check.email,
                     type: check.type,
+                    id: check.id,
                     token: token
                 })
             }

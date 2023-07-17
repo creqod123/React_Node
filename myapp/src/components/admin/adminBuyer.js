@@ -9,6 +9,7 @@ let searchData = []
 let check
 let order = []
 let email = localStorage.getItem("email")
+let _id = localStorage.getItem("_id")
 let token = localStorage.getItem("token")
 
 export default function Adminbuyer(props) {
@@ -98,7 +99,7 @@ export default function Adminbuyer(props) {
 
     }
 
-    
+
     const handleInputUpdate = () => {
         setShowTag(true)
         setAddress(false)
@@ -125,12 +126,6 @@ export default function Adminbuyer(props) {
         }
         SubFunction();
         setShowTag(false)
-    }
-
-    const Detail = (e) => {
-        check = e.target.value
-        setDetail(true)
-        setClicked(true)
     }
 
     const del = (e) => {
@@ -185,44 +180,55 @@ export default function Adminbuyer(props) {
                             <tr>
                                 <th scope='col'>No.</th>
                                 <th scope='col'>Username</th>
-                                <th scope='col'>status</th>
-                                <th scope='col'>Conform</th>
+                                <th scope='col'>Product Name</th>
+                                <th scope='col'>Stock</th>
+                                <th scope='col'>Price</th>
+                                <th scope='col'>Quantity</th>
+                                <th scope='col'>Status</th>
                                 <th scope='col'>Delete</th>
                                 <th scope='col'>Address</th>
-                                <th scope='col'>Detail</th>
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
                             {showSearchValue
                                 ? showSearchValue ? searchData.map((product, counter = 0) => {
                                     const { _id, quantity, productId, userId, price, status } = product
-                                    const { productName } = productId
+                                    const { productName, stock } = productId
                                     const { email } = userId
                                     return (
                                         <tr>
                                             <td>{counter + 1}</td>
                                             <td>{email.slice(0, -10)}</td>
-                                            <td>
-                                                <MDBBadge color='success' pill>{status}</MDBBadge>
+                                            <td>{productName}</td>
+                                            <td>{stock}</td>
+                                            <td>{price}</td>
+                                            <td>{quantity}</td>
+                                            <td>{
+                                                status === 'Conform' ?
+                                                    <MDBBadge color='success' rounded size='sm' value={product._id} pill>
+                                                        {status}
+                                                    </MDBBadge>
+                                                    :
+                                                    <MDBBtn color='warning' rounded size='sm' role='button' value={product._id} onClick={conform} pill>
+                                                        {status}
+                                                    </MDBBtn>
+                                            }
                                             </td>
-                                            <td>{status === 'Conform' ? '-' :
-                                                <MDBBtn color='link' rounded size='sm' value={product._id} onClick={conform}>
-                                                    conform
-                                                </MDBBtn>}
-                                            </td>
                                             <td>
-                                                <MDBBtn color='danger' rounded size='sm' value={product._id} onClick={del}>
-                                                    Delete
-                                                </MDBBtn>
+                                                {
+                                                    status === 'Conform' ?
+                                                        <MDBBtn color='danger' rounded size='sm' disabled>
+                                                            Delete
+                                                        </MDBBtn>
+                                                        :
+                                                        <MDBBtn color='danger' rounded size='sm' value={product._id} onClick={del}>
+                                                            Delete
+                                                        </MDBBtn>
+                                                }
                                             </td>
                                             <td>
                                                 <MDBBtn color='dark' rounded size='sm' value={product.addressId._id} onClick={checkAddress}>
                                                     Check Address
-                                                </MDBBtn>
-                                            </td>
-                                            <td>
-                                                <MDBBtn color='info ' rounded size='sm' value={counter++} onClick={Detail}>
-                                                    Detail
                                                 </MDBBtn>
                                             </td>
                                         </tr>
@@ -231,33 +237,43 @@ export default function Adminbuyer(props) {
 
                                 : showTag ? Data.map((product, counter = 0) => {
                                     const { _id, quantity, productId, userId, price, status } = product
-                                    const { productName } = productId
+                                    const { productName, stock } = productId
                                     const { email } = userId
                                     return (
                                         <tr>
                                             <td>{counter + 1}</td>
                                             <td>{email.slice(0, -10)}</td>
+                                            <td>{productName}</td>
+                                            <td>{stock}</td>
+                                            <td>{price}</td>
+                                            <td>{quantity}</td>
                                             <td>
-                                                <MDBBadge color={status === 'Conform' ? 'success' : 'warning'} pill>{status}</MDBBadge>
-                                            </td>
-                                            <td>{status === 'Conform' ? '-' :
-                                                <MDBBtn color='link' rounded size='sm' value={product._id} onClick={conform}>
-                                                    conform
-                                                </MDBBtn>}
+                                                {
+                                                    status === 'Conform' ?
+                                                        <MDBBadge color='success' rounded size='sm' value={product._id} pill>
+                                                            {status}
+                                                        </MDBBadge>
+                                                        :
+                                                        <MDBBtn color='warning' rounded size='sm' role='button' value={product._id} onClick={conform} pill>
+                                                            {status}
+                                                        </MDBBtn>
+                                                }
                                             </td>
                                             <td>
-                                                <MDBBtn color='danger' rounded size='sm' value={product._id} onClick={del}>
-                                                    Delete
-                                                </MDBBtn>
+                                                {
+                                                    status === 'Conform' ?
+                                                        <MDBBtn color='danger' rounded size='sm' disabled>
+                                                            Delete
+                                                        </MDBBtn>
+                                                        :
+                                                        <MDBBtn color='danger' rounded size='sm' value={product._id} onClick={del}>
+                                                            Delete
+                                                        </MDBBtn>
+                                                }
                                             </td>
                                             <td>
                                                 <MDBBtn color='dark' rounded size='sm' value={product.addressId._id} onClick={checkAddress}>
                                                     Check Address
-                                                </MDBBtn>
-                                            </td>
-                                            <td>
-                                                <MDBBtn color='info ' rounded size='sm' value={counter++} onClick={Detail}>
-                                                    Detail
                                                 </MDBBtn>
                                             </td>
                                         </tr>

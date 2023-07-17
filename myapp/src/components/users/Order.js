@@ -13,6 +13,7 @@ import Modal from 'react-bootstrap/Modal';
 let check
 let Data = []
 let order = []
+const _id = localStorage.getItem("id")
 const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let id
@@ -38,7 +39,7 @@ export default function Order(props) {
                     'Content-Type': 'application/json',
                     token: token,
                 },
-                body: JSON.stringify({ email: email }),
+                body: JSON.stringify({ _id: _id }),
             })
             const data = await response.json();
             Data = data.data
@@ -69,7 +70,7 @@ export default function Order(props) {
     }
 
     const checkAddress = (e) => {
-        const email = e.target.value
+        const id = e.target.value
         const SubFunction = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_USER_URL}/order`, {
@@ -78,7 +79,7 @@ export default function Order(props) {
                         'Content-Type': 'application/json',
                         token: token,
                     },
-                    body: JSON.stringify({ email: email }),
+                    body: JSON.stringify({ _id: id }),
                 })
                 const data = await response.json();
                 order = data.data

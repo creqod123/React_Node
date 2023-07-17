@@ -58,8 +58,8 @@ exports.userCart = (async (req, res, next) => {
 exports.checkout = (async (req, res, next) => {
 
     try {
-        const userEmail = req.body[1]
-        const check = await register.find({ email: userEmail })
+        const id = req.body[1]
+        const check = await register.find({ _id: id })
         const userId = check[0]._id
         let data = req.body[0]
 
@@ -104,8 +104,7 @@ exports.detail = (async (req, res, next) => {
 
 
     try {
-        const id = await register.find({ email: req.body.email })
-        const find = id[0]._id
+        const find = req.body._id
         const data = await checkout.find({ userId: find }).populate('productId').populate('addressId').populate('userId')
 
         res.status(200).json({
@@ -124,7 +123,7 @@ exports.detail = (async (req, res, next) => {
 
 exports.order = (async (req, res, next) => {
     try {
-        const data = await address.find({ _id: req.body.email })
+        const data = await address.find({ _id: req.body._id })
         res.status(200).json({
             message: "complete",
             data: data

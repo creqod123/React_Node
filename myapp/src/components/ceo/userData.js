@@ -164,7 +164,6 @@ export default function UserData() {
                         {
                             0 !== data.length ?
                                 data.map((user) => {
-                                    console.log("User :- ", user)
                                     const { quantity, productId, price } = user
                                     const { productName, _id } = productId
                                     return (

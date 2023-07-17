@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 let paginat = 0
-const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let Data
 let Check123
@@ -48,7 +47,7 @@ function Home(props) {
                 }, 1000)
             })
 
-            props.props.socket.on('removeProduct', res => {
+            props.props.socket.on('addProduct', res => {
                 setShowTag(false)
                 setTimeout(() => {
                     setShowTag(true)

@@ -11,7 +11,7 @@ import Row from 'react-bootstrap/Row';
 
 let totalcost = 0
 let total = 0
-let email = localStorage.getItem('email')
+const _id = localStorage.getItem('id')
 let token = localStorage.getItem("token")
 
 
@@ -85,7 +85,7 @@ function Cart() {
                 }
             }
 
-            formdata = [prop, email]
+            formdata = [prop, _id]
 
             try {
                 await axios.post(`${process.env.REACT_APP_USER_URL}/checkout`, formdata,

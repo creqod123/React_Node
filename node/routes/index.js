@@ -33,6 +33,7 @@ router.post('/admin/update', verifyToken, adminController.update);
 router.post('/admin/order', verifyToken, adminController.order);
 router.post('/admin/status', verifyToken, adminController.status);
 router.post('/admin/search', verifyToken, adminController.search);
+router.post('/admin/stock', verifyToken, adminController.stock);
 
 //            ============ User ============== 
 

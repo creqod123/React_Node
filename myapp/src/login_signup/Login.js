@@ -26,6 +26,7 @@ function Login() {
                 setCheckPassword(true)
             }
             else {
+                localStorage.setItem("id", res.data.id)
                 localStorage.setItem("email", res.data.email)
                 localStorage.setItem("token", res.data.token)
                 localStorage.setItem("type", res.data.type)
