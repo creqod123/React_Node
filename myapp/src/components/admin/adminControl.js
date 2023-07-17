@@ -13,7 +13,7 @@ export default function Admincontrol() {
     const [price, setPrice] = useState('')
     const [image, setImage] = useState('')
     const [stock, setStock] = useState('')
-    const _id = localStorage.getItem("id")
+    const email = localStorage.getItem("email")
     const [validated, setValidated] = useState(false);
 
     const productAdd = async (event) => {
@@ -27,7 +27,7 @@ export default function Admincontrol() {
             formData.append('productName', productName);
             formData.append('price', price);
             formData.append('image', image);
-            formData.append('_id', _id)
+            formData.append('email', email)
             formData.append('stock', stock)
             try {
                 await axios.post(`${process.env.REACT_APP_ADMIN_URL}/add`, formData)
