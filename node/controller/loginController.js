@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken')
 // ============================= Admin and user Login ============================= 
 
 exports.login = (async (req, res, next) => {
-
     try {
         const { email, password } = req.body
         const check = await register.findOne({ email: email })
+
         if (email.length === 0 || check === null) {
             res.status(200).json({
                 message: "Enter vaild email",
@@ -40,7 +40,6 @@ exports.login = (async (req, res, next) => {
                 message: "Enter vaild email",
             })
         }
-
     }
     catch (err) {
         res.status(404).json({
@@ -48,5 +47,4 @@ exports.login = (async (req, res, next) => {
             data: req.body,
         })
     }
-
 });

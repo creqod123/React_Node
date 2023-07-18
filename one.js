@@ -1,3 +1,6 @@
+// Create modal with array for user cart
+// Get and use req.user from token to api
+// Change admin and seller response in nodejs
 
 const cartSaved = async () => {
     try {
@@ -13,6 +16,7 @@ const cartSaved = async () => {
         console.log(e)
     }
 }
+
 
 useEffect(() => {
     cartSaved()

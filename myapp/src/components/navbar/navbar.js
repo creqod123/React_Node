@@ -13,6 +13,7 @@ export default function Navbar() {
         localStorage.removeItem("type")
         localStorage.removeItem("email")
         localStorage.removeItem("token")
+        localStorage.removeItem("id")
     }
 
     const submit1 = (e) => {

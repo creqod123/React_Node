@@ -233,5 +233,3 @@ exports.stock = (async (req, res, next) => {
         })
     }
 });
-
-

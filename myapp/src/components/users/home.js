@@ -26,7 +26,6 @@ function Home(props) {
     const dispatch = useDispatch()
     const history = useNavigate('')
 
-
     Data = useSelector((a) => a.getItem)
     dataStock = useSelector((a) => a.cardItems)
     dispatch(pageNation(paginat))
@@ -61,6 +60,18 @@ function Home(props) {
             })
         }
     }, [])
+
+
+    useEffect(() => {
+        if (props.props.socket) {
+            props.props.socket.on('updateProduct', res => {
+                setShowTag(false)
+                setTimeout(()=>{
+                    setShowTag(true)
+                },1000)
+            })
+        }
+    })
 
     // ========================================================== Get Data, add and remove to cart ==================================================================
 

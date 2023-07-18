@@ -198,9 +198,16 @@ export default function Order(props) {
                                                 <p className='fw-normal mb-1'>{quantity}</p>
                                             </td>
                                             <td>
-                                                <MDBBadge color='success' pill>
-                                                    {status}
-                                                </MDBBadge>
+                                                {
+                                                    status === "Pending" ?
+                                                        <MDBBadge color='warning' pill>
+                                                            {status}
+                                                        </MDBBadge>
+                                                        :
+                                                        <MDBBadge color='success' pill>
+                                                            {status}
+                                                        </MDBBadge>
+                                                }
                                             </td>
                                             <td>
                                                 <MDBBtn color='link' rounded size='sm' value={product.addressId._id} onClick={checkAddress}>
@@ -265,52 +272,54 @@ export default function Order(props) {
                     }
                 </div >
             </div>
-            {updateAddress ?
-                <div className="modal show" style={{ display: 'block', position: 'initial' }}>
-                    <Modal.Dialog>
-                        <Modal.Header >
-                            <Form noValidate validated={validated} onSubmit={orderUpdate}>
-                                <Form.Group className="mb-3" controlId="formGridAddress1">
-                                    <Form.Label>Full Name</Form.Label>
-                                    <Form.Control placeholder="Full Name." name="productName" onChange={(e) => setfullName(e.target.value)} required />
-                                </Form.Group>
+            {
+                updateAddress ?
+                    <div className="modal show" style={{ display: 'block', position: 'initial' }}>
+                        <Modal.Dialog>
+                            <Modal.Header >
+                                <Form noValidate validated={validated} onSubmit={orderUpdate}>
+                                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Full Name</Form.Label>
+                                        <Form.Control placeholder="Full Name." name="productName" onChange={(e) => setfullName(e.target.value)} required />
+                                    </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress1" >
-                                    <Form.Label>Address</Form.Label>
-                                    <Form.Control placeholder="12 - Floor, building name" onChange={(e) => setHouse(e.target.value)} required />
-                                </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGridAddress1" >
+                                        <Form.Label>Address</Form.Label>
+                                        <Form.Control placeholder="12 - Floor, building name" onChange={(e) => setHouse(e.target.value)} required />
+                                    </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
-                                    <Row>
-                                        <Col xs={5}>
-                                            <Form.Control placeholder="Area" onChange={(e) => setArea(e.target.value)} required />
-                                            <Form.Control.Feedback type="invalid">
-                                                Provide valid area.
-                                            </Form.Control.Feedback>
-                                        </Col>
-                                        <Col>
-                                            <Form.Control placeholder="City" onChange={(e) => setCity(e.target.value)} required />
-                                            <Form.Control.Feedback type="invalid">
-                                                Enter valid city
-                                            </Form.Control.Feedback>
-                                        </Col>
-                                        <Col>
-                                            <Form.Control type="number" min={111111} max={999999} placeholder="Pincode" onChange={(e) => setPincode(e.target.value)} required />
-                                            <Form.Control.Feedback type="invalid">
-                                                Enter valid Pincode
-                                            </Form.Control.Feedback>
-                                        </Col>
-                                    </Row>
-                                </Form.Group>
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleInputUpdate}>Close</Button>
-                                    <Button variant="primary" type="submit">Save changes</Button>
-                                </Modal.Footer>
-                            </Form>
-                        </Modal.Header>
-                    </Modal.Dialog>
-                </div>
-                : <></>}
+                                    <Form.Group className="mb-3" controlId="formGridAddress2">
+                                        <Row>
+                                            <Col xs={5}>
+                                                <Form.Control placeholder="Area" onChange={(e) => setArea(e.target.value)} required />
+                                                <Form.Control.Feedback type="invalid">
+                                                    Provide valid area.
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col>
+                                                <Form.Control placeholder="City" onChange={(e) => setCity(e.target.value)} required />
+                                                <Form.Control.Feedback type="invalid">
+                                                    Enter valid city
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col>
+                                                <Form.Control type="number" min={111111} max={999999} placeholder="Pincode" onChange={(e) => setPincode(e.target.value)} required />
+                                                <Form.Control.Feedback type="invalid">
+                                                    Enter valid Pincode
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                        </Row>
+                                    </Form.Group>
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleInputUpdate}>Close</Button>
+                                        <Button variant="primary" type="submit">Save changes</Button>
+                                    </Modal.Footer>
+                                </Form>
+                            </Modal.Header>
+                        </Modal.Dialog>
+                    </div>
+                    : <></>
+            }
         </div >
     )
 }
