@@ -1,6 +1,6 @@
 import axios from 'axios'
 import './user.css'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { addtoCart, RemovetoCart } from "../../Services/Actions/actions"
 import Button from 'react-bootstrap/Button';

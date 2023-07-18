@@ -3,6 +3,7 @@ const adminProduct = require('../models/adminProduct')
 const checkout = require('../models/checkout')
 const register = require('../models/register')
 const address = require('../models/address')
+const cart = require('../models/cart')
 const socket = require('../socket/index');
 
 // ============================= getall data show =========================== 
@@ -171,6 +172,27 @@ exports.search = (async (req, res, next) => {
         res.status(200).json({
             message: "complete",
             data: Data
+        })
+    }
+    catch (error) {
+        res.status(404).json({
+            message: "fail",
+        })
+    }
+});
+
+// ============================= User cart =========================== 
+
+exports.cart = (async (req, res, next) => {
+
+    const a = await cart.find()
+    // const b = { productCart: { productName: "Hello", price: 123, quantity: 123, image: "Wordl" } }
+    // const c = await cart.create(b)
+    console.log("Check :- ", req.user)
+
+    try {
+        res.status(200).json({
+            message: "complete",
         })
     }
     catch (error) {

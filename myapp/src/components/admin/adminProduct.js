@@ -287,11 +287,11 @@ export default function Adminproduct() {
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
                                     <MDBInput label='Product Name' name='Proname' defaultValue={`${productNameSet}`} type='text' onChange={(e) => setproductName(e.target.value)} required />
                                     <Form.Control.Feedback type="invalid">
-                                        Please provide a valid Stock.
+                                        Please provide a valid Product Name.
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                    <MDBInput label='Price' type='text' value={priceSet} onChange={(e) => setPrice(e.target.value)} required />
+                                    <MDBInput label='Price' type='number' defaultValue={`${priceSet}`} onChange={(e) => setPrice(e.target.value)} required />
                                     <Form.Control.Feedback type="invalid">
                                         Please provide a valid Stock.
                                     </Form.Control.Feedback>
@@ -299,7 +299,7 @@ export default function Adminproduct() {
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
                                     <MDBFile id='formFileDisabled' required name='Fileselect' />
                                     <Form.Control.Feedback type="invalid">
-                                        Please provide a valid Stock.
+                                        Please provide a valid file.
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Row>
@@ -318,6 +318,7 @@ export default function Adminproduct() {
                             <div>
                                 <Card style={{ width: '18rem', border: '1px solid black', borderRadius: '1%' }}>
                                     <Card.Img variant="top" src={process.env.REACT_APP_GET_IMAGE + image} id="imageSiza" />
+                                    {console.log(image)}
                                     <Card.Body>
                                         <Card.Title>{productName}</Card.Title>
                                         <Card.Text>
@@ -325,11 +326,12 @@ export default function Adminproduct() {
                                         </Card.Text>
                                         <Card.Text>
                                             InStock ::-- <span className="stockPrice">{stock}</span>
-                                            <Button variant="success" value={_id}>Remove</Button>
+                                            <Button variant="primary" onClick={() => stockUpdate(_id)} value={product} id='stockUpdate'>stock update</Button>
+                                            {modalShow ? <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} /> : <></>}
                                         </Card.Text>
                                         <div id="cartButton">
                                             <Button variant="danger" value={_id} role='button' onClick={e => handleInputRemove(e)}>Remove</Button>
-                                            <Button variant="info" value={_id} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
+                                            <Button variant="info" value={JSON.stringify(product)} role='button' onClick={e => handleInputUpdate(e)}>Update</Button>
                                         </div>
                                     </Card.Body>
                                 </Card>

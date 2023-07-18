@@ -19,7 +19,7 @@ exports.login = (async (req, res, next) => {
             const checkPass = await bcrypt.compareSync(password, check.password)
             if (checkPass) {
                 const token = jwt.sign({
-                    data: 'foobar'
+                    data: email
                 }, process.env.JWT_SECRET_KEY);
                 res.status(200).json({
                     message: "complete",

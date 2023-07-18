@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
+const token = localStorage.getItem("token");
+
 export default function Admincontrol() {
 
     const [productName, setproductName] = useState('')

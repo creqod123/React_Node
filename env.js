@@ -18,3 +18,11 @@ SERVER_PORT = 4200
 JWT_SECRET_KEY= 'secretKey'
 
 DB_HOST="mongodb+srv://dhruvjogani123:dhruvjogani123@cluster0.xoxcqh4.mongodb.net/ecom"
+
+
+
+
+
+
+
+// const b = { productCart: [{ first: "Hello", second: "Wordl" }] }

@@ -51,7 +51,7 @@ exports.register = (async function (req, res, next) {
         }
         else {
             const token = jwt.sign({
-                data: 'foobar'
+                data: email
             }, process.env.JWT_SECRET_KEY);
             await register.create(data)
             data.token = token
