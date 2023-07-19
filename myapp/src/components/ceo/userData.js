@@ -24,7 +24,7 @@ export default function UserData() {
                         token: token,
                     },
                 })
-            userdatas = a.data.user
+            userdatas = a.data.data.seller
         }
         catch (e) {
             console.log(e)

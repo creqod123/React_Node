@@ -1,12 +1,32 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 import { useSelector } from "react-redux"
+import { useEffect } from 'react'
 
 export default function Navbar() {
 
     const history = useNavigate('')
     const type = localStorage.getItem("type")
     const cartLength = useSelector((a) => a.cardItems)
+
+    useEffect(async () => {
+        try {
+            const token = localStorage.getItem("token")
+            const id = localStorage.getItem("id")
+            const response = await fetch(`${process.env.REACT_APP_ADMIN_URL}/cartRequest`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    token: token,
+                },
+            })
+            const data = await response.json();
+            console.log("Check :- ", data)
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }, [])
 
 
     const signout = () => {
@@ -59,7 +79,6 @@ export default function Navbar() {
                     <li>
                         <a href='/admin/control' role='button'> ADD </a>
                     </li>
-
                     <li>
                         <a href='/admin/product' role='button'>Product</a>
                     </li>

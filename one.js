@@ -1,23 +1,8 @@
-// Create modal with array for user cart
-// Get and use req.user from token to api
-// Change admin and seller response in nodejs
-
-const cartSaved = async () => {
-    try {
-        axios.post(`${process.env.REACT_APP_USER_URL}/cartSaved`, prop,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    token: token,
-                },
-            })
-    }
-    catch (e) {
-        console.log(e)
-    }
-}
+// Node response change
+// add and remove product in cart and store in node
+// Update cart data in mongodb 
+// try get cart data and use with redux
 
 
-useEffect(() => {
-    cartSaved()
-}, [])
+
+// rampam pam rampam pam

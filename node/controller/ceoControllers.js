@@ -11,8 +11,7 @@ exports.getData = (async (req, res, next) => {
         socket.ceoUserGet('ceoUserData', [user, seller]);
         res.status(200).json({
             message: "complete",
-            user: user,
-            seller: seller
+            data: {user:user, seller:seller}
         })
     }
     catch (error) {
@@ -30,12 +29,14 @@ exports.userDetail = (async (req, res, next) => {
         const data = await checkout.find({ userId: id }, { quantity: 1, price: 1, productId: 1 }).populate('productId')
 
         res.status(200).json({
+            success: true,
             message: "complete",
             data: data,
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "complete fail",
         })
     }
@@ -55,11 +56,13 @@ exports.userDelete = (async (req, res, next) => {
             await register.deleteOne({ _id: registerid })
         }
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "complete fail",
         })
     }
@@ -75,12 +78,14 @@ exports.adminDetail = (async (req, res, next) => {
         const id = req.body.id
         const data = await adminProduct.find({ adminId: id }, { _id: 1, productName: 1, price: 1 })
         res.status(200).json({
+            success: true,
             message: "complete",
             data: data,
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "complete fail",
         })
     }
@@ -102,11 +107,13 @@ exports.productRemove = (async (req, res, next) => {
         }
 
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "complete fail",
         })
     }

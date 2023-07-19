@@ -24,7 +24,7 @@ export default function AdminData() {
                         token: token,
                     },
                 })
-            adminData = a.data.seller
+            adminData = a.data.data.seller
             const timer = setTimeout(() => {
                 setShowTag(true);
             }, 1000);

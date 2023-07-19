@@ -27,9 +27,9 @@ exports.getAll = (async (req, res, next) => {
             .limit(9)
             .exec();
         res.status(200).json({
+            success: true,
             message: "complete",
             data: data,
-            id: id,
         })
     }
     catch (error) {
@@ -48,22 +48,24 @@ exports.add = (async (req, res, next) => {
         req.body.image = req.file.path
         req.body['adminId'] = req.body._id
         delete req.body._id
-        console.log("5")
         if (check.length != 0) {
             await adminProduct.create(req.body)
             socket.addProduct('addProduct');
             res.status(200).json({
+                success: true,
                 message: "complete"
             })
         }
         else {
             res.status(200).json({
+                success: false,
                 message: "complete fail",
             })
         }
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: error.message,
         })
     }
@@ -79,11 +81,13 @@ exports.remove = (async (req, res, next) => {
         socket.addProduct('removeProduct');
 
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -94,9 +98,9 @@ exports.remove = (async (req, res, next) => {
 exports.detail = (async (req, res, next) => {
 
     try {
-        const check = await register.find({ email: req.body.email })
-        if (check[0].type === "user") {
-            const id = check[0]._id
+        const check = await register.findOne({ email: req.body.email })
+        if (check.type === "user") {
+            const id = check._id
             const data = await checkout.find({ userId: id, sellerId: emailDetail }).populate('productId').populate('userId').populate('addressId')
             res.status(200).json({
                 message: "complete",
@@ -104,10 +108,11 @@ exports.detail = (async (req, res, next) => {
             })
         }
         else {
-            emailDetail = check[0]._id
-            const id = check[0]._id
+            emailDetail = check._id
+            const id = check._id
             const data = await checkout.find({ sellerId: id }).populate('productId').populate('userId').populate('addressId')
             res.status(200).json({
+                success: true,
                 message: "complete",
                 data: data,
             })
@@ -116,6 +121,7 @@ exports.detail = (async (req, res, next) => {
 
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -129,11 +135,13 @@ exports.update = (async (req, res, next) => {
         await adminProduct.updateOne({ _id: req.body.id }, { productName: req.body.productName, price: req.body.price })
         socket.updateProduct('updateProduct');
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -145,12 +153,14 @@ exports.order = (async (req, res, next) => {
     try {
         const data = await address.find({ _id: req.body.email })
         res.status(200).json({
+            success: true,
             message: "complete",
             data: data,
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -170,9 +180,9 @@ exports.status = (async (req, res, next) => {
         }
         else {
 
-            const a = await checkout.find({ _id: id }).populate('addressId')
+            const a = await checkout.findOne({ _id: id }).populate('addressId')
             await checkout.deleteOne({ _id: id })
-            const check = a[0].addressId._id
+            const check = a.addressId._id
             const b = await checkout.find({ addressId: check })
 
             if (b.length === 0) {
@@ -180,11 +190,13 @@ exports.status = (async (req, res, next) => {
             }
         }
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -207,12 +219,14 @@ exports.search = (async (req, res, next) => {
             .limit(9)
             .exec();
         res.status(200).json({
+            success: true,
             message: "complete",
             data: Data
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -224,11 +238,13 @@ exports.stock = (async (req, res, next) => {
     try {
         const a = await adminProduct.updateOne({ _id: req.body._id }, { stock: req.body.stock })
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }

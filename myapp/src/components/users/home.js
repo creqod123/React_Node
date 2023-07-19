@@ -66,9 +66,9 @@ function Home(props) {
         if (props.props.socket) {
             props.props.socket.on('updateProduct', res => {
                 setShowTag(false)
-                setTimeout(()=>{
+                setTimeout(() => {
                     setShowTag(true)
-                },1000)
+                }, 1000)
             })
         }
     })

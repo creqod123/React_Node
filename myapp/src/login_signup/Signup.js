@@ -14,15 +14,13 @@ function SignUp() {
     const [CheckPassword, setCheckPassword] = useState(false)
     const [CheckTel, setCheckTel] = useState(false)
     const [CheckType, setCheckType] = useState(false)
-
-
-
     // const [CheckConPassword, setCheckConPassword] = useState(false)
 
 
 
-    const pass = { Enter_Password: 'Enter Password', Password_not_same: 'Password not same', Password_Length: 'Password Length' }
 
+
+    const pass = { Enter_Password: 'Enter Password', Password_not_same: 'Password not same', Password_Length: 'Password Length' }
     const submit = async (e) => {
         e.preventDefault()
         let res
@@ -57,7 +55,6 @@ function SignUp() {
             else if (res.data.message === "Succesfull") {
                 localStorage.setItem("email", res.data.email)
                 localStorage.setItem("type", res.data.type)
-                document.getElementById('l-s-check').innerHTML = "Signout"
                 if (res.data.type == "seller") {
                     window.location.href = "/admin/control"
                 }

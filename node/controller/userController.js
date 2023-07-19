@@ -26,8 +26,7 @@ exports.getAll = (async (req, res, next) => {
             .exec();
         res.status(200).json({
             message: "complete",
-            data: result,
-            id: id[0]._id
+            data: result
         })
     }
     catch (error) {
@@ -43,12 +42,14 @@ exports.userCart = (async (req, res, next) => {
 
     try {
         res.status(200).json({
+            success: true,
             message: "complete",
             data: req.data
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "complete fail",
         })
     }
@@ -88,11 +89,13 @@ exports.checkout = (async (req, res, next) => {
 
         socket.productCheckout('productCheckout');
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "complete fail",
         })
     }
@@ -109,12 +112,14 @@ exports.detail = (async (req, res, next) => {
         const data = await checkout.find({ userId: find }).populate('productId').populate('addressId').populate('userId')
 
         res.status(200).json({
+            success: true,
             message: "complete",
             data: data
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -126,12 +131,14 @@ exports.order = (async (req, res, next) => {
     try {
         const data = await address.find({ _id: req.body._id })
         res.status(200).json({
+            success: true,
             message: "complete",
             data: data
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -144,11 +151,13 @@ exports.orderUpdate = (async (req, res, next) => {
     try {
         await address.updateOne({ _id: req.body.id }, { fullName: req.body.fullName, house: req.body.house, area: req.body.area, city: req.body.city, pincode: req.body.pincode })
         res.status(200).json({
+            success: true,
             message: "complete",
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -170,12 +179,14 @@ exports.search = (async (req, res, next) => {
             .limit(9)
             .exec();
         res.status(200).json({
+            success: true,
             message: "complete",
             data: Data
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
@@ -184,19 +195,47 @@ exports.search = (async (req, res, next) => {
 // ============================= User cart =========================== 
 
 exports.cart = (async (req, res, next) => {
-
-    const a = await cart.find()
-    // const b = { productCart: { productName: "Hello", price: 123, quantity: 123, image: "Wordl" } }
-    // const c = await cart.create(b)
-    console.log("Check :- ", req.user)
-
     try {
+        const data = []
+        const a = await cart.findOne({ userId: req.user._id })
+        req.body.map((product) => {
+            data.push(product.cardData._id)
+        })
+        if (a === null) {
+            const b = { userId: req.user._id, productCart: data }
+            const c = await cart.create(b)
+        }
+        else {
+            await cart.updateOne({ _id: a._id }, { productCart: data })
+        }
         res.status(200).json({
+            success: true,
             message: "complete",
+        })
+
+    }
+    catch (error) {
+        res.status(404).json({
+            success: false,
+            message: "fail",
+        })
+    }
+});
+
+// ============================= User cart request =========================== 
+
+exports.cartRequest = (async (req, res, next) => {
+    try {
+        const product = await cart.findOne({ userId: req.user._id })
+        res.status(200).json({
+            success: true,
+            message: "complete",
+            data: product
         })
     }
     catch (error) {
         res.status(404).json({
+            success: false,
             message: "fail",
         })
     }
