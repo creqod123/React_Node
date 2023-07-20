@@ -1,33 +1,47 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
-import { useSelector } from "react-redux"
-import { useEffect } from 'react'
+import { useSelector, useDispatch } from "react-redux"
+// import { useEffect } from 'react'
+// import { addtoCart } from "../../Services/Actions/actions"
+
+// let i = 0
 
 export default function Navbar() {
 
     const history = useNavigate('')
     const type = localStorage.getItem("type")
     const cartLength = useSelector((a) => a.cardItems)
+    const dispatch = useDispatch()
 
-    useEffect(async () => {
-        try {
-            const token = localStorage.getItem("token")
-            const id = localStorage.getItem("id")
-            const response = await fetch(`${process.env.REACT_APP_ADMIN_URL}/cartRequest`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    token: token,
-                },
-            })
-            const data = await response.json();
-            console.log("Check :- ", data)
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }, [])
+    // const doSomething = async () => {
+    //     try {
+    //         const token = localStorage.getItem("token")
+    //         const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartRequest`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 token: token,
+    //             },
+    //         })
+    //         const getAll = await response.json();
+    //         const cartData = getAll.data.productCart
+    //         // cartData.map((product) => {
+    //         //     const timer = setTimeout(() => {
+    //         //         dispatch(addtoCart(product))
+    //         //     }, 100);
+    //         // })
+    //     }
+    //     catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
+    // useEffect(() => {
+    //     if (type === "user" && i === 0) {
+    //         doSomething();
+    //         i++;
+    //     }
+    // }, [])
 
     const signout = () => {
         localStorage.removeItem("type")

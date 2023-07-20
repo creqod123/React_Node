@@ -76,6 +76,7 @@ function Home(props) {
     // ========================================================== Get Data, add and remove to cart ==================================================================
 
     const add = (e) => {
+        const a = JSON.parse(e.target.value)
         dispatch(addtoCart(JSON.parse(e.target.value)))
     }
     const remove = (e) => {

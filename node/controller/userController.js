@@ -198,21 +198,28 @@ exports.cart = (async (req, res, next) => {
     try {
         const data = []
         const a = await cart.findOne({ userId: req.user._id })
-        req.body.map((product) => {
+
+        req.body.data.map((product) => {
             data.push(product.cardData._id)
         })
-        if (a === null) {
-            const b = { userId: req.user._id, productCart: data }
-            const c = await cart.create(b)
+        if (a !== null) {
+            await cart.deleteOne({ _id: a._id })
         }
-        else {
-            await cart.updateOne({ _id: a._id }, { productCart: data })
-        }
+        // if (a === null) {
+        //     const b = { userId: req.user._id, productCart: data }
+        //     await cart.create(b)
+        // }
+        // else {
+        //     const b = { userId: req.user._id, productCart: data }
+        //     await cart.create(b)
+        // }
+
+        const b = { userId: req.user._id, productCart: data }
+        await cart.create(b)
         res.status(200).json({
             success: true,
             message: "complete",
         })
-
     }
     catch (error) {
         res.status(404).json({
@@ -226,7 +233,10 @@ exports.cart = (async (req, res, next) => {
 
 exports.cartRequest = (async (req, res, next) => {
     try {
-        const product = await cart.findOne({ userId: req.user._id })
+
+        const product = await cart.findOne({ userId: req.user._id }).populate('productCart')
+        // const abcd = await cart.deleteOne({ _id: product._id })
+
         res.status(200).json({
             success: true,
             message: "complete",
