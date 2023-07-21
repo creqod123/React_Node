@@ -196,26 +196,36 @@ exports.search = (async (req, res, next) => {
 
 exports.cart = (async (req, res, next) => {
     try {
-        const data = []
-        const a = await cart.findOne({ userId: req.user._id })
 
-        req.body.data.map((product) => {
-            data.push(product.cardData._id)
+        const productId = []
+        const quantity = []
+
+        const a = await cart.findOne({ userId: req.user._id })
+        const userReqData = req.body.data
+
+        // ===============================================================================================================
+
+        userReqData.map((product) => {
+            productId.push(product.cardData._id)
         })
+
+
+        for (let i = 0; i < productId.length; i++) {
+            let counter = 1
+            for (let j = i + 1; j < productId.length; j++) {
+                if (productId[i] === productId[j]) {
+                    productId.splice(j, 1)
+                    j--
+                    counter++
+                }
+            }
+            quantity.push(counter)
+        }
         if (a !== null) {
             await cart.deleteOne({ _id: a._id })
         }
-        // if (a === null) {
-        //     const b = { userId: req.user._id, productCart: data }
-        //     await cart.create(b)
-        // }
-        // else {
-        //     const b = { userId: req.user._id, productCart: data }
-        //     await cart.create(b)
-        // }
 
-        const b = { userId: req.user._id, productCart: data }
-        await cart.create(b)
+        const abcde = await cart.create({ userId: req.user._id, productCart: { productId: productId, quantity: quantity } })
         res.status(200).json({
             success: true,
             message: "complete",
@@ -228,15 +238,11 @@ exports.cart = (async (req, res, next) => {
         })
     }
 });
-
 // ============================= User cart request =========================== 
 
 exports.cartRequest = (async (req, res, next) => {
     try {
-
-        const product = await cart.findOne({ userId: req.user._id }).populate('productCart')
-        // const abcd = await cart.deleteOne({ _id: product._id })
-
+        const product = await cart.findOne({ userId: req.user._id }).populate('productCart.productId')
         res.status(200).json({
             success: true,
             message: "complete",

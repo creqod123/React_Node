@@ -44,7 +44,42 @@ function Cart() {
         dispatch(RemovetoCart(JSON.parse(e.target.value)))
     }
 
+    // ===========================================================================================================================
 
+    const doSomething = async () => {
+        try {
+            const token = localStorage.getItem("token")
+            const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartRequest`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    token: token,
+                },
+            })
+            const getAll = await response.json();
+            const getProduct = getAll.data.productCart.productId
+            const getQuantity = getAll.data.productCart.quantity
+
+            getProduct.map((product, i = 0) => {
+                for (let j = 0; j < getQuantity[i]; j++) {
+                    dispatch(addtoCart((product)))
+                }
+                i++
+            })
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        if (type === "user" && i === 0) {
+            doSomething();
+            i = 10;
+        }
+    }, [])
+
+    // ============================================================================================================================
 
     const conformOrder = async (event) => {
         const form = event.currentTarget;

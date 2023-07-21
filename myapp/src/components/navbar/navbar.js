@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 import { useSelector, useDispatch } from "react-redux"
-// import { useEffect } from 'react'
-// import { addtoCart } from "../../Services/Actions/actions"
+import { useEffect } from 'react'
+import { addtoCart } from "../../Services/Actions/actions"
 
-// let i = 0
+let i = 0
 
 export default function Navbar() {
 
@@ -24,12 +24,15 @@ export default function Navbar() {
     //             },
     //         })
     //         const getAll = await response.json();
-    //         const cartData = getAll.data.productCart
-    //         // cartData.map((product) => {
-    //         //     const timer = setTimeout(() => {
-    //         //         dispatch(addtoCart(product))
-    //         //     }, 100);
-    //         // })
+    //         const getProduct = getAll.data.productCart.productId
+    //         const getQuantity = getAll.data.productCart.quantity
+
+    //         getProduct.map((product, i = 0) => {
+    //             for (let j = 0; j < getQuantity[i]; j++) {
+    //                 dispatch(addtoCart((product)))
+    //             }
+    //             i++
+    //         })
     //     }
     //     catch (e) {
     //         console.log(e)
@@ -39,7 +42,7 @@ export default function Navbar() {
     // useEffect(() => {
     //     if (type === "user" && i === 0) {
     //         doSomething();
-    //         i++;
+    //         i = 10;
     //     }
     // }, [])
 

@@ -9,7 +9,6 @@ const cardItems = (state = length, action) => {
         case "ADD_TO_CART":
             const cartSaved = async () => {
                 try {
-
                     const response = fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
                         method: 'POST',
                         headers: {
