@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import './navbar.css'
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from 'react'
-import { addtoCart } from "../../Services/Actions/actions"
+import { addtoCart, getCartSaved } from "../../Services/Actions/actions"
 
 let i = 0
 
@@ -23,24 +23,18 @@ export default function Navbar() {
                     token: token,
                 },
             })
+
             const getAll = await response.json();
             const getProduct = getAll.data.productCart
 
             const Data = []
-
             getProduct.map((product) => {
                 const { productId, quantity } = product
                 for (let j = 0; j < quantity; j++) {
                     Data.push(productId)
                 }
             })
-            let i = 0
-            const myInterval = setInterval(() => {
-                dispatch(addtoCart(Data[i++]))
-                if (i === Data.length) {
-                    clearInterval(myInterval);
-                }
-            }, 300);
+            dispatch(getCartSaved(Data))
         }
         catch (e) {
             console.log(e)

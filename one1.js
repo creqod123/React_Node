@@ -1,142 +1,111 @@
-import { useNavigate } from 'react-router-dom'
-import './navbar.css'
-import { useSelector, useDispatch } from "react-redux"
-import { useEffect } from 'react'
-import { addtoCart } from "../../Services/Actions/actions"
+import axios from "axios"
 
-let i = 0
+let token = localStorage.getItem("token")
+let length = []
 
-export default function Navbar() {
+const cardItems = (state = length, action) => {
+    switch (action.type) {
+        case "ADD_TO_CART":
+            const cartSaved = async () => {
+                try {
+                    const Data = []
+                    const prop = [...state, { cardData: action.data }]
+                    for (let i = 0; i < prop.length; i++) {
+                        prop[i].cardData.quantity = 1
+                        for (let j = i + 1; j < prop.length; j++) {
+                            if (prop[i].cardData._id === prop[j].cardData._id) {
+                                prop[i].cardData.quantity = prop[i].cardData.quantity + 1
+                                prop.splice(j, 1)
+                                j--
+                            }
+                        }
+                        Data.push({ productId: prop[i].cardData._id, quantity: prop[i].cardData.quantity })
+                    }
 
-    const history = useNavigate('')
-    const type = localStorage.getItem("type")
-    const cartLength = useSelector((a) => a.cardItems)
-    const dispatch = useDispatch()
+                    const response = fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            token: token,
+                        },
+                        body: JSON.stringify({ data: Data }),
+                    })
+                }
+                catch (e) {
+                    console.log(e)
+                }
+            }
+            // cartSaved()
 
-    // const doSomething = async () => {
-    //     try {
-    //         const token = localStorage.getItem("token")
-    //         const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartRequest`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 token: token,
-    //             },
-    //         })
-    //         const getAll = await response.json();
-    //         const getProduct = getAll.data.productCart.productId
-    //         const getQuantity = getAll.data.productCart.quantity
+            return [
+                ...state,
+                { cardData: action.data }
+            ]
 
-    //         getProduct.map((product, i = 0) => {
-    //             for (let j = 0; j < getQuantity[i]; j++) {
-    //                 dispatch(addtoCart((product)))
-    //             }
-    //             i++
-    //         })
-    //     }
-    //     catch (e) {
-    //         console.log(e)
-    //     }
-    // }
+        case "REMOVE_TO_CART":
+            const check = action.data._id
 
-    // useEffect(() => {
-    //     if (type === "user" && i === 0) {
-    //         doSomething();
-    //         i = 10;
-    //     }
-    // }, [])
+            let del
+            for (const property in state) {
+                if (state[property].cardData._id == check) {
+                    del = property
+                    break
+                }
+                else {
+                    del = null
+                }
+            }
+            if (del != null) {
+                state.splice(del, 1)
+            }
 
-    const signout = () => {
-        localStorage.removeItem("type")
-        localStorage.removeItem("email")
-        localStorage.removeItem("token")
-        localStorage.removeItem("id")
-    }
 
-    const submit1 = (e) => {
-        e.preventDefault()
-        history('/user/shop')
-    }
+            const cartSaved2 = async () => {
+                try {
 
-    const submit2 = (e) => {
-        history('/user/cart')
-    }
-    const submit3 = (e) => {
-        e.preventDefault()
-        history('/user/order')
-    }
+                    const prop = [...state]
+                    const Data = []
+                    for (let i = 0; i < prop.length; i++) {
+                        prop[i].cardData.quantity = 1
+                        for (let j = i + 1; j < prop.length; j++) {
+                            if (prop[i].cardData._id === prop[j].cardData._id) {
+                                prop[i].cardData.quantity = prop[i].cardData.quantity + 1
+                                prop.splice(j, 1)
+                                j--
+                            }
+                        }
+                        Data.push({ productId: prop[i].cardData._id, quantity: prop[i].cardData.quantity })
+                    }
 
-    if (type === "user") {
-        return (
-            <div id="navbar">
-                <ul>
-                    <li className='cartimg'>
-                        <a role='button' onClick={submit1}>Shop</a>
-                    </li>
-                    <li className='cartimg'>
-                        <a role='button' onClick={submit2}>
-                            <p id='cartlength'>{cartLength.length}</p>
-                            <img src='https://cdn-icons-png.flaticon.com/512/3523/3523865.png' id='cartimg' />
-                        </a>
-                    </li>
-                    <li className='cartimg'>
-                        <a role='button' onClick={submit3}>Order</a>
-                    </li>
-                    <li>
-                        <a href='/register' role='button' onClick={signout}>Signout</a>
-                    </li>
-                </ul>
-            </div>
-        )
-    }
-    else if (type === "seller") {
-        return (
-            <div id="navbar">
-                <ul>
-                    <li>
-                        <a href='/admin/control' role='button'> ADD </a>
-                    </li>
-                    <li>
-                        <a href='/admin/product' role='button'>Product</a>
-                    </li>
-                    <li>
-                        <a href='/admin/detail' role='button' > Buyer </a>
-                    </li>
-                    <li>
-                        <a href='/register' role='button' onClick={signout}>Signout</a>
-                    </li>
-                </ul>
-            </div>
-        )
-    }
-    else if (type === "ceo") {
-        return (
-            <div id="navbar">
-                <ul>
-                    <li>
-                        <a href='/ceo/user' role='button'> User </a>
-                    </li>
+                    const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            token: token,
+                        },
+                        body: JSON.stringify({ data: Data }),
+                    })
+                }
+                catch (e) {
+                    console.log(e)
+                }
+            }
 
-                    <li>
-                        <a href='/ceo/admin' role='button'>Admin</a>
-                    </li>
-                    <li>
-                        <a href='/register' role='button' onClick={signout}>Signout</a>
-                    </li>
-                </ul>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div id="navbar">
-                <ul>
-                    <li>
-                        <a href='/register' id='l-s-check'>Register</a>
-                        <a href='/check' id='l-s-check'>Check</a>
-                    </li>
-                </ul>
-            </div>
-        )
+            cartSaved2()
+            return [
+                ...state,
+            ]
+
+        case "GET_CART_SAVED":
+            // state = action.data
+            console.log("Check :- ",action.data)
+            return [
+                ...state,
+            ]
+
+        default:
+            return state
     }
 }
+
+export default cardItems

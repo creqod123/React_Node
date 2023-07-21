@@ -21,3 +21,9 @@ export const pageNation = (data) => {
     }
 }
 
+export const getCartSaved = (data) => {
+    return {
+        type: "GET_CART_SAVED",
+        data: data
+    }
+}

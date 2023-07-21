@@ -4,7 +4,6 @@ let token = localStorage.getItem("token")
 let length = []
 
 const cardItems = (state = length, action) => {
-
     switch (action.type) {
         case "ADD_TO_CART":
             const cartSaved = async () => {
@@ -36,8 +35,8 @@ const cardItems = (state = length, action) => {
                     console.log(e)
                 }
             }
-
             cartSaved()
+
             return [
                 ...state,
                 { cardData: action.data }
@@ -93,6 +92,15 @@ const cardItems = (state = length, action) => {
             }
 
             cartSaved2()
+            return [
+                ...state,
+            ]
+
+        case "GET_CART_SAVED":
+            let prop = action.data
+            prop.map((product) => {
+                state.push({ cardData: product })
+            })
             return [
                 ...state,
             ]
