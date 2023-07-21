@@ -9,19 +9,34 @@ const cardItems = (state = length, action) => {
         case "ADD_TO_CART":
             const cartSaved = async () => {
                 try {
+                    const Data = []
+                    const prop = [...state, { cardData: action.data }]
+                    for (let i = 0; i < prop.length; i++) {
+                        prop[i].cardData.quantity = 1
+                        for (let j = i + 1; j < prop.length; j++) {
+                            if (prop[i].cardData._id === prop[j].cardData._id) {
+                                prop[i].cardData.quantity = prop[i].cardData.quantity + 1
+                                prop.splice(j, 1)
+                                j--
+                            }
+                        }
+                        Data.push({ productId: prop[i].cardData._id, quantity: prop[i].cardData.quantity })
+                    }
+
                     const response = fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             token: token,
                         },
-                        body: JSON.stringify({ data: [...state, { cardData: action.data }] }),
+                        body: JSON.stringify({ data: Data }),
                     })
                 }
                 catch (e) {
                     console.log(e)
                 }
             }
+
             cartSaved()
             return [
                 ...state,
@@ -44,8 +59,24 @@ const cardItems = (state = length, action) => {
             if (del != null) {
                 state.splice(del, 1)
             }
+
+
             const cartSaved2 = async () => {
                 try {
+
+                    const prop = [...state]
+                    const Data = []
+                    for (let i = 0; i < prop.length; i++) {
+                        prop[i].cardData.quantity = 1
+                        for (let j = i + 1; j < prop.length; j++) {
+                            if (prop[i].cardData._id === prop[j].cardData._id) {
+                                prop[i].cardData.quantity = prop[i].cardData.quantity + 1
+                                prop.splice(j, 1)
+                                j--
+                            }
+                        }
+                        Data.push({ productId: prop[i].cardData._id, quantity: prop[i].cardData.quantity })
+                    }
 
                     const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
                         method: 'POST',
@@ -53,15 +84,15 @@ const cardItems = (state = length, action) => {
                             'Content-Type': 'application/json',
                             token: token,
                         },
-                        body: JSON.stringify({ data: state }),
+                        body: JSON.stringify({ data: Data }),
                     })
                 }
                 catch (e) {
                     console.log(e)
                 }
             }
-            cartSaved2()
 
+            cartSaved2()
             return [
                 ...state,
             ]

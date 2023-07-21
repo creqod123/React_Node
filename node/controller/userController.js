@@ -203,29 +203,11 @@ exports.cart = (async (req, res, next) => {
         const a = await cart.findOne({ userId: req.user._id })
         const userReqData = req.body.data
 
-        // ===============================================================================================================
-
-        userReqData.map((product) => {
-            productId.push(product.cardData._id)
-        })
-
-
-        for (let i = 0; i < productId.length; i++) {
-            let counter = 1
-            for (let j = i + 1; j < productId.length; j++) {
-                if (productId[i] === productId[j]) {
-                    productId.splice(j, 1)
-                    j--
-                    counter++
-                }
-            }
-            quantity.push(counter)
-        }
         if (a !== null) {
             await cart.deleteOne({ _id: a._id })
         }
 
-        const abcde = await cart.create({ userId: req.user._id, productCart: { productId: productId, quantity: quantity } })
+        const abcde = await cart.create({ userId: req.user._id, productCart: userReqData })
         res.status(200).json({
             success: true,
             message: "complete",

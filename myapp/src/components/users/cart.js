@@ -17,6 +17,7 @@ let token = localStorage.getItem("token")
 
 function Cart() {
     const [showTag, setShowTag] = useState(false);
+    const [showProduct, setShowProduct] = useState(true);
     const [fullName, setfullName] = useState('');
     const [house, setHouse] = useState('');
     const [area, setArea] = useState('');
@@ -37,49 +38,20 @@ function Cart() {
     }
 
     const add = (e) => {
+        setShowProduct(false)
         dispatch(addtoCart(JSON.parse(e.target.value)))
+        const timer = setTimeout(() => {
+            setShowProduct(true)
+        }, 500);
     }
 
     const remove = (e) => {
+        setShowProduct(false)
         dispatch(RemovetoCart(JSON.parse(e.target.value)))
+        const timer = setTimeout(() => {
+            setShowProduct(true)
+        }, 500);
     }
-
-    // ===========================================================================================================================
-
-    const doSomething = async () => {
-        try {
-            const token = localStorage.getItem("token")
-            const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartRequest`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    token: token,
-                },
-            })
-            const getAll = await response.json();
-            const getProduct = getAll.data.productCart.productId
-            const getQuantity = getAll.data.productCart.quantity
-
-            getProduct.map((product, i = 0) => {
-                for (let j = 0; j < getQuantity[i]; j++) {
-                    dispatch(addtoCart((product)))
-                }
-                i++
-            })
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }
-
-    useEffect(() => {
-        if (type === "user" && i === 0) {
-            doSomething();
-            i = 10;
-        }
-    }, [])
-
-    // ============================================================================================================================
 
     const conformOrder = async (event) => {
         const form = event.currentTarget;
@@ -142,6 +114,7 @@ function Cart() {
 
         setValidated(true);
     }
+    
 
     let swap
     let counter = []
@@ -183,18 +156,26 @@ function Cart() {
                                 InStock ::-- {stock - quantity}
                             </Card.Text>
                             {
-                                stock > quantity
+                                showProduct
                                     ?
-                                    <div id="cartButton">
-                                        <Button variant="primary" value={JSON.stringify(product)} onClick={add}>+</Button>
-                                        <p id="productCounter">{quantity}</p>
-                                        <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
-                                    </div>
+                                    stock > quantity
+                                        ?
+                                        <div id="cartButton">
+                                            <Button variant="primary" value={JSON.stringify(product)} onClick={add}>+</Button>
+                                            <p id="productCounter">{quantity}</p>
+                                            <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
+                                        </div>
+                                        :
+                                        <div id="cartButton">
+                                            <Button variant="primary" disabled>+</Button>
+                                            <p id="productCounter">{quantity}</p>
+                                            <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
+                                        </div>
                                     :
                                     <div id="cartButton">
                                         <Button variant="primary" disabled>+</Button>
                                         <p id="productCounter">{quantity}</p>
-                                        <Button variant="primary" value={JSON.stringify(product)} onClick={remove}>-</Button>
+                                        <Button variant="primary" disabled>-</Button>
                                     </div>
                             }
                         </Card.Body>
