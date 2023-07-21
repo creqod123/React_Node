@@ -26,10 +26,21 @@ export default function Navbar() {
             const getAll = await response.json();
             const getProduct = getAll.data.productCart
 
-            getProduct.map((product, i = 0) => {
-                console.log("Product :- ", product.productId)
-                console.log("Product :- ", product.quantity)
+            const Data = []
+
+            getProduct.map((product) => {
+                const { productId, quantity } = product
+                for (let j = 0; j < quantity; j++) {
+                    Data.push(productId)
+                }
             })
+            let i = 0
+            const myInterval = setInterval(() => {
+                dispatch(addtoCart(Data[i++]))
+                if (i === Data.length) {
+                    clearInterval(myInterval);
+                }
+            }, 300);
         }
         catch (e) {
             console.log(e)

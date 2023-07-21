@@ -114,7 +114,7 @@ function Cart() {
 
         setValidated(true);
     }
-    
+
 
     let swap
     let counter = []
