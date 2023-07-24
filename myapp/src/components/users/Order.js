@@ -31,6 +31,7 @@ export default function Order(props) {
     const [pincode, setPincode] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [validated, setValidated] = useState(false);
+    const [totalProductValue, setTotalPvalue] = useState('');
 
     const SubFunction = async () => {
         try {

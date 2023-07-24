@@ -96,7 +96,6 @@ exports.remove = (async (req, res, next) => {
 // ============================= Admin detail show =========================== 
 
 exports.detail = (async (req, res, next) => {
-
     try {
         const check = await register.findOne({ email: req.body.email })
         if (check.type === "user") {
@@ -118,7 +117,6 @@ exports.detail = (async (req, res, next) => {
             })
         }
     }
-
     catch (error) {
         res.status(404).json({
             success: false,

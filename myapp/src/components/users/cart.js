@@ -142,6 +142,7 @@ function Cart() {
 
     const hello = (product) => {
         const { image, productName, price, quantity, stock } = product
+        totalcost = 0
         return (
             <div id="showProductUser">
                 <div>
@@ -178,6 +179,9 @@ function Cart() {
                                         <Button variant="primary" disabled>-</Button>
                                     </div>
                             }
+                            {
+                                totalcost += price * quantity
+                            }
                         </Card.Body>
                     </Card>
                 </div>
@@ -187,7 +191,7 @@ function Cart() {
 
     function GridComplexExample() {
         return (
-            <Form noValidate validated={validated} onSubmit={conformOrder}>
+            <Form noValidate validated={validated} onSubmit={conformOrder}> 
                 <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' onClick={check2} id='imageSizaClose' />
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Full Name</Form.Label>

@@ -76,8 +76,7 @@ const cardItems = (state = length, action) => {
                         }
                         Data.push({ productId: prop[i].cardData._id, quantity: prop[i].cardData.quantity })
                     }
-
-                    const response = await fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
+                    await fetch(`${process.env.REACT_APP_USER_URL}/cartSaved`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
