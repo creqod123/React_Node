@@ -60,10 +60,10 @@ button {
     transition: all ease-in-out 0.5s;
 }
 
-.SearchCeo {
+#ceoSearch {
     position: absolute;
-    top: -86px;
-    width: 80%;
-    display: flex;
-    justify-content: space-evenly;
+    top: 4px;
+    width: 20%;
+    left: 50%;
+    transform: translate(-50%);
 }

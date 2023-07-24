@@ -2,6 +2,8 @@ import axios from 'axios'
 import './ceo.css'
 import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
+import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import { MDBInputGroup, MDBInput, MDBIcon } from 'mdb-react-ui-kit';
 
 const token = localStorage.getItem("token")
 let userdatas = []
@@ -10,7 +12,7 @@ let searchData = []
 
 export default function UserData() {
 
-    const [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(true);
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [showSearchValue, setshowSearchValue] = useState(false)
@@ -42,6 +44,7 @@ export default function UserData() {
     // ========================================= Check User Data =========================================
 
     const checkUserData = async (e) => {
+
         const id = e.target.value;
         try {
             const a = await axios.post(`${process.env.REACT_APP_CEO_URL}/user/detail`, { id: id },
@@ -56,7 +59,7 @@ export default function UserData() {
         catch (e) {
             console.log(e)
         }
-        setIsClicked(true);
+        setIsClicked(false);
     }
 
     // ========================================= Remove user =========================================
@@ -98,7 +101,7 @@ export default function UserData() {
     }
 
     const handleClick = () => {
-        setIsClicked(false);
+        setIsClicked(true);
     };
 
     const BorderExample = () => {
@@ -123,6 +126,9 @@ export default function UserData() {
                 })
                 const data = await a.json()
                 searchData = data.data
+
+                console.log("Check :- ",searchData)
+
                 if (searchData == null) {
                     setshowSearchValue(false)
                     setShowTag(true)
@@ -144,23 +150,23 @@ export default function UserData() {
 
     return (
         <div className='adminshow' >
-            <div className='SearchCeo'>
-                <button disabled>{"<"}</button>
-                <button disabled>{">"}</button>
-                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                <input type="submit" onClick={searchFun} />
-            </div>
-            <div id='userdetailshow1' className={isClicked ? 'show' : 'hide'}>
-                <div id='userdetailclose'>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' alt='img' onClick={handleClick} />
-                </div>
-                <div id='userdetailshow2'>
-                    <table id='getss'>
+            <MDBInputGroup id='ceoSearch'>
+                <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <MDBBtn rippleColor='dark' onClick={searchFun}>
+                    <MDBIcon type='submit' icon='search' onClick={searchFun} />
+                </MDBBtn>
+            </MDBInputGroup>
+
+            {isClicked ? <></> :
+                <MDBTable align='middle'>
+                    <MDBTableHead>
                         <tr>
-                            <td>product Name</td>
-                            <td>price</td>
-                            <td>qantity</td>
+                            <td scope='col'>product Name</td>
+                            <td scope='col'>price</td>
+                            <td scope='col'>qantity</td>
                         </tr>
+                    </MDBTableHead>
+                    <MDBTableBody>
                         {
                             0 !== data.length ?
                                 data.map((user) => {
@@ -177,52 +183,73 @@ export default function UserData() {
                                     )
                                 }) : <h1>Product not order </h1>
                         }
-                    </table>
-                </div>
-            </div>
-            <table className={isClicked ? 'hide' : 'show'}>
-                <tr>
-                    <th>No.</th>
-                    <th>Username</th>
-                    <th>Mobile No.</th>
-                    <th>Full Detail</th>
-                    <th>Block</th>
-                </tr>
-                {showSearchValue ?
-                    showSearchValue ?
-                        searchData.map((user, counter = 0) => {
-                            counter += 1
-                            const { userId } = user
-                            const { email, tel, _id } = userId
-                            if (counter === 1) {
-                                return (
-                                    <tr>
-                                        <td>{counter}</td>
-                                        <td>{email.slice(0, -10)}</td>
-                                        <td>{tel}</td>
-                                        <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
-                                        <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
+                    </MDBTableBody>
+                    <MDBTableBody>
+                        <MDBBtn style={{ position: "absolute", left: "50%" }} onClick={handleClick}>Close</MDBBtn>
+                    </MDBTableBody>
+                </MDBTable>
+            }
+            {
+                isClicked
+                    ? <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <tr>
+                                <th scope='col'>No.</th>
+                                <th scope='col'>Username</th>
+                                <th scope='col'>Mobile No.</th>
+                                <th scope='col'>Full Detail</th>
+                                <th scope='col'>Block</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                showSearchValue ?
+                                    showSearchValue ?
+                                        searchData.map((user, counter = 0) => {
+                                            counter += 1
+                                            const { userId } = user
+                                            const { email, tel, _id } = userId
+                                            if (counter === 1) {
+                                                return (
+                                                    <tr>
+                                                        <td>{counter}</td>
+                                                        <td>{email.slice(0, -10)}</td>
+                                                        <td>{tel}</td>
+                                                        <td className="userdetail">
+                                                            <MDBBtn color='link' rounded size='sm' value={_id} onClick={e => checkUserData(e)}>Detail</MDBBtn>
+                                                        </td>
+                                                        <td className="userdetail">
+                                                            <MDBBtn color='link' rounded size='sm' value={_id} onClick={e => removeUser(e)}>Delete</MDBBtn>
+                                                        </td>
 
-                                    </tr>
-                                )
+                                                    </tr>
+                                                )
+                                            }
+                                        }) : <BorderExample />
+                                    : showTag ?
+                                        userdatas.map((user, counter = 0) => {
+                                            counter += 1
+                                            const { email, tel, _id } = user
+                                            return (
+                                                <tr>
+                                                    <td>{counter}</td>
+                                                    <td>{email.slice(0, -10)}</td>
+                                                    <td>{tel}</td>
+                                                    <td className="userdetail">
+                                                        <MDBBtn color='link' rounded size='sm' value={_id} onClick={e => checkUserData(e)}>Detail</MDBBtn>
+                                                    </td>
+                                                    <td className="userdetail">
+                                                        <MDBBtn color='link' rounded size='sm' value={_id} onClick={e => removeUser(e)}>Delete</MDBBtn>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }) : <BorderExample />
                             }
-                        }) : <BorderExample />
-                    : showTag ?
-                        userdatas.map((user, counter = 0) => {
-                            counter += 1
-                            const { email, tel, _id } = user
-                            return (
-                                <tr>
-                                    <td>{counter}</td>
-                                    <td>{email.slice(0, -10)}</td>
-                                    <td>{tel}</td>
-                                    <td className="userdetail"><button value={_id} onClick={e => checkUserData(e)}>Detail</button></td>
-                                    <td className="userdetail"><button value={_id} onClick={e => removeUser(e)}>Delete</button></td>
-                                </tr>
-                            )
-                        }) : <BorderExample />
-                }
-            </table>
+                        </MDBTableBody>
+                    </MDBTable>
+                    :
+                    <></>
+            }
         </div>
     )
 }   

@@ -2,6 +2,8 @@ import axios from 'axios'
 import './ceo.css'
 import { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
+import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+import { MDBInputGroup, MDBInput, MDBIcon } from 'mdb-react-ui-kit';
 
 let data = []
 let adminData = []
@@ -10,7 +12,7 @@ let searchData = []
 
 export default function AdminData() {
 
-    const [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(true);
     const [showTag, setShowTag] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [showSearchValue, setshowSearchValue] = useState(false)
@@ -52,7 +54,7 @@ export default function AdminData() {
         catch (e) {
             console.log(e)
         }
-        setIsClicked(true);
+        setIsClicked(false);
     }
 
     const adminProdctRemove = async (e) => {
@@ -74,7 +76,7 @@ export default function AdminData() {
     }
 
     const handleClick = () => {
-        setIsClicked(false);
+        setIsClicked(true);
     };
 
     const BorderExample = () => {
@@ -118,80 +120,104 @@ export default function AdminData() {
 
     return (
         <div className='adminshow' >
-            <div className='SearchCeo'>
-                <button disabled>{"<"}</button>
-                <button disabled>{">"}</button>
-                <input type="search" id="search" placeholder="Search product" onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
-                <input type="submit" onClick={searchFun} />
-            </div>
-            <div id='userdetailshow1' className={isClicked ? 'show' : 'hide'}>
-                <div id='userdetailclose'>
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Circled_times.svg/1200px-Circled_times.svg.png' alt='img' onClick={handleClick} />
-                </div>
-                <div id='userdetailshow2'>
-                    <table id='getss'>
-                        <tr>
-                            <th>No. </th>
-                            <th>product Name</th>
-                            <th>price</th>
-                            <th>Delete</th>
-                        </tr>
-                        {
-                            showTag ?
-                                data.map((admin, counter = 0) => {
-                                    counter += 1
-                                    const { _id, productName, price } = admin
-                                    return (
-                                        <tr>
-                                            <td>{counter}</td>
-                                            <td>{productName}</td>
-                                            <td>{price}</td>
-                                            <td><button value={_id} onClick={adminProdctRemove} >Delete</button></td>
-                                        </tr>
-                                    )
-                                }) : <BorderExample />
-                        }
-                    </table>
-                </div>
-            </div>
-            <table className={isClicked ? 'hide' : 'show'}>
-                <tr>
-                    <th>No.</th>
-                    <th>Username</th>
-                    <th style={showSearchValue ? { display: "none" } : { display: "block" }}>Mobile No.</th>
-                    <th>Product</th>
-                    <th>Delete</th>
-                </tr>
-                {
-                    showSearchValue
-                        ? showSearchValue ?
-                            searchData.map((admin, counter = 0) => {
-                                counter += 1
-                                const { email, tel, _id } = admin
-                                return (
-                                    <tr>
-                                        <td>{counter}</td>
-                                        <td>{email.slice(0, -10)}</td>
-                                        <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
-                                        <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
-                                    </tr>
-                                )
-                            }) : <BorderExample />
-                        : showTag ? adminData.map((admin, counter = 0) => {
-                            counter += 1
-                            const { email, tel, _id } = admin
-                            return (
-                                <tr>
-                                    <td>{counter}</td>
-                                    <td>{email.slice(0, -10)}</td>
-                                    <td>{tel}</td>
-                                    <td className="userdetail"><button value={_id} onClick={checkAdminData}>Product</button></td>
-                                    <td className="userdetail"><button value={_id} onClick={adminProdctRemove}>Delete</button></td>
-                                </tr>
-                            )
-                        }) : <BorderExample />
-                }
-            </table>
+            <MDBInputGroup id='ceoSearch'>
+                <MDBInput label='Search' onChange={(e) => setSearchValue(e.target.value)} value={searchValue} />
+                <MDBBtn rippleColor='dark' onClick={searchFun}>
+                    <MDBIcon type='submit' icon='search' onClick={searchFun} />
+                </MDBBtn>
+            </MDBInputGroup>
+
+            {
+                isClicked ? <></> :
+
+                    <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <tr>
+                                <th scope='col'>No. </th>
+                                <th scope='col'>product Name</th>
+                                <th scope='col'>price</th>
+                                <th scope='col'>Delete</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                showTag ?
+                                    data.map((admin, counter = 0) => {
+                                        counter += 1
+                                        const { _id, productName, price } = admin
+                                        return (
+                                            <tr>
+                                                <td>{counter}</td>
+                                                <td>{productName}</td>
+                                                <td>{price}</td>
+                                                <td><button value={_id} onClick={adminProdctRemove} >Delete</button></td>
+                                            </tr>
+                                        )
+                                    }) : <BorderExample />
+                            }
+                        </MDBTableBody>
+                        <MDBTableBody>
+                            <MDBBtn style={{ position: "absolute", left: "50%" }} onClick={handleClick}>Close</MDBBtn>
+                        </MDBTableBody>
+                    </MDBTable>
+
+            }
+            {
+                isClicked
+                    ?
+                    <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <tr>
+                                <th scope='col'>No.</th>
+                                <th scope='col'>Username</th>
+                                <th scope='col'>Mobile No.</th>
+                                <th scope='col'>Product</th>
+                                <th scope='col'>Delete</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                showSearchValue
+                                    ? showSearchValue ?
+                                        searchData.map((admin, counter = 0) => {
+                                            counter += 1
+                                            const { email, tel, _id } = admin
+                                            return (
+                                                <tr>
+                                                    <td>{counter}</td>
+                                                    <td>{email.slice(0, -10)}</td>
+                                                    <td className="userdetail">
+                                                        <MDBBtn color='link' rounded size='sm' value={_id} onClick={checkAdminData}>Detail</MDBBtn>
+                                                    </td>
+                                                    <td className="userdetail">
+                                                        <MDBBtn color='link' rounded size='sm' value={_id} onClick={adminProdctRemove}>Remove</MDBBtn>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }) : <BorderExample />
+                                    : showTag ? adminData.map((admin, counter = 0) => {
+                                        counter += 1
+                                        const { email, tel, _id } = admin
+                                        return (
+                                            <tr>
+                                                <td>{counter}</td>
+                                                <td>{email.slice(0, -10)}</td>
+                                                <td>{tel}</td>
+                                                <td className="userdetail">
+                                                    <MDBBtn color='link' rounded size='sm' value={_id} onClick={checkAdminData}>Detail</MDBBtn>
+                                                </td>
+                                                <td className="userdetail">
+                                                    <MDBBtn color='link' rounded size='sm' value={_id} onClick={adminProdctRemove}>Remove`  </MDBBtn>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : <BorderExample />
+                            }
+                        </MDBTableBody>
+                    </MDBTable>
+                    :
+                    <></>
+            }
         </div>
     )
 }
