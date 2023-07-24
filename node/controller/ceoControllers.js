@@ -11,7 +11,7 @@ exports.getData = (async (req, res, next) => {
         socket.ceoUserGet('ceoUserData', [user, seller]);
         res.status(200).json({
             message: "complete",
-            data: {user:user, seller:seller}
+            data: { user: user, seller: seller }
         })
     }
     catch (error) {
@@ -121,23 +121,11 @@ exports.productRemove = (async (req, res, next) => {
 
 exports.searchData = (async (req, res, next) => {
     try {
-        const check = await register.find({ email: req.body.email })
-        const id = check[0]._id
-        const checkType = check[0].type
-        if (checkType === "user") {
-            const data = await checkout.find({ userId: id }).populate('userId')
-            res.status(200).json({
-                message: "complete",
-                data: data
-            })
-        }
-        else {
-            const data = await adminProduct.find({ adminId: id })
-            res.status(200).json({
-                message: "complete",
-                data: data[0]
-            })
-        }
+        const data = await register.findOne({ email: req.body.email })
+        res.status(200).json({
+            message: "complete",
+            data: data
+        })
     }
     catch (error) {
         res.status(404).json({

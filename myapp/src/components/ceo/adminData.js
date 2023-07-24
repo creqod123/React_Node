@@ -98,16 +98,18 @@ export default function AdminData() {
                 })
 
                 const data = await a.json()
-                if (data.data == null) {
+                searchData = []
+                searchData.push(data.data)
+
+                if (searchData[0] === null) {
                     setshowSearchValue(false)
                     setShowTag(true)
                 }
                 else {
-                    searchData.push(data.data)
                     setShowTag(false)
                     const timeout2 = setTimeout(() => {
                         setshowSearchValue(true)
-                    }, 4000);
+                    }, 3000);
                 }
             }
             catch (e) {
@@ -141,19 +143,19 @@ export default function AdminData() {
                         </MDBTableHead>
                         <MDBTableBody>
                             {
-                                showTag ?
-                                    data.map((admin, counter = 0) => {
-                                        counter += 1
-                                        const { _id, productName, price } = admin
-                                        return (
-                                            <tr>
-                                                <td>{counter}</td>
-                                                <td>{productName}</td>
-                                                <td>{price}</td>
-                                                <td><button value={_id} onClick={adminProdctRemove} >Delete</button></td>
-                                            </tr>
-                                        )
-                                    }) : <BorderExample />
+                                data.map((admin, counter = 0) => {
+                                    counter += 1
+                                    const { _id, productName, price } = admin
+                                    console.log("Check data map :- ", admin)
+                                    return (
+                                        <tr>
+                                            <td>{counter}</td>
+                                            <td>{productName}</td>
+                                            <td>{price}</td>
+                                            <td><button value={_id} onClick={adminProdctRemove} >Delete</button></td>
+                                        </tr>
+                                    )
+                                })
                             }
                         </MDBTableBody>
                         <MDBTableBody>
@@ -186,6 +188,7 @@ export default function AdminData() {
                                                 <tr>
                                                     <td>{counter}</td>
                                                     <td>{email.slice(0, -10)}</td>
+                                                    <td>{tel}</td>
                                                     <td className="userdetail">
                                                         <MDBBtn color='link' rounded size='sm' value={_id} onClick={checkAdminData}>Detail</MDBBtn>
                                                     </td>

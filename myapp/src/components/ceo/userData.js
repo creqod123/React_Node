@@ -26,7 +26,7 @@ export default function UserData() {
                         token: token,
                     },
                 })
-            userdatas = a.data.data.seller
+            userdatas = a.data.data.user
         }
         catch (e) {
             console.log(e)
@@ -125,11 +125,10 @@ export default function UserData() {
                     body: JSON.stringify({ email: checkEmail }),
                 })
                 const data = await a.json()
-                searchData = data.data
+                searchData = []
+                searchData.push(data.data)
 
-                console.log("Check :- ",searchData)
-
-                if (searchData == null) {
+                if (searchData[0] === null) {
                     setshowSearchValue(false)
                     setShowTag(true)
                 }
@@ -157,37 +156,39 @@ export default function UserData() {
                 </MDBBtn>
             </MDBInputGroup>
 
-            {isClicked ? <></> :
-                <MDBTable align='middle'>
-                    <MDBTableHead>
-                        <tr>
-                            <td scope='col'>product Name</td>
-                            <td scope='col'>price</td>
-                            <td scope='col'>qantity</td>
-                        </tr>
-                    </MDBTableHead>
-                    <MDBTableBody>
-                        {
-                            0 !== data.length ?
-                                data.map((user) => {
-                                    const { quantity, productId, price } = user
-                                    const { productName, _id } = productId
-                                    return (
-                                        <tr>
-                                            <td>{productName}</td>
-                                            <td>{price}</td>
-                                            <td>{quantity}</td>
-                                            <td><button value={_id} onClick={e => userProductRemove(e)}>Remove</button></td>
-                                        </tr>
+            {
+                isClicked ? <></> :
+                    <MDBTable align='middle'>
+                        <MDBTableHead>
+                            <tr>
+                                <td scope='col'>product Name</td>
+                                <td scope='col'>price</td>
+                                <td scope='col'>qantity</td>
+                                <td scope='col'>Remove</td>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                0 !== data.length ?
+                                    data.map((user) => {
+                                        const { quantity, productId, price } = user
+                                        const { productName, _id } = productId
+                                        return (
+                                            <tr>
+                                                <td>{productName}</td>
+                                                <td>{price}</td>
+                                                <td>{quantity}</td>
+                                                <td><button value={_id} onClick={e => userProductRemove(e)}>Remove</button></td>
+                                            </tr>
 
-                                    )
-                                }) : <h1>Product not order </h1>
-                        }
-                    </MDBTableBody>
-                    <MDBTableBody>
-                        <MDBBtn style={{ position: "absolute", left: "50%" }} onClick={handleClick}>Close</MDBBtn>
-                    </MDBTableBody>
-                </MDBTable>
+                                        )
+                                    }) : <h1>Product not order </h1>
+                            }
+                        </MDBTableBody>
+                        <MDBTableBody>
+                            <MDBBtn style={{ position: "absolute", left: "50%" }} onClick={handleClick}>Close</MDBBtn>
+                        </MDBTableBody>
+                    </MDBTable>
             }
             {
                 isClicked
@@ -206,9 +207,9 @@ export default function UserData() {
                                 showSearchValue ?
                                     showSearchValue ?
                                         searchData.map((user, counter = 0) => {
+                                            console.log("check user :- ", user)
                                             counter += 1
-                                            const { userId } = user
-                                            const { email, tel, _id } = userId
+                                            const { email, tel, _id } = user
                                             if (counter === 1) {
                                                 return (
                                                     <tr>

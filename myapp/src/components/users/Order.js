@@ -17,6 +17,7 @@ const _id = localStorage.getItem("id")
 const email = localStorage.getItem("email")
 const token = localStorage.getItem("token")
 let id
+let defaultValue = {}
 
 export default function Order(props) {
     const [showTag, setShowTag] = useState(false);
@@ -54,7 +55,6 @@ export default function Order(props) {
         setShowTag(true)
     }, 1000);
 
-
     useEffect(() => {
 
         if (props.props.socket) {
@@ -65,7 +65,6 @@ export default function Order(props) {
     }, [])
 
     const BorderExample = () => {
-
         return <Spinner animation="border" className='spinLoader' variant="primary" />;
     }
 
@@ -101,8 +100,17 @@ export default function Order(props) {
         setClicked(false)
     }
 
+    // =====================================================================================================================================================
+
     const addressUpdate = (e) => {
-        id = e.target.value
+        const a = JSON.parse(e.target.value)
+        id = a._id
+        defaultValue["fullName"] = a.fullName
+        defaultValue["house"] = a.house
+        defaultValue["area"] = a.area
+        defaultValue["city"] = a.city
+        defaultValue["pincode"] = a.pincode
+        console.log("Check 123 :- ", defaultValue)
         setUpdateAddress(true)
     }
 
@@ -182,7 +190,7 @@ export default function Order(props) {
                                 {showTag ? Data.map((product) => {
                                     const { quantity, productId, price, status } = product
                                     return (
-                                        < tr className='userTableProduct'>
+                                        <tr className='userTableProduct'>
                                             <td>
                                                 <div className='d-flex align-items-center'>
                                                     <div className='ms-3'>
@@ -192,14 +200,15 @@ export default function Order(props) {
                                                 </div>
                                             </td>
                                             <td>
-                                                <p className='fw-normal mb-1'>₹ {price}</p>
+                                                <p className='fw-normal mb-1'>₹{price}</p>
                                             </td>
                                             <td>
                                                 <p className='fw-normal mb-1'>{quantity}</p>
                                             </td>
                                             <td>
                                                 {
-                                                    status === "Pending" ?
+                                                    status === "Pending"
+                                                        ?
                                                         <MDBBadge color='warning' pill>
                                                             {status}
                                                         </MDBBadge>
@@ -257,7 +266,7 @@ export default function Order(props) {
                                                     <p className='fw-normal mb-1'>{pincode}</p>
                                                 </td>
                                                 <td>
-                                                    <MDBBtn color='link' rounded size='sm' value={_id} onClick={addressUpdate}>
+                                                    <MDBBtn color='link' rounded size='sm' value={JSON.stringify(product)} onClick={addressUpdate}>
                                                         Update
                                                     </MDBBtn>
                                                 </td>
@@ -278,9 +287,10 @@ export default function Order(props) {
                         <Modal.Dialog>
                             <Modal.Header >
                                 <Form noValidate validated={validated} onSubmit={orderUpdate}>
+
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Full Name</Form.Label>
-                                        <Form.Control placeholder="Full Name." name="productName" onChange={(e) => setfullName(e.target.value)} required />
+                                        <Form.Control placeholder="Full Name." defaultValue={`${defaultValue.fullName}`} name="productName" onChange={(e) => setfullName(e.target.value)} required />
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formGridAddress1" >
@@ -310,10 +320,12 @@ export default function Order(props) {
                                             </Col>
                                         </Row>
                                     </Form.Group>
+
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={handleInputUpdate}>Close</Button>
                                         <Button variant="primary" type="submit">Save changes</Button>
                                     </Modal.Footer>
+
                                 </Form>
                             </Modal.Header>
                         </Modal.Dialog>
