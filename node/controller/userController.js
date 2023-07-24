@@ -197,17 +197,13 @@ exports.search = (async (req, res, next) => {
 exports.cart = (async (req, res, next) => {
     try {
 
-        const productId = []
-        const quantity = []
-
         const a = await cart.findOne({ userId: req.user._id })
         const userReqData = req.body.data
 
         if (a !== null) {
             await cart.deleteOne({ _id: a._id })
         }
-
-        const abcde = await cart.create({ userId: req.user._id, productCart: userReqData })
+        await cart.create({ userId: req.user._id, productCart: userReqData })
         res.status(200).json({
             success: true,
             message: "complete",

@@ -15,6 +15,8 @@ const verifyToken = async (req, res, next) => {
     let user = await register.findOne({ email: decoded.data })
     req.user = user;
 
+    console.log("Check :- ", req.user)
+
     next();
   });
 }
