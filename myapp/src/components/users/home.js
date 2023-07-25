@@ -33,7 +33,7 @@ function Home(props) {
 
     useEffect(() => {
         setTimeout(() => {
-            setShowTag(true);
+        setShowTag(true);
         }, 1000);
     }, [])
 
@@ -232,7 +232,6 @@ function Home(props) {
             </div>
             <div className="position">
                 {searchData ? Check123.map((product) => BasicExample(product)) : showTag ? Data.map((product) => BasicExample(product)) : <BorderExample />}
-                {Data?.length && Data.map((product) => BasicExample(product))}
             </div>
         </div>
     );
