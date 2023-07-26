@@ -1,0 +1,22 @@
+SELECT * FROM `AMINAL` WHERE 1
+
+SELECT
+WHERE
+AND OR NOT
+ORDER BY 			====> WHERE  NOT  USE
+INSERT INTO 		====> INSERT  INTO  table_name()  VALUES ()	
+UPDATE			====> UPDATE  table_name  SET   change...........   WHERE 	condition................;
+DELETE			====> DELETE  FROM  table_name WHERE  condition............
+LIMIT
+MIN MAX and AS
+COUNT AVG SUM	====> SELECT COUNT() FROM ........ WHERE                        condition only in sum
+LIKE				====> Find same as '%a' ' _%a'
+WILDCARDS
+IN				====> SELECT  *  FROM  WHERE  customer  IN  ('hello1','hello2')
+BETWEEN
+Aliases			===> SELECT  id  AS  customer,  number  AS  Number 
+JOIN 				===> inner , left , right , cross , self
+SELF JOIN 			===> SELECT
+UNION 			===>SELECT.......... UNION  SELECT...........         OR           SELECT.......... UNION  ALL  SELECT...........	
+GROUP BY 			===> SELECT COUNT(total) ...................... GROUP BY number	
+HAVING COUNT 		===> Is not use without GROUP BY
