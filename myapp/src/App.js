@@ -29,6 +29,7 @@ function App(props) {
               <Route path='/user/shop' element={<Home props={props} />} />
               <Route path='/user/cart' element={<Cart />} />
               <Route path='/user/order' element={<Order props={props} />} />
+              <Route path='/user/check' element={<Check />} />
             </Routes>
           </Router>
         </div>
@@ -70,7 +71,6 @@ function App(props) {
           <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<SignUp />} />
-            <Route path='/check' element={<Check />} />
           </Routes>
         </Router>
       </div>
