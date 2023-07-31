@@ -19,4 +19,18 @@ JOIN 				===> inner , left , right , cross , self
 SELF JOIN 			===> SELECT
 UNION 			===>SELECT.......... UNION  SELECT...........         OR           SELECT.......... UNION  ALL  SELECT...........	
 GROUP BY 			===> SELECT COUNT(total) ...................... GROUP BY number	
-HAVING COUNT 		===> Is not use without GROUP BY
+HAVING 			===> Is not use without GROUP BY
+EXISTS			===> Its run when sub  query is true and return all data of first
+ALL , ANY			===>ALL and ANY syntax same :----     return if same data, WHERE id = ALL ( SELECT * FROM ... WHERE  condition ) ....;
+INSERT INTO SELECT	===>	get data from second and insert into first table
+CASE END 			===> is like a switch case,,....   SELECT  *  CASE .................WHEN THEN ELSE.................END AS extrs  FROM  first
+IFNULL 			===> Is return as change null value into any given value after SELECT
+COMMENT			===> -- and /*  */
+
+CREATE			===> DATABASE  and  TABLE		(  CREATE DATABASE ..........  and  CREATE TABLE ..........  )
+DROP			===> DATABASE  and  TABLE		(  DROP DATABASE ..........  and  DROP TABLE ..........  )
+CREATE  AS  SELECT	===> Its copy table from second by pacific colums		(  CREATE TABLE ....  AS  SELECT (.. , .. , ..) FROM .....  )
+DROP   TRUNCATE 	===> delete table and delete table data only	(  DROP  TABLE  ......    and  TRUNCATE  TABLE  ......  )
+ALTER			===> Its create or delete or modify colums by (  ADD  and  DROP  and MODIFY )	ALTER  TABLE ......  MODIFY  COLUMN column_name data_type
+ CONSTRAINT		===> PRIMARY KEY,  FOREIGN KEY,  UNIQUE,  NOT NULL,  CHECK,  DEFAULT,  CREATE INDEX
+ AUTO INCREAMENT,    VIEW,    DATE	
