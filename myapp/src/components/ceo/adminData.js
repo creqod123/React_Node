@@ -146,7 +146,6 @@ export default function AdminData() {
                                 data.map((admin, counter = 0) => {
                                     counter += 1
                                     const { _id, productName, price } = admin
-                                    console.log("Check data map :- ", admin)
                                     return (
                                         <tr>
                                             <td>{counter}</td>

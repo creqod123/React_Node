@@ -111,7 +111,6 @@ export default function Order(props) {
         defaultValue["area"] = a.area
         defaultValue["city"] = a.city
         defaultValue["pincode"] = a.pincode
-        console.log("Check 123 :- ", defaultValue)
         setUpdateAddress(true)
     }
 

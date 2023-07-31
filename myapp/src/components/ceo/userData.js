@@ -207,7 +207,6 @@ export default function UserData() {
                                 showSearchValue ?
                                     showSearchValue ?
                                         searchData.map((user, counter = 0) => {
-                                            console.log("check user :- ", user)
                                             counter += 1
                                             const { email, tel, _id } = user
                                             if (counter === 1) {

@@ -1,4 +1,5 @@
-// Cart store compelete
-// Use boostrap in admin, user and seller side
-// Get data and show user and seller data to admin
-// Searching in admin page
+    SELECT DISTINCT CITY from STATION WHERE 
+    CITY LIKE '%a' AND CITY LIKE '%e' AND CITY LIKE '%i' AND CITY LIKE '%o' AND CITY LIKE '%u' AND 
+    CITY LIKE '%A' AND CITY LIKE '%E' AND CITY LIKE '%I' AND CITY LIKE '%O' AND CITY LIKE '%U' AND  
+    CITY LIKE 'a%' AND CITY LIKE 'e%' AND CITY LIKE 'i%' AND CITY LIKE 'o%' AND CITY LIKE 'u%' AND 
+    CITY LIKE 'A%' AND CITY LIKE 'E%' AND CITY LIKE 'I%' AND CITY LIKE 'O%' AND CITY LIKE 'U%'

@@ -12,8 +12,6 @@ exports.getAll = (async (req, res, next) => {
 
     try {
 
-        console.log("check :- ",req.user)
-
         const email = req.body.email
         const id = await register.find({ email: email })
         const pageNumber = req.body.pageNumber;

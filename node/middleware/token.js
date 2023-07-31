@@ -11,9 +11,6 @@ const verifyToken = async (req, res, next) => {
       return res.status(403).json({ message: 'Token verification failed' });
     }
 
-    console.log("token 1:- ",decoded)
-    console.log("token 2:- ",decoded.data)
-
     let user = await register.findOne({ email: decoded.data })
     req.user = user;
     next();
