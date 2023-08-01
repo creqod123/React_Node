@@ -12,12 +12,11 @@ var usersRouter = require('./routes/users');
 var mongoose = require('mongoose')
 
 var app = express();
-
 app.use(cors())
 
-mongoose.connect(process.env.DB_HOST)
-  .then(() => console.log('connected'))
-  .catch((err) => console.log(err.message))
+var mongoose = require('./connection/mongodb')
+var mysql = require('./connection/mysql')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

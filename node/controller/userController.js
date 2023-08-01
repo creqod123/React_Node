@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const con = require('../connection/mysql');
 const adminProduct = require('../models/adminProduct')
 const checkout = require('../models/checkout')
 const register = require('../models/register')
@@ -13,7 +14,6 @@ exports.getAll = (async (req, res, next) => {
     try {
 
         const email = req.body.email
-        const id = await register.find({ email: email })
         const pageNumber = req.body.pageNumber;
         const result = {};
         const totalPosts = await adminProduct.countDocuments().exec();
@@ -41,6 +41,7 @@ exports.getAll = (async (req, res, next) => {
 exports.userCart = (async (req, res, next) => {
 
     try {
+
         res.status(200).json({
             success: true,
             message: "complete",
@@ -220,11 +221,19 @@ exports.cart = (async (req, res, next) => {
 
 exports.cartRequest = (async (req, res, next) => {
     try {
+
+        let sql_data_
+
+        const sqlQuery = "SELECT * FROM test.first WHERE id = 1;"
+        const rows = con.query(sqlQuery, (a, b) => {
+            sql_data_= b
+        });
         const product = await cart.findOne({ userId: req.user._id }).populate('productCart.productId')
         res.status(200).json({
             success: true,
             message: "complete",
-            data: product
+            data: product,
+            data_1: sql_data_
         })
     }
     catch (error) {

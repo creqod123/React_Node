@@ -1,5 +1,3 @@
-    SELECT DISTINCT CITY from STATION WHERE 
-    CITY LIKE '%a' AND CITY LIKE '%e' AND CITY LIKE '%i' AND CITY LIKE '%o' AND CITY LIKE '%u' AND 
-    CITY LIKE '%A' AND CITY LIKE '%E' AND CITY LIKE '%I' AND CITY LIKE '%O' AND CITY LIKE '%U' AND  
-    CITY LIKE 'a%' AND CITY LIKE 'e%' AND CITY LIKE 'i%' AND CITY LIKE 'o%' AND CITY LIKE 'u%' AND 
-    CITY LIKE 'A%' AND CITY LIKE 'E%' AND CITY LIKE 'I%' AND CITY LIKE 'O%' AND CITY LIKE 'U%'
+// learn and practice procedure and trigger
+// connect mysql with nodejs
+// start learn function in mysql
