@@ -1,0 +1,46 @@
+1 ) =========================
+PROCEDURE CREATE SYNTAX  ::=================::
+
+====================================  WITHOUT PARAMETER  ==================================== 
+
+DELIMITER //
+CREATE PROCEDURE `check123`()
+BEGIN
+    SELECT *
+    FROM FIRST
+    WHERE 1;
+END //
+DELIMITER ;
+
+====================================  WITH PARAMETER  ====================================
+
+ DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check`(
+    IN `p_period` CHAR(10)
+)
+BEGIN
+    SELECT *
+    FROM FIRST
+    WHERE 1;
+END //
+DELIMITER ;
+
+2 )
+CALL  check123()
+
+3 )
+DROP  PROCEDURE  IF  EXISTS  procedure_name;
+
+
+2 ) =========================
+TRIGGER  CREATE  SYNTAX  ::=================::
+
+
+====================================  CREATE TRIGGER  ====================================
+
+CREATE   TRIGGER  before_insert_occupation  
+BEFORE  INSERT  ON  FIRST 
+FOR  EACH  ROW  
+SET  NEW.salary  =  (NEW.hourly  *  2080)
+	
+
