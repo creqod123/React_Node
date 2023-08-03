@@ -1,0 +1,129 @@
+.payroll-totals {
+    .dx-field {
+        display: flex;
+        display: -webkit-flex;
+        display: -moz-flex;
+        align-items: center;
+        margin-bottom: 0;
+        .dx-field-label {
+            width: auto;
+            font-weight: 600;
+            padding-right: 5px;
+        }
+        .dx-field-value {
+            width: auto;
+        }
+    }
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.label-class {
+    margin: auto;
+    width: 50%;
+    /* border: 3px solid green; */
+    padding: 10px;
+}
+
+.active {
+    background-color: navy;
+    color: whitesmoke;
+}
+
+.red-dot {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.green-dot {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(21, 226, 21);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.orange-dot {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(248, 244, 11);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.title-info {
+    .field-label {
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 15px;
+    }
+}
+::ng-deep.payroll-qb {
+    padding-left: 0 !important;
+    label  {
+        position: relative;
+        padding-left: 15px;
+        margin-left: 10px;
+        &:before {
+            position: absolute;
+            content: '';
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        span {
+            margin-left: 2px;
+        }
+    }
+    &.in-qb {
+        label {
+            &:before {
+                background-color: #15e215;
+            }
+        }
+    }
+    &.not-in-qb {
+        label {
+            &:before {
+                background-color: red;
+            }
+        }
+    }
+    &.in-db {
+        label {
+            &:before {
+                background-color: #f8f40b;
+            }
+        }
+    }
+}
+
+::ng-deep.test {
+    .dx-field-item-content {
+        .dx-form-group {
+            .dx-form-group-content {
+                .dx-widget {
+                    .dx-collection{
+                        .dx-box-flex{
+                            .dx-item{
+                                .dx-item-content{
+                                    flex-direction: column !important;
+                                    align-items: flex-start !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

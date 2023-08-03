@@ -1,0 +1,56 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UpdateQbStatusComponent } from './update-qb-status.component'
+import { RouterModule, Routes } from '@angular/router';
+import { PulseSharedModule } from '../../../../@pulse/shared.module';
+import {
+  DxButtonModule,
+  DxCheckBoxModule,
+  DxDataGridModule,
+  DxFormModule,
+  DxPopupModule, DxRadioGroupModule, DxScrollViewModule,
+  DxSelectBoxModule,
+  DxTextBoxModule,
+  DxListModule,
+  DxDateBoxModule,
+  DxValidatorModule,
+  DxValidationGroupModule,
+  DxTooltipModule
+} from 'devextreme-angular';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { QbIntegrationService } from 'app/services/qb-integration/qb-integration.service';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: UpdateQbStatusComponent
+  }
+];
+
+@NgModule({
+  declarations: [UpdateQbStatusComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    PulseSharedModule,
+    DxFormModule,
+    DxSelectBoxModule,
+    DxTextBoxModule,
+    DxButtonModule,
+    DxCheckBoxModule,
+    DxDataGridModule,
+    DxPopupModule,
+    DxScrollViewModule,
+    DxRadioGroupModule,
+    DxListModule,
+    MatTooltipModule,
+    MatListModule,
+    DxDateBoxModule,
+    DxValidatorModule,
+    DxValidationGroupModule,
+    DxTooltipModule
+  ],
+  providers: [QbIntegrationService]
+})
+export class UpdateQbStatusModule { }

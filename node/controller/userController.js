@@ -224,9 +224,9 @@ exports.cartRequest = (async (req, res, next) => {
 
         let sql_data_
 
-        const sqlQuery = "SELECT * FROM test.first WHERE id = 1;"
+        const sqlQuery = "SELECT * FROM test.product WHERE id = 1;"
         const rows = con.query(sqlQuery, (a, b) => {
-            sql_data_= b
+            sql_data_ = b
         });
         const product = await cart.findOne({ userId: req.user._id }).populate('productCart.productId')
         res.status(200).json({
