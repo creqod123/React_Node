@@ -19,6 +19,7 @@ export default function Admincontrol() {
     const [validated, setValidated] = useState(false);
 
     const productAdd = async (event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
