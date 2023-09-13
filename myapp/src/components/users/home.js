@@ -25,6 +25,8 @@ function Home(props) {
     const [searchData, setSearchData] = useState(false);
     const dispatch = useDispatch()
     const history = useNavigate('')
+    const [first, setFirst] = useState(false);
+    const [second, setSecond] = useState(false);
 
     Data = useSelector((a) => a.getItem)
     dataStock = useSelector((a) => a.cardItems)
@@ -33,7 +35,7 @@ function Home(props) {
 
     useEffect(() => {
         setTimeout(() => {
-        setShowTag(true);
+            setShowTag(true);
         }, 1000);
     }, [])
 
@@ -232,6 +234,15 @@ function Home(props) {
             </div>
             <div className="position">
                 {searchData ? Check123.map((product) => BasicExample(product)) : showTag ? Data.map((product) => BasicExample(product)) : <BorderExample />}
+            </div>
+            <div className="calc">
+                FIRST<input type="number" placeholder="first" onChange={(e) => { setFirst(e.target.value) }} />
+                SECOND<input type="number" placeholder="second" onChange={(e) => { setSecond(e.target.value) }} />
+                F * S<input value={first * second} />
+                F * S / 9<input value={(first * second / 9).toFixed(2)} />
+                F - S<input value={(first - second)} />
+                F / 2<input value={(first / 2)} />
+                {/* <input type="submit" onClick={restBtn} /> */}
             </div>
         </div>
     );
