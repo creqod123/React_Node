@@ -115,13 +115,14 @@ input::-webkit-inner-spin-button {
 }
 .calc{
   display: flex;
-  /* position: absolute; */
+  position: absolute;
   top: 10%;
   left: 30%;
   justify-content: space-between;
   flex-direction: column;
-  width: 5%;
+  width: 10%;
   height: 3%;
+  text-align: center;
 }
 .calc div{
  background: white;

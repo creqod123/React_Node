@@ -25,8 +25,8 @@ function Home(props) {
     const [searchData, setSearchData] = useState(false);
     const dispatch = useDispatch()
     const history = useNavigate('')
-    const [first, setFirst] = useState(false);
-    const [second, setSecond] = useState(false);
+    const [first, setFirst] = useState(0);
+    const [second, setSecond] = useState(0);
 
     Data = useSelector((a) => a.getItem)
     dataStock = useSelector((a) => a.cardItems)
@@ -208,6 +208,13 @@ function Home(props) {
         }
     }
 
+    const restBtn = (e) => {
+        e.preventDefault();
+        e.target.form.reset();
+        setFirst(0);
+        setSecond(0);
+    }
+
     return (
         <div className="items">
             <div className="pagination">
@@ -235,15 +242,17 @@ function Home(props) {
             <div className="position">
                 {searchData ? Check123.map((product) => BasicExample(product)) : showTag ? Data.map((product) => BasicExample(product)) : <BorderExample />}
             </div>
-            <div className="calc">
+            <form className="calc">
                 FIRST<input type="number" placeholder="first" onChange={(e) => { setFirst(e.target.value) }} />
                 SECOND<input type="number" placeholder="second" onChange={(e) => { setSecond(e.target.value) }} />
-                F * S<input value={first * second} />
-                F * S / 9<input value={(first * second / 9).toFixed(2)} />
-                F - S<input value={(first - second)} />
-                F / 2<input value={(first / 2)} />
-                {/* <input type="submit" onClick={restBtn} /> */}
-            </div>
+                F * S Square Foot<input value={(first * second) + ' Sq foot'} />
+                F * S / 9 Var<input value={(first * second / 9).toFixed(2) + ' Var'} />
+                F * 12 Inch<input value={(first * 12) + ' Inch'} />
+                F - S<input value={(first - second).toFixed(2)} />
+                F / 2<input value={(first / 2).toFixed(2)} />
+                F / S<input value={(first / second).toFixed(2)} />
+                Reset Button<input type="reset" onClick={restBtn} />
+            </form>
         </div>
     );
 }
