@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const register = require('../models/register')
 
 const verifyToken = async (req, res, next) => {
+  console.log("=======================================")
   const token = req.headers.token;
   if (!token) {
     return res.status(200).json({ message: 'Token not provided' });
